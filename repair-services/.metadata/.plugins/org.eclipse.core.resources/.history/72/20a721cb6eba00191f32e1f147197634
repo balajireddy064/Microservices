@@ -1,0 +1,98 @@
+package com.ayusha.http.client.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ayusha.repair.services.data.models.FaultyItemDataModel;
+import com.ayusha.repair.services.data.models.FaultyItemsDataModel;
+import com.ayusha.repair.services.data.models.SymptomDataModel;
+import com.ayusha.repair.services.data.models.SymptomsDataModel;
+import com.ayusha.tktmgmt.data.RepairFaultyItemsDataHandler;
+import com.ayusha.tktmgmt.data.RepairSymptomsDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class RepairFaultyItemsTester {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public RepairFaultyItemsTester() {
+		
+	}
+	
+	
+	
+	/********************************************************************************************************/
+    
+	/*************************************************************************************************************/
+	
+	/**
+	 * test
+	 */
+	public void testRepairFaultyItemsFind() {
+		RepairFaultyItemsDataHandler repairFaultyItemsDataHandler = null;
+		FaultyItemsDataModel faultyItemsDataModel = null;
+		try {
+			
+			repairFaultyItemsDataHandler = RepairFaultyItemsDataHandler.getInstance();
+			faultyItemsDataModel = repairFaultyItemsDataHandler.getFaultyItems("9");
+			System.out.println(" Job Notes returned IS ==<>>> "+faultyItemsDataModel.getLstFaultyItems());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testRepairFaultyItemsAdd() {
+		RepairFaultyItemsDataHandler repairFaultyItemsDataHandler = null;
+		FaultyItemsDataModel faultyItemsDataModel = null;
+		List<FaultyItemDataModel> lstFaultyItemDataModel = new ArrayList();
+		FaultyItemDataModel faultyItemDataModel = null;
+		int jobId = 9;
+		try {
+			
+			repairFaultyItemsDataHandler = RepairFaultyItemsDataHandler.getInstance();
+			faultyItemDataModel = new FaultyItemDataModel();
+			faultyItemDataModel.setJobId(""+jobId);
+			faultyItemDataModel.setMedia(null);
+			faultyItemDataModel.setPartId("Part_100");
+			faultyItemDataModel.setMedia("IMAGE".getBytes());
+			faultyItemDataModel.setFaulty("N");
+			lstFaultyItemDataModel.add(faultyItemDataModel);
+			
+			faultyItemDataModel = new FaultyItemDataModel();
+			faultyItemDataModel.setJobId(""+jobId);
+			faultyItemDataModel.setMedia(null);
+			faultyItemDataModel.setPartId("Part_200");
+			faultyItemDataModel.setMedia("I AM GOOD".getBytes());
+			faultyItemDataModel.setFaulty("Y");
+			lstFaultyItemDataModel.add(faultyItemDataModel);
+			
+			faultyItemsDataModel = new FaultyItemsDataModel();
+			faultyItemsDataModel.setJob_id(""+jobId);
+			faultyItemsDataModel.setLstFaultyItems(lstFaultyItemDataModel);
+			
+			repairFaultyItemsDataHandler.updateRepairSymptoms(faultyItemsDataModel);
+			System.out.println(" Repair Symptoms returned IS ==<>>> "+faultyItemsDataModel.getLstFaultyItems());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		RepairFaultyItemsTester repairFaultyItemsTester = new RepairFaultyItemsTester();
+		repairFaultyItemsTester.testRepairFaultyItemsAdd();
+	}
+
+}

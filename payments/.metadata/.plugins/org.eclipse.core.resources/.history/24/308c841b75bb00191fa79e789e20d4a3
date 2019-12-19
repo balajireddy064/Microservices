@@ -1,0 +1,34 @@
+package com.ayusha.payments.data.models;
+
+/**
+ * 
+ * @author author
+ * 10-Aug-2019
+ *
+ */
+public class PaymentsDataModel {
+	
+	/** id **/
+	private int id;
+	
+	/** cash receipt id **/
+	private String cashReceiptId;
+	
+	/** cash receipt id **/
+	private String mode;
+	
+
+	/** cash receipt id **/
+	private String paidOn;
+	
+	/** cash receipt id **/
+	private String status;
+	
+	/**
+	 * default constructor
+	 */
+	public PaymentsDataModel() {
+		
+	}
+
+}

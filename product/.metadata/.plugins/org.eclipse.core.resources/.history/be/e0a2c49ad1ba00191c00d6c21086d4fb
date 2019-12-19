@@ -1,0 +1,113 @@
+package com.ayusha.tktmgmt.data;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.products.data.models.ModelDataModel;
+import com.ayusha.products.services.constants.ModelServiceConstants;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class ModelDataHandler {
+	
+	/** singleon object reference **/
+	private final static ModelDataHandler makeDataHandler = new ModelDataHandler();
+	
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private ModelDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static ModelDataHandler getInstance() {
+		return makeDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public ModelDataModel getModel(String id) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		ModelDataModel modelDataModel = null;
+		String serviceName=ModelServiceConstants.GET_MODEL_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", id);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			modelDataModel = ((ModelDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),ModelDataModel.class));
+			return modelDataModel;
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw new ServicesDataException();
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateModel(ModelDataModel modelDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=ModelServiceConstants.UPDATE_MODEL_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(modelDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(modelDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void addModel(ModelDataModel modelDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=ModelServiceConstants.UPDATE_MODEL_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(modelDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(modelDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+}

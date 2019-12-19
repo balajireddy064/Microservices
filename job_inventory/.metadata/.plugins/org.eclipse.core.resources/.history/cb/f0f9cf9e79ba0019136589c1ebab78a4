@@ -1,0 +1,43 @@
+package com.ayusha.job.inventory.data.models;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Job Notes
+ */
+public class PartsIssuedDataModel {
+	
+	/** id **/
+	private int id;
+	
+	/** jobid **/
+	private String jobId;
+	
+	/** heading **/
+	private String heading;
+	
+	/** partid **/
+	private String partId;
+	
+	/** media **/
+	private int quantity;
+	
+	/** partid **/
+	private String type;
+	/** partid **/
+	private String issudedOn;
+	
+	/** partid **/
+	private byte[] media;
+	
+	/**
+	 * default constructor
+	 */
+	public PartsIssuedDataModel() {
+		
+	}
+
+	
+}
+

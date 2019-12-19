@@ -1,0 +1,17 @@
+package com.ayusha.job.inventory.data.constants;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Job Notes
+ */
+public class JonInventoryServiceConstants {
+	
+	/** parts returned get service name **/
+	public final static String GET_PARTS_RETURNED_SERVICE_NAME="";
+	
+	/** parts returned get service name **/
+	public final static String UPDATE_PARTS_RETURNED_SERVICE_NAME="";
+
+}

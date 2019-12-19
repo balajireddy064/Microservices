@@ -1,0 +1,146 @@
+package com.ayusha.tktmgmt.data;
+
+import com.ayusha.communication.data.models.NotificationDataModel;
+import com.ayusha.communication.data.models.NotificationMessageDataModel;
+import com.ayusha.communication.services.constants.CommunicationServicesConstants;
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class NotificationDataHandler {
+	
+	/** singleon object reference **/
+	private final static NotificationDataHandler NotificationDataHandler = new NotificationDataHandler();
+	
+	/** states data model **/
+	private NotificationDataModel notificationDataModel;
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private NotificationDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static NotificationDataHandler getInstance() {
+		return NotificationDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public NotificationDataModel getNotification(String notificationId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		NotificationDataModel notificationDataModel = null;
+		String serviceName=CommunicationServicesConstants.GET_NOTIFICATION_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", notificationId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			notificationDataModel = ((NotificationDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),NotificationDataModel.class));
+			if(notificationDataModel==null) {
+				notificationDataModel= new NotificationDataModel();
+			}
+			return notificationDataModel;
+		}catch(Exception e) {
+			notificationDataModel= new NotificationDataModel();
+			return notificationDataModel;
+		}
+	}
+	
+	
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateNotification(NotificationDataModel notificationDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=CommunicationServicesConstants.UPDATE_NOTIFICATION_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(notificationDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(notificationDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public NotificationDataModel addNotification(NotificationDataModel notificationDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=CommunicationServicesConstants.ADD_NOTIFICATION_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(notificationDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(notificationDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+		
+		return notificationDataModel;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public String sendNotification(NotificationMessageDataModel notificationMessageDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=CommunicationServicesConstants.SEND_NOTIFICATION_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(notificationMessageDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(notificationMessageDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+		
+		return "";
+	}
+}

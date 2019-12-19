@@ -1,0 +1,24 @@
+package com.ayusha.communication.services.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.ayusha.communication.services.entity.CommunicationEntity;
+import com.ayusha.communication.services.entity.CountryEntity;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the methods for the ticketmanagement persistance CRUD operations
+ *
+ */
+public interface INotificationRepository extends CrudRepository<CommunicationEntity,Integer>{
+
+	 @Query("SELECT t FROM CommunicationEntity t WHERE t.notificationId = ?1")
+	 CommunicationEntity findNotificationByNotificationId(String notificationId);
+	
+}

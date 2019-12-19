@@ -1,0 +1,38 @@
+1565432606751	Rename type 'RepairServicesApp'
+1565432619999	Rename package 'com.ayusha.repair'
+1565432636258	Rename package 'com.ayusha.repair.service'
+1565432649352	Rename package 'com.ayusha.repair.service.validations'
+1565432661680	Rename package 'com.ayusha.repair.services.controller'
+1565432674749	Rename package 'com.ayusha.repair.services.entity'
+1565432686440	Rename package 'com.ayusha.repair.services.repository'
+1565432709868	Rename type 'IRepairFaultyItemsService'
+1565432781308	Delete elements
+1565432795954	Rename type 'RepairNotesService'
+1565432801100	Delete element
+1565432867997	Delete elements
+1565432878415	Rename type 'FaultyItemsDataValidation'
+1565433040679	Delete elements
+1565433052434	Rename type 'RepairFaultyItemsServicesController'
+1565433151470	Delete elements
+1565433163696	Rename type 'FaultyItemEntity'
+1565433241858	Delete elements
+1565433253666	Rename type 'IFaultyItemRepository'
+1565433368349	Rename field 'iRepairFaultyItemsService'
+1565433391110	Rename local variable 'symptomsEntity'
+1565433600410	Rename field 'iJobNotesRepository'
+1565434673743	Copy compilation unit
+1565434849011	Copy compilation unit
+1565435000740	Copy compilation unit
+1565435127963	Copy compilation unit
+1565435246576	Copy compilation unit
+1565435488983	Copy compilation unit
+1565435520812	Rename field 'iCountryRepository'
+1565436272860	Copy compilation unit
+1565436344405	Copy compilation unit
+1565436392530	Rename field 'iStateRepository'
+1565437882693	Copy compilation unit
+1565437919543	Rename local variable 'countryDataModel'
+1565437928634	Rename local variable 'countryEntity'
+1565437968601	Rename field 'iCountryService'
+1565441266846	Copy compilation unit
+1565441345143	Rename local variable 'stateDataModel'

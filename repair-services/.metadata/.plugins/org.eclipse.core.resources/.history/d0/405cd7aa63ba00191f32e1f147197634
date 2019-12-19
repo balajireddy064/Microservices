@@ -1,0 +1,5 @@
+package com.ayusha.repair.services.entity;
+
+public class FaultyItemEntity {
+
+}

@@ -1,0 +1,85 @@
+package com.ayusha.http.client.test;
+
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.StringTokenizer;
+
+import org.springframework.core.io.Resource;
+
+import com.ayusha.communication.data.models.NotificationDataModel;
+import com.ayusha.tktmgmt.data.NotificationDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class NotificationDataPoplation {
+	
+	/** city data handler **/
+	private NotificationDataHandler notificationDataHandler = null;
+	/**
+	 * default constructor
+	 */
+	public NotificationDataPoplation() {
+		notificationDataHandler = NotificationDataHandler.getInstance();
+	}
+	
+	/**
+	 * test
+	 */
+	public void addNotification() {
+		Resource resource = null;
+		InputStream input=null;
+		File file=null;
+		DataInputStream dataInputStream = null;
+		String strLine="";
+		NotificationDataModel notificationDataModel= null;
+		StringTokenizer stringTokenizer = null;
+		try {
+			notificationDataModel = new NotificationDataModel();
+			notificationDataModel.setAppId("AYUSHA");
+			notificationDataModel.setChannelType("SMS");
+			notificationDataModel.setNotificationType("ACCOUNTCREATED");
+			notificationDataModel.setNotifiedOn("2019/12/12 10:00:00");
+			notificationDataModel.setRequestedBy("dsk");
+			notificationDataModel.setRequestedOn("2019/12/12 10:00:00");
+			notificationDataModel.setStatus("SENT");
+			notificationDataModel.setNotifiedOn("2019/12/12 10:00:00");
+			notificationDataModel.setNotificationId("123");
+			notificationDataHandler.addNotification(notificationDataModel);
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void getNotification(String notificationId) {
+		NotificationDataHandler notificationHandler = null;
+		NotificationDataModel notificationDataModel = null;
+		try {
+			
+			notificationHandler = NotificationDataHandler.getInstance();
+			notificationDataModel = notificationHandler.getNotification(notificationId);
+			System.out.println(" Job Notes returned IS ==<>>> "+notificationDataModel);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		NotificationDataPoplation serviceTester = new NotificationDataPoplation();
+		serviceTester.addNotification();
+	}
+
+}

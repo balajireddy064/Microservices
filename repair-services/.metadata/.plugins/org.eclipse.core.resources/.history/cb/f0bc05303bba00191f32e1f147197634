@@ -1,0 +1,19 @@
+package com.ayusha.repair.service;
+
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.tktmgmt.models.ServiceType;
+
+/**
+ * 
+ * @author author
+ *
+ *08-Aug-2019
+ */
+public interface IServiceTypeService {
+	
+	/** find ticket by id **/
+	public ServiceType getServiceTypeById(String id) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+		
+}

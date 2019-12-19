@@ -1,0 +1,5 @@
+package com.ayusha.job.inventory.service;
+
+public class IPartsRequestedService {
+
+}

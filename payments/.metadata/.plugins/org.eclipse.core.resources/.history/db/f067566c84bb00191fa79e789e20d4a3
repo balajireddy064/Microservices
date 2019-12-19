@@ -1,0 +1,174 @@
+package com.ayusha.payments.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.payments.data.models.CashReceiptDataModel;
+import com.ayusha.payments.data.models.EstimateDataModel;
+import com.ayusha.payments.data.models.EstimateLineItemsDataModel;
+import com.ayusha.payments.data.models.EstimateOtherChargesDataModel;
+import com.ayusha.payments.services.entity.CashReceiptEntity;
+import com.ayusha.payments.services.entity.EstimateEntity;
+import com.ayusha.payments.services.entity.EstimateLineItemEntity;
+import com.ayusha.payments.services.entity.EstimateOtherChargesEntity;
+import com.ayusha.payments.services.repository.ICashReceiptRepository;
+import com.ayusha.payments.services.repository.IEstimationLineItemsRepository;
+import com.ayusha.payments.services.repository.IEstimationOtherChargesRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class CashReceiptService implements ICashReceiptService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(CashReceiptService.class);
+	
+	/** repository **/
+	@Autowired
+	private ICashReceiptRepository iCashReceiptRepository;
+	
+	/** repository **/
+	@Autowired
+	private IEstimationLineItemsRepository iEstimationLineItemsRepository;
+	
+	/** repository **/
+	@Autowired
+	private IEstimationOtherChargesRepository iEstimationOtherChargesRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public CashReceiptService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public CashReceiptDataModel save(CashReceiptDataModel cashReceiptDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		CashReceiptEntity cashReceiptEntity = new CashReceiptEntity();
+		cashReceiptEntity.setPaidStatus(cashReceiptDataModel.getPaidStatus());
+		cashReceiptEntity.setCashReceiptId(cashReceiptDataModel.getCashReceiptId());
+		cashReceiptEntity.setGeneratedOn(cashReceiptDataModel.getGeneratedOn());
+		cashReceiptEntity.setGrandTotal(Double.parseDouble(cashReceiptDataModel.getGrandTotal()));
+		cashReceiptEntity.setJobCode(cashReceiptDataModel.getJobCode());
+		cashReceiptEntity.setRequestedBy(cashReceiptDataModel.getRequested_by());
+		
+		iCashReceiptRepository.save(cashReceiptEntity);
+		return cashReceiptDataModel;
+	}
+	
+	/** find job notes by id **/
+	public CashReceiptDataModel getCashReceiptByReceiptId(String cashReceiptId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		CashReceiptEntity cashReceiptEntity = iCashReceiptRepository.findCashReceiptByReceiptId(cashReceiptId);
+		CashReceiptDataModel cashReceiptDataModel = new CashReceiptDataModel();
+		cashReceiptDataModel.setPaidStatus(cashReceiptEntity.getPaidStatus());
+		cashReceiptDataModel.setCashReceiptId(cashReceiptEntity.getCashReceiptId());
+		cashReceiptDataModel.setGeneratedOn(cashReceiptEntity.getGeneratedOn());
+		cashReceiptDataModel.setGrandTotal(""+cashReceiptEntity.getGrandTotal());
+		cashReceiptDataModel.setJobCode(cashReceiptEntity.getJobCode());
+		cashReceiptDataModel.setRequested_by(cashReceiptEntity.getRequestedBy());
+	
+		EstimateLineItemEntity estimateLineItemEntity = iEstimationLineItemsRepository.findEstimateLineItemEntityByEstimateId(cashReceiptId);
+		
+		EstimateLineItemsDataModel estimateLineItemsDataModel = new EstimateLineItemsDataModel();
+		
+		if(estimateLineItemEntity!=null) {
+			estimateLineItemsDataModel.setAmount(estimateLineItemEntity.getAmount());
+			estimateLineItemsDataModel.setEstimateId(cashReceiptId);
+			estimateLineItemsDataModel.setItemId(estimateLineItemEntity.getItemId());
+			estimateLineItemsDataModel.setQuantity(estimateLineItemEntity.getQuantity());
+			estimateLineItemsDataModel.setAmount(estimateLineItemEntity.getAmount());
+			estimateLineItemsDataModel.setTax(estimateLineItemEntity.getTax());
+			estimateLineItemsDataModel.setType(estimateLineItemEntity.getType());
+			cashReceiptDataModel.setEstimateLineItemsDataModel(estimateLineItemsDataModel);
+		}
+		
+		EstimateOtherChargesEntity estimateOtherChargesEntity = iEstimationOtherChargesRepository.findEstimateOtherChargesEntityByEstimateId(cashReceiptId);
+		
+		EstimateOtherChargesDataModel estimateOtherChargesDataModel = new EstimateOtherChargesDataModel();
+		
+		if(estimateOtherChargesEntity!=null) {
+			estimateOtherChargesDataModel.setAmount(estimateOtherChargesEntity.getAmount());
+			estimateOtherChargesDataModel.setEstimateId(cashReceiptId);
+			estimateOtherChargesDataModel.setType(estimateOtherChargesEntity.getType());
+			cashReceiptDataModel.setEstimateOtherChargesDataModel(estimateOtherChargesDataModel);
+		}
+		
+		return cashReceiptDataModel;
+	}
+	
+	/** find job notes by id **/
+	public CashReceiptDataModel getEstimateForJobCode(String jobCode) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		CashReceiptEntity cashReceiptEntity = iCashReceiptRepository.findCashReceiptByJobCode(jobCode);
+		CashReceiptDataModel cashReceiptDataModel = new CashReceiptDataModel();
+		cashReceiptDataModel.setPaidStatus(cashReceiptEntity.getPaidStatus());
+		cashReceiptDataModel.setCashReceiptId(cashReceiptEntity.getCashReceiptId());
+		cashReceiptDataModel.setGeneratedOn(cashReceiptEntity.getGeneratedOn());
+		cashReceiptDataModel.setGrandTotal(""+cashReceiptEntity.getGrandTotal());
+		cashReceiptDataModel.setJobCode(cashReceiptEntity.getJobCode());
+		cashReceiptDataModel.setRequested_by(cashReceiptEntity.getRequestedBy());
+	
+		EstimateLineItemEntity estimateLineItemEntity = iEstimationLineItemsRepository.findEstimateLineItemEntityByEstimateId(cashReceiptEntity.getCashReceiptId());
+		
+		EstimateLineItemsDataModel estimateLineItemsDataModel = new EstimateLineItemsDataModel();
+		
+		if(estimateLineItemEntity!=null) {
+			estimateLineItemsDataModel.setAmount(estimateLineItemEntity.getAmount());
+			estimateLineItemsDataModel.setEstimateId(cashReceiptEntity.getCashReceiptId());
+			estimateLineItemsDataModel.setItemId(estimateLineItemEntity.getItemId());
+			estimateLineItemsDataModel.setQuantity(estimateLineItemEntity.getQuantity());
+			estimateLineItemsDataModel.setAmount(estimateLineItemEntity.getAmount());
+			estimateLineItemsDataModel.setTax(estimateLineItemEntity.getTax());
+			estimateLineItemsDataModel.setType(estimateLineItemEntity.getType());
+			cashReceiptDataModel.setEstimateLineItemsDataModel(estimateLineItemsDataModel);
+		}
+		
+		EstimateOtherChargesEntity estimateOtherChargesEntity = iEstimationOtherChargesRepository.findEstimateOtherChargesEntityByEstimateId(cashReceiptEntity.getCashReceiptId());
+		
+		EstimateOtherChargesDataModel estimateOtherChargesDataModel = new EstimateOtherChargesDataModel();
+		
+		if(estimateOtherChargesEntity!=null) {
+			estimateOtherChargesDataModel.setAmount(estimateOtherChargesEntity.getAmount());
+			estimateOtherChargesDataModel.setEstimateId(cashReceiptEntity.getCashReceiptId());
+			estimateOtherChargesDataModel.setType(estimateOtherChargesEntity.getType());
+			cashReceiptDataModel.setEstimateOtherChargesDataModel(estimateOtherChargesDataModel);
+		}
+		
+		return cashReceiptDataModel;
+	}
+	
+}

@@ -1,0 +1,239 @@
+package com.ayusha.repair.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.repair.services.entity.Customer;
+import com.ayusha.repair.services.entity.ServiceType;
+import com.ayusha.repair.services.entity.Ticket;
+import com.ayusha.repair.services.repository.ITicketPersistantRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.tktmgmt.models.CustomerMgmtDataModel;
+import com.ayusha.tktmgmt.models.TicketDetailsDataModel;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class RepairService implements IRepairServices{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(RepairService.class);
+	
+	/** repository **/
+	@Autowired
+	private ITicketPersistantRepository iTicketRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public RepairService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public JobNotesDataModel getNotes(Ticket ticket) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		Ticket ticket1 = new Ticket();
+		LOG.info("In adding a new Ticket -Start");
+		/**
+		 * 1. Validate the data, throw exception if validation fails.
+		 * 2. Save the ticket data into DB
+		 * 3. Send a event to the event handler
+		 */
+		ticketDataValidation.validate(ticket);
+		iTicketRepository.save(ticket);
+		LOG.info("In adding a new Ticket -End");
+		return new Ticket();
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public Ticket recordNewTickets(List<Ticket> ticket) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		Ticket ticket1 = new Ticket();
+		LOG.info("In adding a new Tickets in BULK -Start");
+		/**
+		 * 1. Validate the data, throw exception if validation fails.
+		 * 2. Save the ticket data into DB
+		 * 3. Send a event to the event handler
+		 */
+		iTicketRepository.save(ticket1);
+		LOG.info("In adding a new Tickets in BULK -End");
+		return new Ticket();
+	}
+	/**
+	 * update ticket
+	 */
+	public boolean updateTicket(Ticket ticket) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("In adding a new Ticket Update -Start");
+		ticketDataValidation.validate(ticket);
+		iTicketRepository.save(ticket);
+		LOG.info("In adding a new Ticket Update -End");
+		return true;
+	}
+	/**
+	 * update ticket
+	 */
+	public boolean updateTicket(String id, String issue, String description, String serialNumber,String warranty,String status) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("In adding a new Ticket Update -Start");
+		Ticket currentTicket = null;//getTicketById();
+		
+		if(id==null || id.trim().length()<1) {
+			LOG.info("Invalid ticket id "+id);
+			throw new InvalidServiceRequestException("Invalid ticket id");
+		}
+		
+		currentTicket = null;//getTicketById();
+		
+		if(issue!=null && issue.trim().length()>0) {
+			currentTicket.setIssue(issue);
+		}
+		if(description!=null && description.trim().length()>0) {
+			currentTicket.setDescription(description);
+		}
+		if(serialNumber!=null && serialNumber.trim().length()>0) {
+			currentTicket.setSerialnumber(serialNumber);
+		}
+		
+		if(warranty!=null && warranty.trim().length()>0) {
+			currentTicket.setServicetype(warranty);
+		}
+		
+		if(status!=null && status.trim().length()>0) {
+			currentTicket.setStatusid(status);
+		}
+		
+		ticketDataValidation.validate(currentTicket);
+		iTicketRepository.save(currentTicket);
+		LOG.info("In adding a new Ticket Update -End");
+		return true;
+	}
+	
+	/** find ticket by id **/
+	public TicketDetailsDataModel getTicketById(String id) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+		List<Ticket> lstTicket = iTicketRepository.findById(new Long(id));
+		
+		if(lstTicket==null || lstTicket.size()<1) {
+			LOG.info("No Data Found for the ticket id "+id);
+			throw new ResourceNotFoundException("No Data Found for the ticket id "+id);
+		}
+		
+		Ticket ticket = lstTicket.get(0);
+		
+		return buildTicketDataModel(ticket);
+	}
+	
+	/** find ticket by id **/
+	public Ticket getTicketDataById(String id) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+		List<Ticket> lstTicket = iTicketRepository.findById(new Long(id));
+		
+		if(lstTicket==null || lstTicket.size()<1) {
+			LOG.info("No Data Found for the ticket id "+id);
+			throw new ResourceNotFoundException("No Data Found for the ticket id "+id);
+		}
+		
+		Ticket ticket = lstTicket.get(0);
+		
+		return ticket;
+	}
+	
+	/**
+	 * populate ticket model
+	 */
+	private TicketDetailsDataModel buildTicketDataModel(Ticket ticket) throws Exception{
+		
+		TicketDetailsDataModel ticketDetailsDataModel = new TicketDetailsDataModel();
+		
+		ticketDetailsDataModel.setDescription(ticket.getDescription());
+		ticketDetailsDataModel.setIssue(ticket.getIssue());
+		ticketDetailsDataModel.setSerialNumber(ticket.getSerialnumber());
+		ticketDetailsDataModel.setStatusId(ticket.getStatusid());
+		ticketDetailsDataModel.setTktId(""+ticket.getId());
+		
+		if(ticket!=null && ticket.getCustomerid()!=null) {
+			CustomerMgmtDataModel customerDataModel = new CustomerMgmtDataModel();
+			Customer customer = iCustomerRepository.findCustomerById(ticket.getCustomerid());
+			customerDataModel.setAddr1(customer.getAddr1());
+			customerDataModel.setAddr2(customer.getAddr2());
+			customerDataModel.setAddr3(customer.getAddr3());
+			customerDataModel.setCity(customer.getCity());
+			customerDataModel.setState(customer.getState());
+			customerDataModel.setCountry(customer.getCountry());
+			customerDataModel.setPin(customer.getPin());
+			customerDataModel.setCustomerId(customer.getCustomerId());
+			customerDataModel.setEmail(customer.getEmail());
+			customerDataModel.setPhoneNumber(customer.getPhoneNumber());
+			customerDataModel.setFirstName(customer.getFirstName());
+			customerDataModel.setLastName(customer.getLastName());
+			customerDataModel.setMiddleName(customer.getMiddleName());
+			ticketDetailsDataModel.setCustomerMgmtDataModel(customerDataModel);
+			
+			/**
+			 * 1. Warranty
+			 * 2. Product
+			 */
+		}
+		
+		if(ticket!=null && ticket.getServicetype()!=null) {
+			
+			System.out.println(" NAGENDRA KUMAR "+ticket.getServicetype());
+			ServiceType serviceTypeEntity= iServiceTypeRepository.findServiceTypeById(Integer.parseInt(ticket.getServicetype()));
+			System.out.println(" NAGENDRA KUMAR "+serviceTypeEntity.getId());
+			com.ayusha.tktmgmt.models.ServiceType serviceType = new com.ayusha.tktmgmt.models.ServiceType();
+			serviceType.setId(Integer.parseInt(""+serviceTypeEntity.getId()));
+			serviceType.setType(serviceTypeEntity.getType());
+			ticketDetailsDataModel.setServiceType(serviceType); 
+		}
+		
+		return ticketDetailsDataModel;
+	}
+	
+	/** find ticket by id **/
+	public Ticket searchTicket(String statusId, String loggedBy) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+		List<Ticket> lstTicket = iTicketRepository.findTicketByStatusAndLoggedBy(statusId, loggedBy);
+		
+		if(lstTicket==null || lstTicket.size()<1) {
+			LOG.info("No Data Found for the ticket <<statusId>> "+statusId+" <<loggedBy>> "+loggedBy);
+			throw new ResourceNotFoundException("No Data Found for the ticket <<statusId>> "+statusId+" <<loggedBy>> "+loggedBy);
+		}
+		return lstTicket.get(0);
+	}
+}

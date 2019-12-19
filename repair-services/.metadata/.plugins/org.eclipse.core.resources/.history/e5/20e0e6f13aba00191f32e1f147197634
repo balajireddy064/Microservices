@@ -1,0 +1,105 @@
+package com.ayusha.repair.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.repair.services.entity.Customer;
+import com.ayusha.repair.services.repository.ICustPersistantRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.ticketmgmt.service.validations.CustomerDataValidation;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class CustomerService implements ICustomerService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(CustomerService.class);
+	
+	/** repository **/
+	@Autowired
+	private ICustPersistantRepository iCustomerRepository;
+	
+	/** validations **/
+
+	private CustomerDataValidation customerDataValidation;
+	
+	
+	/**
+	 * default constructor
+	 */
+	public CustomerService() {
+		LOG.info("Ticket Service Constructor");
+		customerDataValidation = new CustomerDataValidation();
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public Customer recordNewCustomer(Customer customer) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		LOG.info("In adding a new Customer -Start");
+		/**
+		 * 1. Validate the data, throw exception if validation fails.
+		 * 2. Save the ticket data into DB
+		 * 3. Send a event to the event handler
+		 */
+		customerDataValidation.validate(customer);
+		iCustomerRepository.save(customer);
+		LOG.info("In adding a new Customer -End");
+		return new Customer();
+	}
+	/**
+	 * update ticket
+	 */
+	public boolean updateCustomer(Customer customer) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("In adding a new Ticket Update -Start");
+		customerDataValidation.validate(customer);
+		iCustomerRepository.save(customer);
+		LOG.info("In adding a new Ticket Update -End");
+		return true;
+	}
+	
+	
+	/** find ticket by id **/
+	public Customer getCustomerById(String custId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+		Customer customer = iCustomerRepository.findCustomerById(custId);
+		
+		if(customer==null) {
+			LOG.info("No Data Found for the ticket id "+custId);
+			throw new ResourceNotFoundException("No Data Found for the ticket id "+custId);
+		}
+		return customer;
+	}
+
+}

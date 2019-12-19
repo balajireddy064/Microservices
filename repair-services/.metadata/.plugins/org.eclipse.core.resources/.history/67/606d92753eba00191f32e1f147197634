@@ -1,0 +1,90 @@
+package com.ayusha.repair.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.repair.services.repository.IJobNotesRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class RepairService implements IRepairServices{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(RepairService.class);
+	
+	/** repository **/
+	@Autowired
+	private IJobNotesRepository iJobNotesRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public RepairService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public JobNotesDataModel getJobNotes(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		JobNotesDataModel jobNotesDataModel =null;
+		LOG.info("In adding a new Ticket -Start");
+		/**
+		 * 1. Validate the data, throw exception if validation fails.
+		 * 2. Save the ticket data into DB
+		 * 3. Send a event to the event handler
+		 */
+		iJobNotesRepository.findJobNotesById(jobId);
+		LOG.info("In adding a new Ticket -End");
+		return jobNotesDataModel;
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public JobNotesDataModel updateJobNotes(JobNotesDataModel jobNotesDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		LOG.info("In adding a new Tickets in BULK -Start");
+		/**
+		 * 1. Validate the data, throw exception if validation fails.
+		 * 2. Save the ticket data into DB
+		 * 3. Send a event to the event handler
+		 */
+		iJobNotesRepository.save(jobNotesDataModel);
+		LOG.info("In adding a new Tickets in BULK -End");
+		return jobNotesDataModel;
+	}
+}

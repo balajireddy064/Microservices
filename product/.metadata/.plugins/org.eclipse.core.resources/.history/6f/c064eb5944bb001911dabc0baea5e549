@@ -1,0 +1,29 @@
+package com.ayusha.products.service;
+
+import com.ayusha.products.data.models.MakeDataModel;
+import com.ayusha.products.data.models.MakeDataModels;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the ticket service methods
+ *
+ */
+public interface IItemService {
+	
+	/** add **/
+	public MakeDataModel getMake(String id) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	
+	/** make service **/
+	public MakeDataModels getAllMake() throws DataPersistenceOperationException,InvalidServiceRequestException;
+	/** update **/
+	public MakeDataModel updateMake(MakeDataModel makeDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	/** update **/
+	public MakeDataModel add(MakeDataModel makeDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+
+
+}

@@ -1,0 +1,129 @@
+package com.ayusha.tktmgmt.data;
+
+import java.util.ArrayList;
+
+import com.ayusha.general.services.constants.GeneralServicesConstants;
+import com.ayusha.general.services.data.model.CountryDataModel;
+import com.ayusha.general.services.data.model.StateDataModel;
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class CountryDataHandler {
+	
+	/** singleon object reference **/
+	private final static CountryDataHandler repairFaultyItemsDataHandler = new CountryDataHandler();
+	
+	/** selected ticket id **/
+	private String selectedJobId="9";
+	
+	/** states data model **/
+	private StateDataModel stateDataModel;
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private CountryDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static CountryDataHandler getInstance() {
+		return repairFaultyItemsDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public CountryDataModel getCountry(String countryId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		CountryDataModel countryDataModel = null;
+		String serviceName=GeneralServicesConstants.GET_COUNTRY_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", countryId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			countryDataModel = ((CountryDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),CountryDataModel.class));
+			if(countryDataModel==null) {
+				countryDataModel= new CountryDataModel();
+				countryDataModel.setStatecode("");
+				countryDataModel.setName("");
+				countryDataModel.setLstCityDataModel(new ArrayList());
+			}
+			return countryDataModel;
+		}catch(Exception e) {
+			stateDataModel= new StateDataModel();
+			stateDataModel.setStatecode("");
+			stateDataModel.setName("");
+			stateDataModel.setLstCityDataModel(new ArrayList());
+			return stateDataModel;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateState(StateDataModel stateDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=GeneralServicesConstants.UPDATE_STATES_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(stateDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(stateDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public StateDataModel addState(StateDataModel stateDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=GeneralServicesConstants.ADD_STATES_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(stateDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(stateDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+		return stateDataModel;
+	}
+}

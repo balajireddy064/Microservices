@@ -1,0 +1,5 @@
+package com.ayusha.user.services.constants;
+
+public class UserServiceConstants {
+
+}

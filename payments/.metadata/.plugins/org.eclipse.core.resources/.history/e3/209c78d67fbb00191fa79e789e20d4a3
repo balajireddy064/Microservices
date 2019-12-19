@@ -1,0 +1,164 @@
+package com.ayusha.general.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.general.services.entity.EstimateEntity;
+import com.ayusha.general.services.entity.EstimateLineItemEntity;
+import com.ayusha.general.services.entity.EstimateOtherChargesEntity;
+import com.ayusha.general.services.repository.IEstimationLineItemsRepository;
+import com.ayusha.general.services.repository.IEstimationOtherChargesRepository;
+import com.ayusha.general.services.repository.IEstimationRepository;
+import com.ayusha.payments.data.models.EstimateDataModel;
+import com.ayusha.payments.data.models.EstimateLineItemsDataModel;
+import com.ayusha.payments.data.models.EstimateOtherChargesDataModel;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class EstimateService implements IEstimateService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(EstimateService.class);
+	
+	/** repository **/
+	@Autowired
+	private IEstimationRepository iEstimationRepository;
+	
+	/** repository **/
+	@Autowired
+	private IEstimationLineItemsRepository iEstimationLineItemsRepository;
+	
+	/** repository **/
+	@Autowired
+	private IEstimationOtherChargesRepository iEstimationOtherChargesRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public EstimateService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public EstimateDataModel save(EstimateDataModel estimateDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		EstimateEntity estimateEntity = new EstimateEntity();
+		estimateEntity.setApprovalStatus(estimateDataModel.getApprovalStatus());
+		estimateEntity.setEstimateId(estimateDataModel.getEstimateId());
+		estimateEntity.setGeneratedOn(estimateDataModel.getGeneratedOn());
+		estimateEntity.setGrandTotal(Double.parseDouble(estimateDataModel.getGrandTotal()));
+		estimateEntity.setJobCode(estimateDataModel.getJobCode());
+		estimateEntity.setRequestedBy(estimateDataModel.getRequested_by());
+		
+		iEstimationRepository.save(estimateEntity);
+		return estimateDataModel;
+	}
+	
+	/** find job notes by id **/
+	public EstimateDataModel getEstimateByEstimateId(String estimateId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		EstimateEntity estimateEntity = iEstimationRepository.findEstimateByEstimateId(estimateId);
+		EstimateDataModel estimateDataModel = new EstimateDataModel();
+		estimateDataModel.setApprovalStatus(estimateEntity.getApprovalStatus());
+		estimateDataModel.setEstimateId(estimateEntity.getEstimateId());
+		estimateDataModel.setGeneratedOn(estimateEntity.getGeneratedOn());
+		estimateDataModel.setGrandTotal(""+estimateEntity.getGrandTotal());
+		estimateDataModel.setJobCode(estimateEntity.getJobCode());
+		estimateDataModel.setRequested_by(estimateEntity.getRequestedBy());
+	
+		EstimateLineItemEntity estimateLineItemEntity = iEstimationLineItemsRepository.findEstimateLineItemEntityByEstimateId(estimateId);
+		
+		EstimateLineItemsDataModel estimateLineItemsDataModel = new EstimateLineItemsDataModel();
+		
+		estimateLineItemsDataModel.setAmount(estimateLineItemEntity.getAmount());
+		estimateLineItemsDataModel.setEstimateId(estimateId);
+		estimateLineItemsDataModel.setItemId(estimateLineItemEntity.getItemId());
+		estimateLineItemsDataModel.setQuantity(estimateLineItemEntity.getQuantity());
+		estimateLineItemsDataModel.setAmount(estimateLineItemEntity.getAmount());
+		estimateLineItemsDataModel.setTax(estimateLineItemEntity.getTax());
+		estimateLineItemsDataModel.setType(estimateLineItemEntity.getType());
+		estimateDataModel.setEstimateLineItemsDataModel(estimateLineItemsDataModel);
+		
+		EstimateOtherChargesEntity estimateOtherChargesEntity = iEstimationOtherChargesRepository.findEstimateOtherChargesEntityByEstimateId(estimateId);
+		
+		EstimateOtherChargesDataModel estimateOtherChargesDataModel = new EstimateOtherChargesDataModel();
+		
+		estimateOtherChargesDataModel.setAmount(estimateOtherChargesEntity.getAmount());
+		estimateOtherChargesDataModel.setEstimateId(estimateId);
+		estimateOtherChargesDataModel.setType(estimateOtherChargesEntity.getType());
+		estimateDataModel.setEstimateOtherChargesDataModel(estimateOtherChargesDataModel);
+		
+		return estimateDataModel;
+	}
+	
+	/** find job notes by id **/
+	public EstimateDataModel getEstimateForJobCode(String jobCode) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		EstimateEntity estimateEntity = iEstimationRepository.findEstimateByEstimateId(estimateId);
+		EstimateDataModel estimateDataModel = new EstimateDataModel();
+		estimateDataModel.setApprovalStatus(estimateEntity.getApprovalStatus());
+		estimateDataModel.setEstimateId(estimateEntity.getEstimateId());
+		estimateDataModel.setGeneratedOn(estimateEntity.getGeneratedOn());
+		estimateDataModel.setGrandTotal(""+estimateEntity.getGrandTotal());
+		estimateDataModel.setJobCode(estimateEntity.getJobCode());
+		estimateDataModel.setRequested_by(estimateEntity.getRequestedBy());
+	
+		EstimateLineItemEntity estimateLineItemEntity = iEstimationLineItemsRepository.findEstimateLineItemEntityByEstimateId(estimateId);
+		
+		EstimateLineItemsDataModel estimateLineItemsDataModel = new EstimateLineItemsDataModel();
+		
+		estimateLineItemsDataModel.setAmount(estimateLineItemEntity.getAmount());
+		estimateLineItemsDataModel.setEstimateId(estimateLineItemEntity.getEstimateId());
+		estimateLineItemsDataModel.setItemId(estimateLineItemEntity.getItemId());
+		estimateLineItemsDataModel.setQuantity(estimateLineItemEntity.getQuantity());
+		estimateLineItemsDataModel.setAmount(estimateLineItemEntity.getAmount());
+		estimateLineItemsDataModel.setTax(estimateLineItemEntity.getTax());
+		estimateLineItemsDataModel.setType(estimateLineItemEntity.getType());
+		estimateDataModel.setEstimateLineItemsDataModel(estimateLineItemsDataModel);
+		
+		EstimateOtherChargesEntity estimateOtherChargesEntity = iEstimationOtherChargesRepository.findEstimateOtherChargesEntityByEstimateId(estimateOtherChargesEntity.getEstimateId());
+		
+		EstimateOtherChargesDataModel estimateOtherChargesDataModel = new EstimateOtherChargesDataModel();
+		
+		estimateOtherChargesDataModel.setAmount(estimateOtherChargesEntity.getAmount());
+		estimateOtherChargesDataModel.setEstimateId(estimateOtherChargesEntity.getEstimateId());
+		estimateOtherChargesDataModel.setType(estimateOtherChargesEntity.getType());
+		estimateDataModel.setEstimateOtherChargesDataModel(estimateOtherChargesDataModel);
+		
+		return estimateDataModel;
+	}
+	
+}

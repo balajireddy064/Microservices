@@ -1,0 +1,156 @@
+package com.ayusha.job.data.models;
+
+import java.util.List;
+
+/**
+ * 
+ * @author author
+ * 10-Aug-2019
+ *
+ */
+public class JobsDataModel {
+
+	/** id **/
+	private int id;
+	
+	/** jobs **/
+	private List<JobDataModel> lstJobModel;
+	/**
+	 * default constructor
+	 */
+	public JobsDataModel() {
+		
+	}
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	/**
+	 * @return the jobId
+	 */
+	public String getJobId() {
+		return jobId;
+	}
+	/**
+	 * @param jobId the jobId to set
+	 */
+	public void setJobId(String jobId) {
+		this.jobId = jobId;
+	}
+	/**
+	 * @return the statusId
+	 */
+	public String getStatusId() {
+		return statusId;
+	}
+	/**
+	 * @param statusId the statusId to set
+	 */
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
+	}
+	/**
+	 * @return the statusName
+	 */
+	public String getStatusName() {
+		return statusName;
+	}
+	/**
+	 * @param statusName the statusName to set
+	 */
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+	/**
+	 * @return the startDate
+	 */
+	public String getStartDate() {
+		return startDate;
+	}
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	/**
+	 * @return the endDate
+	 */
+	public String getEndDate() {
+		return endDate;
+	}
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	/**
+	 * @return the actualStartDate
+	 */
+	public String getActualStartDate() {
+		return actualStartDate;
+	}
+	/**
+	 * @param actualStartDate the actualStartDate to set
+	 */
+	public void setActualStartDate(String actualStartDate) {
+		this.actualStartDate = actualStartDate;
+	}
+	/**
+	 * @return the actualEndDate
+	 */
+	public String getActualEndDate() {
+		return actualEndDate;
+	}
+	/**
+	 * @param actualEndDate the actualEndDate to set
+	 */
+	public void setActualEndDate(String actualEndDate) {
+		this.actualEndDate = actualEndDate;
+	}
+	/**
+	 * @return the loggedBy
+	 */
+	public String getLoggedBy() {
+		return loggedBy;
+	}
+	/**
+	 * @param loggedBy the loggedBy to set
+	 */
+	public void setLoggedBy(String loggedBy) {
+		this.loggedBy = loggedBy;
+	}
+	/**
+	 * @return the lastUpdatedOn
+	 */
+	public String getLastUpdatedOn() {
+		return lastUpdatedOn;
+	}
+	/**
+	 * @param lastUpdatedOn the lastUpdatedOn to set
+	 */
+	public void setLastUpdatedOn(String lastUpdatedOn) {
+		this.lastUpdatedOn = lastUpdatedOn;
+	}
+	/**
+	 * @return the notes
+	 */
+	public String getNotes() {
+		return notes;
+	}
+	/**
+	 * @param notes the notes to set
+	 */
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+}

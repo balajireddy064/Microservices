@@ -1,0 +1,91 @@
+package com.ayusha.repair.services.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Ticket Model
+ *
+ */
+@Entity
+@Table(name="job_symptoms")
+public class SymptomEntity {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE) 
+	@Column(name="id")
+    private long id; 
+	
+
+	/** customerid **/
+	@Column(name="symptom")
+	private String symptom="";
+	
+	/** customerid **/
+	@Column(name="description")
+	private String description="";
+	
+	
+	/**
+	 * default constructor
+	 */
+	public SymptomEntity() {
+		
+	}
+
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+	/**
+	 * @return the symptom
+	 */
+	public String getSymptom() {
+		return symptom;
+	}
+
+
+	/**
+	 * @param symptom the symptom to set
+	 */
+	public void setSymptom(String symptom) {
+		this.symptom = symptom;
+	}
+
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+}

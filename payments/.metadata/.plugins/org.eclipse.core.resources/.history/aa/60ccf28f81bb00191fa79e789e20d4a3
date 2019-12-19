@@ -1,0 +1,22 @@
+package com.ayusha.general.services.repository;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.ayusha.general.services.entity.EstimateEntity;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the methods for the ticketmanagement persistance CRUD operations
+ *
+ */
+public interface IEstimationRepository extends CrudRepository<EstimateEntity,Integer>{
+
+	 @Query("SELECT t FROM EstimateEntity t WHERE t.estimateId = ?1")
+	    EstimateEntity findEstimateByEstimateId(String estimateId);
+	 @Query("SELECT t FROM EstimateEntity t WHERE t.jobCode = ?1")
+	 EstimateEntity findEstimateByJobCode(String jobCode);
+}

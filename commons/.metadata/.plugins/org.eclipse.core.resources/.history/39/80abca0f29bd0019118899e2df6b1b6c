@@ -1,0 +1,105 @@
+package com.ayusha.http.client;
+
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+/**
+ * 
+ * @author author
+ *
+ * 07-Aug-2019
+ * Services Client 
+ */
+public class ServicesClient {
+	
+	/** singletton reference **/
+	private final static ServicesClient servicesClient = new ServicesClient();
+	
+	/** base url **/
+	public String BASE_URL="http://localhost:8092/";
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(ServicesClient.class);
+	
+	/** urls **/
+	public final static TICKET_BASE_URL="http://localhost:8091/";
+	/** urls **/
+	public final static USER_BASE_URL="http://localhost:8095/";
+	/** urls **/
+	public final static JOB_BASE_URL="http://localhost:8092/";
+		/** urls **/
+	public final static PRODUCT_BASE_URL="http://localhost:8093/";
+		/** urls **/
+	public final static COMMUNICATION_BASE_URL="http://localhost:8094/";
+		/** urls **/
+	public final static PAYMENTS_BASE_URL="http://localhost:8096/";
+		/** urls **/
+	public final static JOB_INVENTORY_BASE_URL="http://localhost:8097/";
+		/** urls **/
+	public final static GENERAL_SERVICES_BASE_URL="http://localhost:8098/";
+	
+	/**
+	 * default constructor
+	 */
+	public ServicesClient() {
+		
+	}
+	
+	/**
+	 * returns singleton object reference
+	 */
+	public void setBaseURL(String baseURL) {
+		this.BASE_URL = baseURL;
+	}
+	
+	/**
+	 * execute get method
+	 */
+	public ServiceResponse execute(String serviceName,String payLoad,String method) throws ServicesDataException{
+		HttpClient httpClient = new HttpClient();
+		ServiceResponse serviceResponse = null;
+		if(method==null) {
+			ServicesDataException servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}else if(method.equalsIgnoreCase(HTTPConstants.GET)) {
+			serviceResponse= httpClient.executeGET(BASE_URL+serviceName);
+			System.out.println(" CHECK THIS    "+serviceResponse.getResponseCode());
+			if(serviceResponse==null) {
+				
+			}else if(serviceResponse!=null && (!serviceResponse.getResponseCode().equalsIgnoreCase(HTTPConstants.HTTP_OK) || !serviceResponse.getResponseCode().equalsIgnoreCase(HTTPConstants.HTTP_SUCCESS))) {
+				System.out.println(" CHECK THIS    "+serviceResponse);
+				ServicesDataException servicesDataException = new ServicesDataException();
+				servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+				servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+				throw servicesDataException;
+			}
+			
+			
+			return serviceResponse;
+		}else if(method.equalsIgnoreCase(HTTPConstants.POST)) {
+			LOG.info(" Post Service "+(BASE_URL+serviceName)+":::::"+payLoad);
+			serviceResponse =  httpClient.executePOST(BASE_URL+serviceName,payLoad);
+			System.out.println(" SERVICE RESSSSSSSSSSSSSSSSSSSSSS "+serviceResponse.getResponseCode());
+			if(serviceResponse==null) {
+				
+			}else if(serviceResponse!=null && (!serviceResponse.getResponseCode().equalsIgnoreCase(HTTPConstants.HTTP_SUCCESS))) {
+				ServicesDataException servicesDataException = new ServicesDataException();
+				servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+				servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+				throw servicesDataException;
+			}
+			return serviceResponse;
+		}else {
+			ServicesDataException servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+
+}

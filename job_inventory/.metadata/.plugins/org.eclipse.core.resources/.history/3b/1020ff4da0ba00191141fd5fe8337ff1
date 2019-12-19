@@ -1,0 +1,101 @@
+package com.ayusha.tktmgmt.data;
+
+import java.util.ArrayList;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.job.inventory.data.constants.JonInventoryServiceConstants;
+import com.ayusha.job.inventory.data.models.PartsIssuedDataModel;
+import com.ayusha.job.inventory.data.models.PartsRequestedDataModel;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class PartsIssuedItemsDataHandler {
+	
+	/** singleon object reference **/
+	private final static PartsIssuedItemsDataHandler partsIssuedItemsDataHandler= new PartsIssuedItemsDataHandler();
+	
+	/** selected ticket id **/
+	private String selectedJobId="9";
+	
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private PartsIssuedItemsDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static PartsIssuedItemsDataHandler getInstance() {
+		return partsIssuedItemsDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public PartsIssuedDataModel getPartsIssued(String jobId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		PartsIssuedDataModel partsIssuedDataModel = null;
+		String serviceName   = JonInventoryServiceConstants.GET_PARTS_RETURNED_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", jobId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			partsIssuedDataModel = ((PartsIssuedDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),PartsIssuedDataModel.class));
+			if(partsIssuedDataModel==null) {
+				partsIssuedDataModel= new PartsIssuedDataModel();
+				partsIssuedDataModel.setJobId(jobId);
+				partsIssuedDataModel.setLstPartsIssuedDataModel(new ArrayList());
+			}
+			return partsIssuedDataModel;
+		}catch(Exception e) {
+			partsIssuedDataModel= new PartsIssuedDataModel();
+			partsIssuedDataModel.setJobId(jobId);
+			partsIssuedDataModel.setLstPartsIssuedDataModel(new ArrayList());
+			return partsIssuedDataModel;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void updatePartsRequested(PartsRequestedDataModel partsRequestedDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=JonInventoryServiceConstants.UPDATE_PARTS_RETURNED_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(partsRequestedDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(partsRequestedDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+}

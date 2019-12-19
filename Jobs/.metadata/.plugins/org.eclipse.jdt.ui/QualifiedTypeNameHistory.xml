@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.ayusha.job.services.repository.IJobRepository"/>
+<fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
+<fullyQualifiedTypeName name="com.ayusha.job.services.constants.JobServiceConstants"/>
+<fullyQualifiedTypeName name="com.ayusha.job.data.models.JobDataModel"/>
+<fullyQualifiedTypeName name="com.ayusha.json.utils.JSONConverter"/>
+<fullyQualifiedTypeName name="com.ayusha.http.client.ServicesClient"/>
+<fullyQualifiedTypeName name="com.ayusha.user.data.models.LocationsUsersDataModel"/>
+<fullyQualifiedTypeName name="com.custom.logger.manager.LogManager"/>
+<fullyQualifiedTypeName name="com.custom.logger.logging.Logger"/>
+<fullyQualifiedTypeName name="com.ayusha.job.user.data.handler.UserLocationsDataHandler"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.ayusha.job.services.repository.IJobTicketRepository"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="com.ayusha.job.services.entity.JobTicketEntity"/>
+</qualifiedTypeNameHistroy>

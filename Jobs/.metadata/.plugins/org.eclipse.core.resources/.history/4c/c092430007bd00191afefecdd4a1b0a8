@@ -1,0 +1,300 @@
+package com.ayusha.job.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.job.data.models.JobDataModel;
+import com.ayusha.job.data.models.JobsDataModel;
+import com.ayusha.job.services.entity.JobEntity;
+import com.ayusha.job.services.entity.JobTicketEntity;
+import com.ayusha.job.services.repository.IJobRepository;
+import com.ayusha.job.services.repository.IJobTicketRepository;
+import com.ayusha.job.user.data.handler.UserLocationsDataHandler;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+import com.ayusha.ticket.data.models.CustomerDataModel;
+import com.ayusha.ticket.data.models.TicketDataModel;
+import com.ayusha.user.data.models.LocationsUsersDataModel;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class JobService implements IJobService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(JobService.class);
+	
+	/** repository **/
+	@Autowired
+	private IJobRepository iJobRepositiory;
+	/** repository **/
+	@Autowired
+	private IJobTicketRepository iJobTicketRepository;
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel save(JobDataModel jobDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		JobEntity jobEntity = new JobEntity();
+		
+		populateJobEntity(jobEntity, jobDataModel);
+		
+		iJobRepositiory.save(jobEntity);
+		return jobDataModel;
+	}
+		
+	/** find job notes by id **/
+	public JobDataModel getJob(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		LOG.info(" LOG FOUND ================ "+jobId);
+		JobEntity jobEntity = new JobEntity();
+		JobDataModel jobDataModel = new JobDataModel();
+		jobEntity = iJobRepositiory.findJobByJobId(jobId);
+		LOG.info(" LOG FOUND ===========<<jobEntity>>==== "+jobEntity);
+		populateJobDataModel(jobDataModel, jobEntity);
+		return jobDataModel;
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel update(JobDataModel jobDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		JobEntity jobEntity = new JobEntity();
+		
+		populateJobEntity(jobEntity,jobDataModel);
+		
+		iJobRepositiory.save(jobEntity);
+		return jobDataModel;
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel updateJobStatus(String jobId ,String statusId) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		JobEntity jobEntity = new JobEntity();
+		JobDataModel jobDataModel = new JobDataModel();
+		jobEntity = iJobRepositiory.findJobByJobId(jobId);
+		
+		if(statusId!=null && statusId.trim().length()>0) {
+			jobEntity.setStatusId(statusId);
+			iJobRepositiory.save(jobEntity);
+			populateJobDataModel(jobDataModel, jobEntity);
+		}
+		return jobDataModel;
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel updateJobNotes(String jobId,String notes) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		JobEntity jobEntity = new JobEntity();
+		JobDataModel jobDataModel = new JobDataModel();
+		jobEntity = iJobRepositiory.findJobByJobId(jobId);
+		
+		if(notes!=null && notes.trim().length()>0) {
+			jobEntity.setNotes(notes);
+			iJobRepositiory.save(jobEntity);
+			populateJobDataModel(jobDataModel, jobEntity);
+		}
+		return jobDataModel;
+	}
+	
+	/**
+	 * populate data
+	 */
+	private void populateJobEntity(JobEntity jobEntity, JobDataModel jobDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		jobEntity.setActualStartDate(jobDataModel.getActualStartDate());
+		jobEntity.setActualEndDate(jobDataModel.getActualEndDate());
+		jobEntity.setEndDate(jobDataModel.getEndDate());
+		jobEntity.setJobId(jobDataModel.getJobId());
+		jobEntity.setLastUpdatedOn(jobDataModel.getLastUpdatedOn());
+		jobEntity.setLoggedBy(jobDataModel.getLoggedBy());
+		jobEntity.setNotes(jobDataModel.getNotes());
+		jobEntity.setStartDate(jobDataModel.getStartDate());
+		jobEntity.setStatusId(jobDataModel.getStatusId());
+		jobEntity.setUserId(jobDataModel.getUserId());
+	}
+	
+	/**
+	 * populate data
+	 */
+	private void populateJobDataModel(JobDataModel jobDataModel,JobEntity jobEntity) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		jobDataModel.setActualStartDate(jobEntity.getActualStartDate());
+		jobDataModel.setActualEndDate(jobEntity.getActualEndDate());
+		jobDataModel.setEndDate(jobEntity.getEndDate());
+		jobDataModel.setJobId(jobEntity.getJobId());
+		jobDataModel.setLastUpdatedOn(jobEntity.getLastUpdatedOn());
+		jobDataModel.setLoggedBy(jobEntity.getLoggedBy());
+		jobDataModel.setNotes(jobEntity.getNotes());
+		jobDataModel.setStartDate(jobEntity.getStartDate());
+		jobDataModel.setStatusId(jobEntity.getStatusId());
+		jobDataModel.setUserId(jobEntity.getUserId());
+	}
+	
+	/** find job notes by id **/
+	public JobsDataModel getJobsFor(String userId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+		JobsDataModel jobsDataModel = new JobsDataModel();
+		List<JobEntity> lstJobEntity = iJobRepositiory.findJobByUserId(userId);
+		List<JobDataModel> lstJobDataModel = new ArrayList();
+		JobEntity jobEntity = null;
+		JobDataModel jobDataModel = null;
+		int size =0;
+		
+		size = lstJobEntity.size();
+		
+		for(int index=0; index<size; index++) {
+			jobEntity = lstJobEntity.get(index);
+			jobDataModel = new JobDataModel();
+			populateJobDataModel(jobDataModel, jobEntity);
+			lstJobDataModel.add(jobDataModel);
+		}
+		jobsDataModel.setLstJobModel(lstJobDataModel);
+		return jobsDataModel;
+	}
+	
+	/** find job notes by id **/
+	public JobsDataModel getJobsFor(String userId,String statusId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		JobsDataModel jobsDataModel = new JobsDataModel();
+		List<JobEntity> lstJobEntity = iJobRepositiory.findJobByUserIdAndStatus(userId, statusId);
+		List<JobDataModel> lstJobDataModel = new ArrayList();
+		JobEntity jobEntity = null;
+		JobDataModel jobDataModel = null;
+		int size =0;
+		
+		size = lstJobEntity.size();
+		
+		for(int index=0; index<size; index++) {
+			jobEntity = lstJobEntity.get(index);
+			jobDataModel = new JobDataModel();
+			populateJobDataModel(jobDataModel, jobEntity);
+			lstJobDataModel.add(jobDataModel);
+		}
+		jobsDataModel.setLstJobModel(lstJobDataModel);
+		return jobsDataModel;
+	}
+	
+	
+	/**
+	 * get ticket
+	 */
+	public JobTicketEntity findJobId(String ticketId) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		return iJobTicketRepository.findJobByTicketId(ticketId);
+	}
+	
+	/**
+	 * assign job
+	 */
+	public void assignJob(TicketDataModel ticketDataModel)  throws ServicesDataException,DataPersistenceOperationException,InvalidServiceRequestException{
+		LOG.info("entered JobAssigning - start");
+		UserLocationsDataHandler userLocationsDataHandler = null;
+		LocationsUsersDataModel locationsUsersDataModel = null;
+		List<String> lstUserIds = null;
+		/**
+		 * 1. Get List of Jobs for user and status
+		 * 2. For each Job fetch the Job details
+		 * 3. For eacj Job feych the ticket ID
+		 * 4. For each Ticket find the ticket details
+		 */
+		
+		JobTicketEntity jobTicketEntity = null;
+		JobEntity jobEntity = null;
+		JobDataModel jobDataModel = buildJob("", "");
+		LOG.info(" TICKET ID IS "+ticketDataModel.getTktId());
+		if(ticketDataModel!=null && ticketDataModel.getTktId()!=null) {
+			CustomerDataModel customerDataModel = ticketDataModel.getCustomerDataModel();
+			LOG.info("TICKET MESSAGE IS <<CUSTOMER MODEL>> "+customerDataModel.getPin());
+			
+			if(customerDataModel!=null && customerDataModel.getPin()!=null) {
+				LOG.info(" PIN NUMBER IS "+customerDataModel.getPin());
+				userLocationsDataHandler = UserLocationsDataHandler.getInstance();
+				locationsUsersDataModel = userLocationsDataHandler.getUsersForLocationId(customerDataModel.getPin());
+				
+				if(locationsUsersDataModel!=null && locationsUsersDataModel.getLstUsers()!=null) {
+					lstUserIds = locationsUsersDataModel.getLstUsers();
+					
+					if(lstUserIds!=null && lstUserIds.size()==1) {
+						jobTicketEntity = findJobId(ticketDataModel.getTktId());
+						if(jobTicketEntity!=null && jobTicketEntity.getJobId()!=null) {
+							jobEntity = iJobRepositiory.findJobByJobId(jobTicketEntity.getJobId());
+							jobEntity.setUserId(lstUserIds.get(0));
+							iJobRepositiory.save(jobEntity);
+						}else {
+							jobDataModel.setUserId(lstUserIds.get(0));
+							save(jobDataModel);
+							jobTicketEntity = new JobTicketEntity();
+							jobTicketEntity.setJobId(jobDataModel.getJobId());
+							jobTicketEntity.setTicketId(ticketDataModel.getTktId());
+							iJobTicketRepository.save(jobTicketEntity);
+						}
+					}else if(lstUserIds!=null && lstUserIds.size()>1) {
+						jobTicketEntity = findJobId(ticketDataModel.getTktId());
+						if(jobTicketEntity!=null && jobTicketEntity.getJobId()!=null) {
+							jobEntity = iJobRepositiory.findJobByJobId(jobTicketEntity.getJobId());
+							jobEntity.setUserId(lstUserIds.get(0));
+							iJobRepositiory.save(jobEntity);
+						}else {
+							jobDataModel.setUserId(lstUserIds.get(0));
+							save(jobDataModel);
+							jobTicketEntity = new JobTicketEntity();
+							jobTicketEntity.setJobId(jobDataModel.getJobId());
+							jobTicketEntity.setTicketId(ticketDataModel.getTktId());
+							iJobTicketRepository.save(jobTicketEntity);
+						}
+					}
+				}
+				LOG.info(" << locationsUsersDataModel >> "+locationsUsersDataModel.getLstUsers());
+			}
+		}
+	}
+	
+	/**
+	 * build job
+	 */
+	private JobDataModel buildJob(String userId,String loggedBy) {
+		JobDataModel jobDataModel = new JobDataModel();
+		jobDataModel.setActualEndDate("2019/12/12 11:00:00");
+		jobDataModel.setActualStartDate("2019/12/12 11:00:00");
+		jobDataModel.setEndDate("2019/12/12 11:00:00");
+		jobDataModel.setStartDate("2019/12/12 11:00:00");
+		jobDataModel.setJobId("JOB#"+System.currentTimeMillis());
+		jobDataModel.setLastUpdatedOn("2019/12/12 11:00:00");
+		jobDataModel.setLoggedBy(loggedBy);
+		jobDataModel.setNotes("Ticket Opened");
+		jobDataModel.setStatusId("OPEN");
+		jobDataModel.setUserId(userId);
+		return jobDataModel;
+	}
+
+}

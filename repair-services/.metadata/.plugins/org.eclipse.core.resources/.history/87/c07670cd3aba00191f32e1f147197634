@@ -1,0 +1,228 @@
+package com.ayusha.ticketmgmt.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Ticket Model
+ *
+ */
+@Entity
+@Table(name="ticket")
+public class Ticket {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE) 
+	@Column(name="id")
+    private long id; 
+	
+	/** tikectid **/
+	@Column(name="issue")
+	private String issue="";
+	/** tikectid **/
+	@Column(name="description")
+	private String description="";
+	/** tikectid **/
+	@Column(name="status_id")
+	private String statusid="";
+	/** tikectid **/
+	@Column(name="product_id")
+	private String productid="";
+	/** tikectid **/
+	@Column(name="loggedon")
+	private String loggedon="";
+	/** tikectid **/
+	@Column(name="customer_id")
+	private String customerid="";
+	/** tikectid **/
+	@Column(name="logged_by")
+	private String loggedby="";
+	
+	/** tikectid **/
+	@Column(name="last_update_on")
+	private String lastupdatedon="";
+	/** tikectid **/
+	@Column(name="serial_no")
+	private String serialnumber="";
+	/** tikectid **/
+	@Column(name="warranty_condition")
+	private String servicetype="";
+	
+	
+	/**
+	 * default constructor
+	 */
+	public Ticket() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+
+	/**
+	 * @return the issue
+	 */
+	public String getIssue() {
+		return issue;
+	}
+
+	/**
+	 * @param issue the issue to set
+	 */
+	public void setIssue(String issue) {
+		this.issue = issue;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the statusid
+	 */
+	public String getStatusid() {
+		return statusid;
+	}
+
+	/**
+	 * @param statusid the statusid to set
+	 */
+	public void setStatusid(String statusid) {
+		this.statusid = statusid;
+	}
+
+	/**
+	 * @return the productid
+	 */
+	public String getProductid() {
+		return productid;
+	}
+
+	/**
+	 * @param productid the productid to set
+	 */
+	public void setProductid(String productid) {
+		this.productid = productid;
+	}
+
+	/**
+	 * @return the loggedon
+	 */
+	public String getLoggedon() {
+		return loggedon;
+	}
+
+	/**
+	 * @param loggedon the loggedon to set
+	 */
+	public void setLoggedon(String loggedon) {
+		this.loggedon = loggedon;
+	}
+
+	/**
+	 * @return the customerid
+	 */
+	public String getCustomerid() {
+		return customerid;
+	}
+
+	/**
+	 * @param customerid the customerid to set
+	 */
+	public void setCustomerid(String customerid) {
+		this.customerid = customerid;
+	}
+
+	/**
+	 * @return the loggedby
+	 */
+	public String getLoggedby() {
+		return loggedby;
+	}
+
+	/**
+	 * @param loggedby the loggedby to set
+	 */
+	public void setLoggedby(String loggedby) {
+		this.loggedby = loggedby;
+	}
+
+	/**
+	 * @return the lastupdatedon
+	 */
+	public String getLastupdatedon() {
+		return lastupdatedon;
+	}
+
+	/**
+	 * @param lastupdatedon the lastupdatedon to set
+	 */
+	public void setLastupdatedon(String lastupdatedon) {
+		this.lastupdatedon = lastupdatedon;
+	}
+
+	/**
+	 * @return the serialnumber
+	 */
+	public String getSerialnumber() {
+		return serialnumber;
+	}
+
+	/**
+	 * @param serialnumber the serialnumber to set
+	 */
+	public void setSerialnumber(String serialnumber) {
+		this.serialnumber = serialnumber;
+	}
+
+	/**
+	 * @return the servicetype
+	 */
+	public String getServicetype() {
+		return servicetype;
+	}
+
+	/**
+	 * @param servicetype the servicetype to set
+	 */
+	public void setServicetype(String servicetype) {
+		this.servicetype = servicetype;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+}

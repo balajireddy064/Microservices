@@ -1,0 +1,112 @@
+package com.ayusha.http.client.test;
+
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.StringTokenizer;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.ayusha.ticket.data.models.CustomerDataModel;
+import com.ayusha.ticket.data.models.ProductDataModel;
+import com.ayusha.ticket.data.models.ServiceTypeDataModel;
+import com.ayusha.ticket.data.models.TicketDataModel;
+import com.ayusha.tktmgmt.data.UserDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class ServiceTester {
+	
+	/** ticket Data Handler **/
+	private UserDataHandler ticketDataHandler = UserDataHandler.getInstance();
+	
+	/**
+	 * default constructor
+	 */
+	public ServiceTester() {
+		
+	}
+	
+	/**
+	 * add ticket
+	 */
+	private void addTicket() {
+		Resource resource = null;
+		InputStream input=null;
+		File file=null;
+		DataInputStream dataInputStream = null;
+		String strLine="";
+		TicketDataModel ticketDataModel= new TicketDataModel();
+		CustomerDataModel customerDataModel = new CustomerDataModel();
+		ProductDataModel productDataModel = new ProductDataModel();
+		ServiceTypeDataModel serviceTypeDataModel = new ServiceTypeDataModel();
+		
+		StringTokenizer stringTokenizer = null;
+		try {
+			resource = new ClassPathResource("tickets.txt", this.getClass().getClassLoader());
+			input = resource.getInputStream();
+			dataInputStream = new DataInputStream(input);
+			ticketDataModel.setCustomerDataModel(customerDataModel);
+			ticketDataModel.setServiceTypeDataModel(serviceTypeDataModel);
+			ticketDataModel.setProductModel(productDataModel);
+			while((strLine=dataInputStream.readLine())!=null) {
+				stringTokenizer = new StringTokenizer(strLine,",");
+				ticketDataModel.setIssue(stringTokenizer.nextToken());
+				ticketDataModel.setDescription(stringTokenizer.nextToken());
+				productDataModel.setCategory(stringTokenizer.nextToken());
+				productDataModel.setSubCategory(stringTokenizer.nextToken());
+				productDataModel.setMake(stringTokenizer.nextToken());
+				productDataModel.setModel(stringTokenizer.nextToken());
+				serviceTypeDataModel.setCode(stringTokenizer.nextToken());
+				ticketDataModel.setLoggedBy(stringTokenizer.nextToken());
+				ticketDataModel.setSerialNumber(stringTokenizer.nextToken());
+				customerDataModel.setFirstName(stringTokenizer.nextToken());
+				customerDataModel.setMiddleName(stringTokenizer.nextToken());
+				customerDataModel.setLastName(stringTokenizer.nextToken());
+				customerDataModel.setAddr1(stringTokenizer.nextToken());
+				customerDataModel.setAddr2(stringTokenizer.nextToken());
+				customerDataModel.setAddr3(stringTokenizer.nextToken());
+				
+				customerDataModel.setCity(stringTokenizer.nextToken());
+				customerDataModel.setState(stringTokenizer.nextToken());
+				customerDataModel.setCountry(stringTokenizer.nextToken());
+				customerDataModel.setPin(stringTokenizer.nextToken());
+				customerDataModel.setEmail(stringTokenizer.nextToken());
+				customerDataModel.setPhoneNumber(stringTokenizer.nextToken());	
+				ticketDataHandler.addTicket(ticketDataModel);
+			}
+		}catch(Exception e) {
+			
+		}
+	}
+	/**
+	 * test
+	 */
+	public void getTicket() {
+		UserDataHandler ticketDataHandler = null;
+		TicketDataModel ticketDataModel = null;
+		try {
+			//http://localhost:8092/tktmgmt/get?id="+i
+			ticketDataHandler = UserDataHandler.getInstance();
+			ticketDataModel = ticketDataHandler.getTicket("TICKET-1");
+			System.out.println(" TICKET ISSUE IS "+ticketDataModel.getIssue());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		ServiceTester serviceTester = new ServiceTester();
+		serviceTester.getTicket();
+	}
+
+}

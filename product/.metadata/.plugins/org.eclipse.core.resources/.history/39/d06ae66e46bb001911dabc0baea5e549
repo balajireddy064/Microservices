@@ -1,0 +1,34 @@
+package com.ayusha.products.service;
+
+import java.util.List;
+
+import com.ayusha.products.data.models.ItemDataModel;
+import com.ayusha.products.data.models.MakeDataModel;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the ticket service methods
+ *
+ */
+public interface IItemService {
+	
+	/** add **/
+	public ItemDataModel getItem(String itemId) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	
+	/** add **/
+	public List<ItemDataModel> getItemByProductId(String productId,String type) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	
+	/** make service **/
+	public List<ItemDataModel> getItemsFor(String productId) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	/** update **/
+	public ItemDataModel updateItem(ItemDataModel itemDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	/** update **/
+	public ItemDataModel add(ItemDataModel itemDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+
+
+}

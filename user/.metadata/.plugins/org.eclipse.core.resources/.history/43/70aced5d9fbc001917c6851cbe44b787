@@ -1,0 +1,238 @@
+package com.ayusha.user.data.models;
+
+
+/**
+ * 
+ * @author author
+ *
+ */
+public class UserDataModel {
+	
+	/** id **/
+	private String id;
+	
+	/** user id */
+	private String userId;
+	
+	/** customerid **/
+	
+	private String customerId="";
+	
+	/** customerid **/
+	
+	private String firstName="";
+
+	/** customerid **/
+
+	private String lastName="";
+	/** customerid **/
+	
+	private String middleName="";
+	
+	/** customerid **/
+	
+	private String addressId="";
+	
+	/** customerid **/
+
+	private String addressType="";
+	
+	/** customerid **/
+	
+	private String contactId="";
+	
+	/** customerid **/
+	
+	private String email="";
+	
+	/** customerid **/
+	
+	private String phoneNumber="";
+	
+	/** customerid **/
+	
+	private String createdOn="2019/12/12 10:00:00";
+	
+	/** customerid **/
+	
+	private String addr1="";
+	/** customerid **/
+	
+	private String addr2="";
+	/** customerid **/
+	
+	private String addr3="";
+	
+	/** customerid **/
+	
+	private String city="";
+	
+	/** customerid **/
+	
+	private String country="";
+	/** customerid **/
+
+	private String pin="";
+	/** customerid **/
+	
+	private String state="";
+	
+	/**
+	 * default constructor
+	 */
+	public UserDataModel() {
+		
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public String getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(String addressId) {
+		this.addressId = addressId;
+	}
+
+	public String getAddressType() {
+		return addressType;
+	}
+
+	public void setAddressType(String addressType) {
+		this.addressType = addressType;
+	}
+
+	public String getContactId() {
+		return contactId;
+	}
+
+	public void setContactId(String contactId) {
+		this.contactId = contactId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public String getAddr1() {
+		return addr1;
+	}
+
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
+	}
+
+	public String getAddr2() {
+		return addr2;
+	}
+
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
+	}
+
+	public String getAddr3() {
+		return addr3;
+	}
+
+	public void setAddr3(String addr3) {
+		this.addr3 = addr3;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getPin() {
+		return pin;
+	}
+
+	public void setPin(String pin) {
+		this.pin = pin;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+}

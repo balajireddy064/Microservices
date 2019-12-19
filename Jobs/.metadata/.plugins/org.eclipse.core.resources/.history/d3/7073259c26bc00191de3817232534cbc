@@ -1,0 +1,102 @@
+package com.ayusha.http.client.test;
+
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.StringTokenizer;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.ayusha.general.services.data.model.CitiesDataModel;
+import com.ayusha.general.services.data.model.CityDataModel;
+import com.ayusha.job.data.handlers.JobDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class CityDataPoplation {
+	
+	/** city data handler **/
+	private JobDataHandler cityDataHandler = null;
+	/**
+	 * default constructor
+	 */
+	public CityDataPoplation() {
+		cityDataHandler = JobDataHandler.getInstance();
+	}
+	
+	/**
+	 * test
+	 */
+	public void addCities() {
+		Resource resource = null;
+		InputStream input=null;
+		File file=null;
+		DataInputStream dataInputStream = null;
+		String strLine="";
+		CityDataModel cityDataModel= null;
+		StringTokenizer stringTokenizer = null;
+		try {
+			resource = new ClassPathResource("cities.txt", this.getClass().getClassLoader());
+			input = resource.getInputStream();
+			dataInputStream = new DataInputStream(input);
+			while((strLine=dataInputStream.readLine())!=null) {
+				stringTokenizer = new StringTokenizer(strLine,",");
+				cityDataModel = new CityDataModel();
+				cityDataModel.setStateCode(stringTokenizer.nextToken());
+				cityDataModel.setCityCode(stringTokenizer.nextToken());
+				cityDataModel.setName(stringTokenizer.nextToken());
+				cityDataHandler.addCity(cityDataModel);
+			}
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void getCity(String cityId) {
+		JobDataHandler cityDataHandler = null;
+		CityDataModel cityDataModel = null;
+		try {
+			
+			cityDataHandler = JobDataHandler.getInstance();
+			cityDataModel = cityDataHandler.getCity(cityId);
+			System.out.println(" Job Notes returned IS ==<>>> "+cityDataModel);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void getCities(String stateId) {
+		JobDataHandler cityDataHandler = null;
+		CitiesDataModel cityDataModel = null;
+		try {
+			
+			cityDataHandler = JobDataHandler.getInstance();
+			cityDataModel = cityDataHandler.getCities(stateId);
+			System.out.println(" Job Notes returned IS ==<>>> "+cityDataModel);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		JobDataPoplation serviceTester = new JobDataPoplation();
+		serviceTester.getCities("KARNATAKA");
+	}
+
+}

@@ -1,0 +1,33 @@
+package com.ayusha.products.service.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import com.ayusha.products.service.entity.CategoryEntity;
+import com.ayusha.products.service.entity.SubCategoryEntity;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the methods for the ticketmanagement persistance CRUD operations
+ *
+ */
+@Component
+@Repository
+public interface ISubCategoryRepository extends CrudRepository<SubCategoryEntity,Integer>{
+
+	 @Query("SELECT t FROM SubCategoryEntity t WHERE t.id = ?1")
+	    SubCategoryEntity findSubCategoryById(String id);
+	 @Query("SELECT t FROM SubCategoryEntity t WHERE t.subcategoryId = ?1")
+	    SubCategoryEntity findSubCategoryBySubCatId(String id);
+	 @Query("select t FROM SubCategoryEntity t")
+	    List<SubCategoryEntity> findAllSubCategories();
+	 @Query("select t FROM SubCategoryEntity t where t.category_id=?1")
+	    List<SubCategoryEntity> findAllSubCategoriesForCategory(String category_id);
+}

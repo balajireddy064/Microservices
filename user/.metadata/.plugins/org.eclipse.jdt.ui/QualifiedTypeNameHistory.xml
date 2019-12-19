@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.ayusha.user.data.models.UserLocationsDataModel"/>
+<fullyQualifiedTypeName name="com.ayusha.user.services.entity.UserLocationEntity"/>
+<fullyQualifiedTypeName name="com.ayusha.user.services.repository.IUserRepository"/>
+<fullyQualifiedTypeName name="com.ayusha.user.services.repository.IUserLocationRepository"/>
+<fullyQualifiedTypeName name="com.ayusha.user.services.constants.UserServiceConstants"/>
+<fullyQualifiedTypeName name="java.util.StringTokenizer"/>
+<fullyQualifiedTypeName name="org.jboss.logging.Param"/>
+<fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.ayusha.user.data.models.LocationsUsersDataModel"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="com.ayusha.json.utils.JSONConverter"/>
+</qualifiedTypeNameHistroy>

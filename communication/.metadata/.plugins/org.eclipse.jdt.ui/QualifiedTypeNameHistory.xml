@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.ayusha.communication.services.entity.CommunicationEntity"/>
+<fullyQualifiedTypeName name="com.ayusha.communication.service.validations.NotificationDataValidation"/>
+<fullyQualifiedTypeName name="com.ayusha.communication.services.repository.INotificationRepository"/>
+<fullyQualifiedTypeName name="com.ayusha.communication.services.constants.CommunicationServicesConstants"/>
+<fullyQualifiedTypeName name="com.ayusha.communication.data.models.NotificationDataModel"/>
+<fullyQualifiedTypeName name="javax.mail.Message"/>
+<fullyQualifiedTypeName name="com.twilio.rest.api.v2010.account.Message"/>
+<fullyQualifiedTypeName name="com.ayusha.communication.core.CommunicationHandler"/>
+<fullyQualifiedTypeName name="com.ayusha.communication.data.models.NotificationMessageDataModel"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+</qualifiedTypeNameHistroy>

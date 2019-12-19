@@ -1,0 +1,5 @@
+package com.ayusha.user.data.models;
+
+public class UserLocationsDataModel {
+
+}

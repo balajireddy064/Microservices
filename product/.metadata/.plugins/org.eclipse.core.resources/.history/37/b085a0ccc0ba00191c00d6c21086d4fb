@@ -1,0 +1,47 @@
+package com.ayusha.http.client.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.repair.services.data.models.SymptomDataModel;
+import com.ayusha.repair.services.data.models.SymptomsDataModel;
+import com.ayusha.tktmgmt.data.RepairNotesDataHandler;
+import com.ayusha.tktmgmt.data.RepairSymptomsDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class CategoryDataPopulator {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public CategoryDataPopulator() {
+		
+	}
+	
+	/**
+	 * populate data
+	 */
+	public void populateCategoryData() {
+		try {
+			
+		}catch(Exception e) {
+			
+		}
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		CategoryDataPopulator serviceTester = new CategoryDataPopulator();
+		serviceTester.testJobNotesFind();
+	}
+
+}

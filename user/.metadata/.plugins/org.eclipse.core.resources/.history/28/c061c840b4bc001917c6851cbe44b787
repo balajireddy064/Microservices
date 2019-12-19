@@ -1,0 +1,137 @@
+package com.ayusha.tktmgmt.data;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+import com.ayusha.ticket.data.models.TicketDataModel;
+import com.ayusha.ticket.services.constants.TicketServiceConstants;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class TicketDataHandler {
+	
+	/** singleon object reference **/
+	private final static TicketDataHandler ticketDataHandler = new TicketDataHandler();
+	
+	/** selected ticket id **/
+	private String selectedTicketId="15";
+	
+	/** selected ticket **/
+	private TicketDataModel ticketDetailsDataModel = null;
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private TicketDataHandler() {
+		
+	}
+	
+	/**
+	 * @return the ticketDetailsDataModel
+	 */
+	public TicketDataModel getTicketDetailsDataModel() {
+		return ticketDetailsDataModel;
+	}
+
+
+
+	/**
+	 * @param ticketDetailsDataModel the ticketDetailsDataModel to set
+	 */
+	public void setTicketDetailsDataModel(TicketDataModel ticketDetailsDataModel) {
+		this.ticketDetailsDataModel = ticketDetailsDataModel;
+	}
+
+
+
+	/**
+	 * @return the selectedTicketId
+	 */
+	public String getSelectedTicketId() {
+		return selectedTicketId;
+	}
+
+
+
+
+	/**
+	 * @param selectedTicketId the selectedTicketId to set
+	 */
+	public void setSelectedTicketId(String selectedTicketId) {
+		this.selectedTicketId = selectedTicketId;
+	}
+
+
+
+
+	/**
+	 * returns singleton reference
+	 */
+	public static TicketDataHandler getInstance() {
+		return ticketDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public TicketDataModel getTicket(String tktId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String tktService=TicketServiceConstants.GET_TICKET_DETAILS_SERVICE_NAME;
+		
+		tktService = tktService.replace("$1", tktId);
+		
+		servicesClient = ServicesClient.getInstance();
+		
+		serviceResponse = servicesClient.execute(tktService,"",HTTPConstants.GET);
+		
+		try {
+			return ((TicketDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),TicketDataModel.class));
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public TicketDataModel addTicket(TicketDataModel ticketDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String tktService=TicketServiceConstants.ADD_TICKET_DETAILS_SERVICE_NAME;
+		
+		
+		
+		servicesClient = ServicesClient.getInstance();
+		
+		serviceResponse = servicesClient.execute(tktService,JSONConverter.convertPOJOToString(ticketDataModel),HTTPConstants.POST);
+		
+		try {
+			serviceResponse = servicesClient.execute(tktService,JSONConverter.convertPOJOToString(ticketDataModel),HTTPConstants.POST);
+			
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+		return ticketDataModel;
+	}
+}

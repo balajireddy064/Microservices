@@ -1,0 +1,106 @@
+package com.ayusha.user.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.user.data.models.UserDataModel;
+import com.ayusha.user.services.data.model.CitiesDataModel;
+import com.ayusha.user.services.data.model.CityDataModel;
+import com.ayusha.user.services.entity.UserEntity;
+import com.ayusha.user.services.repository.IUserRepository;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class UserService implements IUserService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(UserService.class);
+	
+	/** repository **/
+	@Autowired
+	private IUserRepository iCityRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public UserService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public UserDataModel save(UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+	}
+		
+	/**
+	 * add ticket
+	 */
+	public UserDataModel update(UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+	}
+	
+	/** find job notes by id **/
+	public UserDataModel getUserByUserId(String userId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+	}
+	
+	/** find job notes by id **/
+	public UserDataModel getUserByEmailId(String emailId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+	}
+
+	/** find job notes by id **/
+	public UserDataModel getUserByPhoneNumber(String phoneNumber) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+	}
+	
+	/** find job notes by id **/
+	public UserDataModel getUserByFisrtName(String firstName) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+	}
+	
+	/** find job notes by id **/
+	public List<UserDataModel> getAllUsers() throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+	}
+	
+	
+}

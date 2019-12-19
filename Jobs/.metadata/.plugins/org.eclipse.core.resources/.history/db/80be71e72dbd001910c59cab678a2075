@@ -1,0 +1,166 @@
+package com.ayusha.job.data.handlers;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.job.data.models.JobDataModel;
+import com.ayusha.job.data.models.JobsDataModel;
+import com.ayusha.job.services.constants.JobServiceConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class JobDataHandler {
+	
+	/** states data model **/
+	private JobDataModel jobDataModel;
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	public JobDataHandler() {
+		
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public JobDataModel getJobForJobId(String jobId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		JobDataModel jobDataModel = null;
+		String serviceName=JobServiceConstants.GET_JOBS_FOR_JOBID_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", jobId);
+	
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			jobDataModel = ((JobDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),JobDataModel.class));
+			if(jobDataModel==null) {
+				jobDataModel= new JobDataModel();
+			}
+			return jobDataModel;
+		}catch(Exception e) {
+			jobDataModel= new JobDataModel();
+			return jobDataModel;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public JobDataModel getJobsForUserId(String userId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		JobsDataModel jobsDataModel = null;
+		String serviceName=JobServiceConstants.GET_JOBS_FOR_USERID_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", userId);
+		
+		
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			jobsDataModel = ((JobsDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),JobsDataModel.class));
+			if(jobsDataModel==null) {
+				jobsDataModel= new JobsDataModel();
+			}
+			return jobDataModel;
+		}catch(Exception e) {
+			jobsDataModel= new JobsDataModel();
+			return jobDataModel;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public JobDataModel getJobsForUserIdAndStatusId(String userId,String statusId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		JobsDataModel jobsDataModel = null;
+		String serviceName=JobServiceConstants.GET_JOBS_FOR_STATUS_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", userId);
+		serviceName = serviceName.replace("$2", statusId);
+		
+	
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			jobsDataModel = ((JobsDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),JobsDataModel.class));
+			if(jobsDataModel==null) {
+				jobsDataModel= new JobsDataModel();
+			}
+			return jobDataModel;
+		}catch(Exception e) {
+			jobsDataModel= new JobsDataModel();
+			return jobDataModel;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public JobDataModel getJobsForTicketId(String ticketId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		JobsDataModel jobsDataModel = null;
+		String serviceName=JobServiceConstants.GET_JOBS_FOR_TICKETID_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", ticketId);
+	
+	
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			jobsDataModel = ((JobsDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),JobsDataModel.class));
+			if(jobsDataModel==null) {
+				jobsDataModel= new JobsDataModel();
+			}
+			return jobDataModel;
+		}catch(Exception e) {
+			jobsDataModel= new JobsDataModel();
+			return jobDataModel;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public JobDataModel createJob(JobDataModel jobDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String serviceName=JobServiceConstants.ADD_JOB_SERVICE_NAME;
+		
+	
+		try {
+			serviceResponse = servicesClient.execute(serviceName,JSONConverter.convertPOJOToString(jobDataModel),HTTPConstants.POST);
+			jobDataModel = ((JobDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),JobDataModel.class));
+			if(jobDataModel==null) {
+				jobDataModel= new JobDataModel();
+			}
+			return jobDataModel;
+		}catch(Exception e) {
+			jobDataModel= new JobDataModel();
+			return jobDataModel;
+		}
+	}
+}

@@ -1,0 +1,112 @@
+package com.ayusha.job.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.job.data.models.JobDataModel;
+import com.ayusha.job.services.entity.JobEntity;
+import com.ayusha.job.services.repository.IJobRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class JobService implements IJobService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(JobService.class);
+	
+	/** repository **/
+	@Autowired
+	private IJobRepository iJobRepositiory;
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel save(JobDataModel jobDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		JobEntity jobEntity = new JobEntity();
+		
+		jobEntity.setActualStartDate(jobDataModel.getActualStartDate());
+		jobEntity.setActualEndDate(jobDataModel.getActualEndDate());
+		jobEntity.setEndDate(jobDataModel.getEndDate());
+		jobEntity.setJobId(jobDataModel.getJobId());
+		jobEntity.setLastUpdatedOn(jobDataModel.getLastUpdatedOn());
+		jobEntity.setLoggedBy(jobDataModel.getLoggedBy());
+		jobEntity.setNotes(jobDataModel.getNotes());
+		jobEntity.setStartDate(jobDataModel.getStartDate());
+		jobEntity.setStatusId(jobDataModel.getStatusId());
+		
+		iJobRepositiory.save(jobEntity);
+		return jobDataModel;
+	}
+		
+	/** find job notes by id **/
+	public JobDataModel getJob(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+		JobEntity jobEntity = new JobEntity();
+		JobDataModel jobDataModel = new JobDataModel();
+		jobEntity = iJobRepositiory.findJobByJobId(jobId);
+		
+		jobDataModel.setActualStartDate(jobEntity.getActualStartDate());
+		jobDataModel.setActualEndDate(jobEntity.getActualEndDate());
+		jobDataModel.setEndDate(jobEntity.getEndDate());
+		jobDataModel.setJobId(jobEntity.getJobId());
+		jobDataModel.setLastUpdatedOn(jobEntity.getLastUpdatedOn());
+		jobDataModel.setLoggedBy(jobEntity.getLoggedBy());
+		jobDataModel.setNotes(jobEntity.getNotes());
+		jobDataModel.setStartDate(jobEntity.getStartDate());
+		jobDataModel.setStatusId(jobEntity.getStatusId());
+		return jobDataModel;
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel update(JobDataModel jobDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel updateJobStatus(String jobId ,String statusId) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel updateJobNotes(String jobId,String notes) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+	}
+	
+}

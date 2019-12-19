@@ -1,0 +1,233 @@
+package com.ayusha.tktmgmt.data;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+import com.ayusha.user.data.models.LocationsUsersDataModel;
+import com.ayusha.user.data.models.UserDataModel;
+import com.ayusha.user.data.models.UsersDataModel;
+import com.ayusha.user.services.constants.UserServiceConstants;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class UserDataHandler {
+	
+	/** singleon object reference **/
+	private final static UserDataHandler userDataHandler = new UserDataHandler();
+	
+	/** selected ticket id **/
+	private String selectedTicketId="15";
+	
+	/** selected ticket **/
+	private UserDataModel userDataModel = null;
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private UserDataHandler() {
+		
+	}
+	
+	
+
+	/**
+	 * returns singleton reference
+	 */
+	public static UserDataHandler getInstance() {
+		return userDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public UserDataModel getUserUserId(String userId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String tktService=UserServiceConstants.GET_USER_DETAILS_BY_USERID_SERVICE_NAME;
+		
+		tktService = tktService.replace("$1", userId);
+		
+		servicesClient = ServicesClient.getInstance();
+		
+		serviceResponse = servicesClient.execute(tktService,"",HTTPConstants.GET);
+		
+		try {
+			return ((UserDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),UserDataModel.class));
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public LocationsUsersDataModel getLocationUsers(String locationId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String tktService=UserServiceConstants.GET_LOCATIONS_USER_DETAILS_BY_USERNAME_SERVICE_NAME;
+		
+		tktService = tktService.replace("$1", locationId);
+		
+		servicesClient = ServicesClient.getInstance();
+		
+		serviceResponse = servicesClient.execute(tktService,"",HTTPConstants.GET);
+		
+		try {
+			return ((LocationsUsersDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),LocationsUsersDataModel.class));
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public UserDataModel getUserEmailId(String emailId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String tktService=UserServiceConstants.GET_USER_DETAILS_BY_USEREMAIL_SERVICE_NAME;
+		
+		tktService = tktService.replace("$1", emailId);
+		
+		servicesClient = ServicesClient.getInstance();
+		
+		serviceResponse = servicesClient.execute(tktService,"",HTTPConstants.GET);
+		
+		try {
+			return ((UserDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),UserDataModel.class));
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public UserDataModel getUserPhone(String phoneNumber) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String tktService=UserServiceConstants.GET_USER_DETAILS_BY_USEREPHONE_SERVICE_NAME;
+		
+		tktService = tktService.replace("$1", phoneNumber);
+		
+		servicesClient = ServicesClient.getInstance();
+		
+		serviceResponse = servicesClient.execute(tktService,"",HTTPConstants.GET);
+		
+		try {
+			return ((UserDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),UserDataModel.class));
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public UserDataModel getUserByName(String name) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String tktService=UserServiceConstants.GET_USER_DETAILS_BY_USERNAME_SERVICE_NAME;
+		
+		tktService = tktService.replace("$1", name);
+		
+		servicesClient = ServicesClient.getInstance();
+		
+		serviceResponse = servicesClient.execute(tktService,"",HTTPConstants.GET);
+		
+		try {
+			return ((UserDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),UserDataModel.class));
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public UsersDataModel getAllUsers() throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String tktService=UserServiceConstants.GET_USERS_SERVICE_NAME;
+		
+		
+		
+		servicesClient = ServicesClient.getInstance();
+		
+		serviceResponse = servicesClient.execute(tktService,"",HTTPConstants.GET);
+		
+		try {
+			return ((UsersDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),UsersDataModel.class));
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public UserDataModel addUser(UserDataModel userDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String tktService=UserServiceConstants.ADD_USER_DETAILS_SERVICE_NAME;
+		
+		
+		
+		servicesClient = ServicesClient.getInstance();
+		
+		serviceResponse = servicesClient.execute(tktService,JSONConverter.convertPOJOToString(userDataModel),HTTPConstants.POST);
+		
+		try {
+			serviceResponse = servicesClient.execute(tktService,JSONConverter.convertPOJOToString(userDataModel),HTTPConstants.POST);
+			
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+		return userDataModel;
+	}
+}

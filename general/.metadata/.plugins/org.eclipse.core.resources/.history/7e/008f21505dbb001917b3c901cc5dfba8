@@ -1,0 +1,64 @@
+package com.ayusha.http.client.test;
+
+import com.ayusha.general.services.data.model.StateDataModel;
+import com.ayusha.tktmgmt.data.StateDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class CountryDataPoplation {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public CountryDataPoplation() {
+		
+	}
+	
+	/**
+	 * test
+	 */
+	public void addStates() {
+		StateDataHandler stateDataHandler = null;
+		StateDataModel stateDataModel = null;
+		try {
+			
+			stateDataHandler = stateDataHandler.getInstance();
+			stateDataModel = stateDataHandler.addState(stateDataModel);
+			System.out.println(" Job Notes returned IS ==<>>> "+stateDataModel);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void getState(String stateId) {
+		StateDataHandler stateDataHandler = null;
+		StateDataModel stateDataModel = null;
+		try {
+			
+			stateDataHandler = stateDataHandler.getInstance();
+			stateDataModel = stateDataHandler.getState(stateId);
+			System.out.println(" Job Notes returned IS ==<>>> "+stateDataModel);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		CountryDataPoplation serviceTester = new CountryDataPoplation();
+		serviceTester.addStates();
+	}
+
+}

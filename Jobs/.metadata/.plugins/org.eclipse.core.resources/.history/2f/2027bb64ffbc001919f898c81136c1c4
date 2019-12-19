@@ -1,0 +1,94 @@
+package com.ayusha.job.user.data.handler;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.job.data.models.JobDataModel;
+import com.ayusha.job.services.constants.JobServiceConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+import com.ayusha.user.data.models.LocationsUsersDataModel;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class UserLocationsDataHandler {
+	
+	/** singleon object reference **/
+	private final static UserLocationsDataHandler userLocationsDataHandler = new UserLocationsDataHandler();
+	
+	/** Logger **/
+	private Logger LOG = LogManager.getLogger(UserLocationsDataHandler.class);
+	
+	/** states data model **/
+	private JobDataModel jobDataModel;
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private UserLocationsDataHandler() {
+		ServicesClient.BASE_URL = "http://localhost:8095/";//users/user/location/locationid=$1"
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static UserLocationsDataHandler getInstance() {
+		return userLocationsDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public LocationsUsersDataModel getUsersForLocationId(String locationId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		LocationsUsersDataModel locationsUsersDataModel = null;
+		String serviceName=JobServiceConstants.GET_USERS_FOR_LOCATIONID_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", locationId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			locationsUsersDataModel = ((LocationsUsersDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),LocationsUsersDataModel.class));
+			
+			LOG.info("<<USER LOCATIONS "+locationsUsersDataModel);
+			if(locationsUsersDataModel!=null && locationsUsersDataModel.getLstUsers()!=null) {
+				LOG.info("<<USER LOCATIONS "+locationsUsersDataModel.getLstUsers());
+				
+				if(locationsUsersDataModel.getLstUsers().size()==1) {
+					
+				}
+			}
+			return locationsUsersDataModel;
+		}catch(Exception e) {
+			jobDataModel= new JobDataModel();
+			return locationsUsersDataModel;
+		}
+	}
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		try {
+			UserLocationsDataHandler userLocationsDataHandler = UserLocationsDataHandler.getInstance();
+			userLocationsDataHandler.getUsersForLocationId("560038");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,137 @@
+package com.ayusha.payments.data.models;
+
+/**
+ * 
+ * @author author
+ * 10-Aug-2019
+ *
+ */
+public class EstimateOtherChargesDataModel {
+	
+	/** id **/
+	private int id;
+	
+	/** cash receipt id **/
+	private String estimateId;
+	
+	/** cash receipt id **/
+	private String itemId;
+	
+
+	/** cash receipt id **/
+	private String type;
+	
+	/** cash receipt id **/
+	private double amount;
+	
+	/** cash receipt id **/
+	private double tax;
+	
+	/** cash receipt id **/
+	private double quantity;
+	
+	/**
+	 * default constructor
+	 */
+	public EstimateOtherChargesDataModel() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the estimateId
+	 */
+	public String getEstimateId() {
+		return estimateId;
+	}
+
+	/**
+	 * @param estimateId the estimateId to set
+	 */
+	public void setEstimateId(String estimateId) {
+		this.estimateId = estimateId;
+	}
+
+	/**
+	 * @return the itemId
+	 */
+	public String getItemId() {
+		return itemId;
+	}
+
+	/**
+	 * @param itemId the itemId to set
+	 */
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return the amount
+	 */
+	public double getAmount() {
+		return amount;
+	}
+
+	/**
+	 * @param amount the amount to set
+	 */
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	/**
+	 * @return the tax
+	 */
+	public double getTax() {
+		return tax;
+	}
+
+	/**
+	 * @param tax the tax to set
+	 */
+	public void setTax(double tax) {
+		this.tax = tax;
+	}
+
+	/**
+	 * @return the quantity
+	 */
+	public double getQuantity() {
+		return quantity;
+	}
+
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+}

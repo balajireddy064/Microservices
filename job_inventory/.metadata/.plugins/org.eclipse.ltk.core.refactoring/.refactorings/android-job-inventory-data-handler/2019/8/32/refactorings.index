@@ -1,0 +1,14 @@
+1565347240445	Rename compilation unit 'RepairFaultyItemsDataHandler.java'
+1565347389110	Rename local variable 'faultyItemsDataModel'
+1565347477204	Delete elements
+1565347482282	Delete elements
+1565347515117	Rename local variable 'faultyItemsDataModel'
+1565348029941	Rename type 'NotesServiceTester'
+1565348087308	Rename local variable 'jobNotesDataModel'
+1565353092820	Rename local variable 'partsReturnedDataModel'
+1565353578351	Rename local variable 'partsReturnedDataModel'
+1565353650084	Rename local variable 'partReturnedDataModel'
+1565353871654	Rename local variable 'partsRequestedItemsDataHandler'
+1565353890107	Rename local variable 'partsRequestedDataModel'
+1565354175918	Rename local variable 'lstPartsRequestedDataModel'
+1565354195164	Rename local variable 'partRequestedDataModel'

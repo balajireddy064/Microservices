@@ -1,0 +1,5 @@
+package com.ayusha.job.inventory.services.entity;
+
+public class PartRequestedEntity {
+
+}

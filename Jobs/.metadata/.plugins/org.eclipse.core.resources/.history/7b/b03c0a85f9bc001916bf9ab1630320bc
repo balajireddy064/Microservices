@@ -1,0 +1,31 @@
+package com.ayusha.job.services.constants;
+
+/**
+ * 
+ * @author author
+ * 10-Aug-2019
+ *
+ */
+public class JobServiceConstants {
+	
+	/** Job Notes Get Service Name **/
+	public final static String GET_JOB_SERVICE_NAME="jobs/job/find?jobId=$1";
+	/** Job Notes Get Service Name **/
+	public final static String GET_JOBS_FOR_USERID_SERVICE_NAME="jobs/job/findJobsForUserId?userid=$1";
+	/** Job Notes Get Service Name **/
+	public final static String GET_JOBS_FOR_STATUS_SERVICE_NAME="jobs/job/findJobsForStatusId?userid=$1&statusid=$2";
+	/** Job Notes Get Service Name **/
+	public final static String GET_JOBS_FOR_TICKETID_SERVICE_NAME="jobs/job/findJobForTicketId?ticketid=$1";
+	
+	/** Job Notes Get Service Name **/
+	public final static String GET_JOBS_FOR_JOBID_SERVICE_NAME="jobs/job/findJobForJobId?jobid=$1";
+	
+	
+	
+	/** Job Notes Get Service Name **/
+	public final static String UPDATE_JOB_SERVICE_NAME="jobs/job/update/";
+	
+	/** Job Notes Get Service Name **/
+	public final static String ADD_JOB_SERVICE_NAME="jobs/job/add";
+
+}

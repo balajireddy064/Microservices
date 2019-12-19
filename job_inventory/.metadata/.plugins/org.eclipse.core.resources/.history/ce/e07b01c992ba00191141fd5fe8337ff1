@@ -1,0 +1,102 @@
+package com.ayusha.tktmgmt.data;
+
+import java.util.ArrayList;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.job.inventory.data.models.PartsReturnedDataModel;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.repair.services.constants.RepairServiceConstants;
+import com.ayusha.repair.services.data.models.FaultyItemsDataModel;
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class PartsReturnedItemsDataHandler {
+	
+	/** singleon object reference **/
+	private final static PartsReturnedItemsDataHandler partsReturnedItemsDataHandler= new PartsReturnedItemsDataHandler();
+	
+	/** selected ticket id **/
+	private String selectedJobId="9";
+	
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private PartsReturnedItemsDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static PartsReturnedItemsDataHandler getInstance() {
+		return partsReturnedItemsDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public PartsReturnedDataModel getFaultyItems(String jobId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		PartsReturnedDataModel partsReturnedDataModel = null;
+		String serviceName   = RepairServiceConstants.GET_REPAIR_FAULTY_ITEMS_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", jobId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			partsReturnedDataModel = ((PartsReturnedDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),PartsReturnedDataModel.class));
+			if(partsReturnedDataModel==null) {
+				partsReturnedDataModel= new PartsReturnedDataModel();
+				partsReturnedDataModel.setJobId(jobId);
+				partsReturnedDataModel.setLstPartsReturnedDataModel(new ArrayList());
+			}
+			return partsReturnedDataModel;
+		}catch(Exception e) {
+			partsReturnedDataModel= new PartsReturnedDataModel();
+			partsReturnedDataModel.setJobId(jobId);
+			partsReturnedDataModel.setLstPartsReturnedDataModel(new ArrayList());
+			return partsReturnedDataModel;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateRepairSymptoms(FaultyItemsDataModel faultyItemsDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=RepairServiceConstants.UPDATE_REPAIR_FAULTY_ITEMS_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(faultyItemsDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(faultyItemsDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+}

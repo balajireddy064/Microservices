@@ -1,0 +1,16 @@
+package com.ayusha.products.services.constants;
+
+/**
+ * 
+ * @author author
+ * 08-Aug-2019
+ * Repai services constants
+ *
+ */
+public class ModelServiceConstants {
+
+	/** Job Notes Get Service Name **/
+	public final static String GET_CATEGORY_SERVICE_NAME="products/category/find?id=$1";
+	/** Job Notes Get Service Name **/
+	public final static String UPDATE_CATEGORY_SERVICE_NAME="products/category/update/";
+}

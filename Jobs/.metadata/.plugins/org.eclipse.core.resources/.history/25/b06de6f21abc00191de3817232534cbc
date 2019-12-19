@@ -1,0 +1,5 @@
+package com.ayusha.job.data.models;
+
+public class JobDataModel {
+
+}

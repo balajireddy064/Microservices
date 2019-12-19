@@ -1,0 +1,99 @@
+package com.ayusha.tktmgmt.data;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.repair.services.constants.RepairServiceConstants;
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class RepairNotesDataHandler {
+	
+	/** singleon object reference **/
+	private final static RepairNotesDataHandler repairDataHandler = new RepairNotesDataHandler();
+	
+	/** selected ticket id **/
+	private String selectedJobId="15";
+	
+	/** selected ticket **/
+	private JobNotesDataModel jobNotesDataModel = null;
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private RepairNotesDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static RepairNotesDataHandler getInstance() {
+		return repairDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public JobNotesDataModel getJobNotes(String jobId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String jobNotesServiceName=RepairServiceConstants.GET_JOB_NOTES_SERVICE_NAME;
+		
+		jobNotesServiceName = jobNotesServiceName.replace("$1", jobId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(jobNotesServiceName,"",HTTPConstants.GET);
+			jobNotesDataModel = ((JobNotesDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),JobNotesDataModel.class));
+			if(jobNotesDataModel==null) {
+				jobNotesDataModel= new JobNotesDataModel();
+			}
+			return jobNotesDataModel;
+		}catch(Exception e) {
+			return new JobNotesDataModel();
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateJobNotes(String notes) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateJobNotesServiceName=RepairServiceConstants.UPDATE_JOB_NOTES_SERVICE_NAME;
+		
+		if(jobNotesDataModel==null) {
+			jobNotesDataModel = new JobNotesDataModel();
+		}
+		
+		jobNotesDataModel.setJobId(selectedJobId);
+		jobNotesDataModel.setNotes(notes);
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(updateJobNotesServiceName,JSONConverter.convertPOJOToString(jobNotesDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+}

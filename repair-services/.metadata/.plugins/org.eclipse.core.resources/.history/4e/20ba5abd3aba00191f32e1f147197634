@@ -1,0 +1,184 @@
+package com.ayusha.ticketmgmt.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.services.common.exceptions.ServiceRequestProcessor;
+import com.ayusha.ticketmgmt.entity.Ticket;
+import com.ayusha.ticketmgmt.service.TicketService;
+import com.ayusha.tktmgmt.models.TicketDetailsDataModel;
+import com.ayusha.tktmgmt.models.UpdateTicketDetailsDataModel;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+/**
+* This is the service api interface.
+* This controls the access to the services
+*
+* @author  author1r
+* @version 1.0
+* @since   2019-05-03 
+*/
+@RestController
+@RequestMapping("/tktmgmt")
+public class TicketManagementController extends ServiceRequestProcessor{
+	
+	/** Logger **/
+	private static Logger LOG = LogManager.getLogger(TicketManagementController.class);
+	
+	/** ticket Services **/
+	@Autowired
+	private TicketService ticketService=null;
+	
+	/**
+	 * ping service
+	 */
+	@RequestMapping("/test")
+	public String ping() {
+		LOG.info("Successfully triggered Ping operation");
+		return "Successfully deployed  Services";
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	@PostMapping("/add")
+	public String addTicket(@RequestBody String requestBody,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("Successfully triggered add ticket operation");
+		String strRequestBody = preProcess(requestBody,httpServletRequest,httpServletResponse);
+		
+		strRequestBody = postProcess(requestBody,httpServletRequest,httpServletResponse);
+		Ticket ticket = (Ticket)JSONConverter.convertStringToPOJO(requestBody, Ticket.class);
+		ticketService.recordNewTicket(ticket);
+		LOG.info("Successfully completed add ticket operation "+ticket.getCustomerid());
+		return "Successfully Added Ticket-REPO";
+	}
+	/**
+	 * 
+	 * 
+	 */
+	@PostMapping("/update")
+	public String updateTicket(@RequestBody String requestBody,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		
+		LOG.info("Successfully triggered update ticket operation");
+		String strRequestBody = preProcess(requestBody,httpServletRequest,httpServletResponse);
+		
+		strRequestBody = postProcess(requestBody,httpServletRequest,httpServletResponse);
+		Ticket ticket = (Ticket)JSONConverter.convertStringToPOJO(requestBody, Ticket.class);
+		ticketService.updateTicket(ticket);
+		LOG.info("Successfully completed add ticket operation "+ticket.getCustomerid());
+		
+		/**
+		 * 1. Process the request, ex: unzipping, decoding and decrypting
+		 * 2. Perform the Re service operation
+		 * 3. Perform the response building
+		 * 4. Perform post processing like encrypting, zipping and encoding
+		 * 5. Service data validation will be done at service level
+		 * 6. Service operations will be done at service level not here.
+		 */
+		
+		LOG.info("Successfully completed update ticket operation");
+		return "Successfully Added Ticket-REPO";
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	@PostMapping("/updatesub")
+	public String updateTicketSub(@RequestBody String requestBody,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		
+		LOG.info("Successfully triggered update ticket operation");
+		UpdateTicketDetailsDataModel updateTicketDetailsDataModel=null;
+		String strRequestBody = preProcess(requestBody,httpServletRequest,httpServletResponse);
+		
+		Ticket ticket=null;
+		
+		updateTicketDetailsDataModel = (UpdateTicketDetailsDataModel)JSONConverter.convertStringToPOJO(requestBody, UpdateTicketDetailsDataModel.class);
+		ticket = ticketService.getTicketDataById(updateTicketDetailsDataModel.getTktId());
+		if(updateTicketDetailsDataModel!=null && updateTicketDetailsDataModel.getType().equalsIgnoreCase("TKTDETAILS")) {
+			
+			ticket.setDescription(updateTicketDetailsDataModel.getDescription());
+			ticket.setIssue(updateTicketDetailsDataModel.getIssue());
+		}else if(updateTicketDetailsDataModel!=null && updateTicketDetailsDataModel.getType().equalsIgnoreCase("SERVICETYPE")) {
+			ticket.setServicetype(updateTicketDetailsDataModel.getSeviceTypeId());
+		}
+		LOG.info(" TICKET IS HERE << TICKET >>"+JSONConverter.convertPOJOToString(ticket));
+		ticketService.updateTicket(ticket);
+		LOG.info("Successfully completed add ticket operation "+ticket.getCustomerid());
+		
+		/**
+		 * 1. Process the request, ex: unzipping, decoding and decrypting
+		 * 2. Perform the Re service operation
+		 * 3. Perform the response building
+		 * 4. Perform post processing like encrypting, zipping and encoding
+		 * 5. Service data validation will be done at service level
+		 * 6. Service operations will be done at service level not here.
+		 */
+		
+		LOG.info("Successfully completed update ticket operation");
+		strRequestBody = postProcess(requestBody,httpServletRequest,httpServletResponse);
+		return "Successfully Added Ticket-REPO";
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	@GetMapping("/update1")
+	public String updateTicket() throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		ticketService.recordNewTicket(new Ticket());
+		
+		/**
+		 * 1. Process the request, ex: unzipping, decoding and decrypting
+		 * 2. Perform the Re service operation
+		 * 3. Perform the response building
+		 * 4. Perform post processing like encrypting, zipping and encoding
+		 * 5. Service data validation will be done at service level
+		 * 6. Service operations will be done at service level not here.
+		 */
+		LOG.info("Successfully triggered update ticket operation");
+		LOG.info("Successfully completed update ticket operation");
+		return "Successfully Added Ticket-REPO";
+	}
+	/**
+	 * 
+	 * 
+	 */
+	@GetMapping("/get")
+	public String getTicket(@RequestParam("id") String id) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		
+		LOG.info("Successfully triggered get ticket details operation");
+		TicketDetailsDataModel ticketDetailsDataModel = ticketService.getTicketById(id);
+		String serviceResponse = JSONConverter.convertPOJOToString(ticketDetailsDataModel);
+		
+		//CustomerDataHandler customerDataHandler = new CustomerDataHandler();
+		
+		LOG.info("Successfully completed get ticket detailsoperation");
+		return serviceResponse;
+	}
+	/**
+	 * 
+	 * 
+	 */
+	@GetMapping("/search")
+	public String search(@RequestParam("statusid") String statusid,@RequestParam("loggedby") String loggedby) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		Ticket ticket = ticketService.searchTicket(statusid, loggedby);
+		LOG.info("Successfully triggered search ticket details operation");
+		LOG.info("Successfully completed search ticket detailsoperation");
+		return JSONConverter.convertPOJOToString(ticket);
+	}
+}

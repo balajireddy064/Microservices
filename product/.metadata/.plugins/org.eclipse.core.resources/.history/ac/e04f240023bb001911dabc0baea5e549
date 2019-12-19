@@ -1,0 +1,109 @@
+package com.ayusha.products.service.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+/**
+ * 
+ * @author author
+ * 09-Aug-2019
+ * Product and supported service types
+ *
+ */
+@Entity
+@Table(name="model")
+public class ModelEntity {
+	
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE) 
+	@Column(name="id")
+    private long id; 
+	
+
+	/** customerid **/
+	@Column(name="name")
+	private String name="";
+	
+	/** customerid **/
+	@Column(name="description")
+	private String description="";
+	
+	/** customerid **/
+	@Column(name="model_id")
+	private String model_id="";
+	
+	/**
+	 * default constructor
+	 */
+	public ModelEntity() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @return the model_id
+	 */
+	public String getModel_id() {
+		return model_id;
+	}
+
+	/**
+	 * @param model_id the model_id to set
+	 */
+	public void setModel_id(String model_id) {
+		this.model_id = model_id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+}

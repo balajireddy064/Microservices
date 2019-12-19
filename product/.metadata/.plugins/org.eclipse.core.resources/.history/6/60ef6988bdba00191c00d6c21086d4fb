@@ -1,0 +1,5 @@
+package com.ayusha.products.services.constants;
+
+public class MakeServiceConstants {
+
+}

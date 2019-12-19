@@ -1,0 +1,167 @@
+package com.ayusha.tktmgmt.data;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.products.data.models.ItemDataModel;
+import com.ayusha.products.data.models.ItemsDataModel;
+import com.ayusha.products.data.models.MakeDataModel;
+import com.ayusha.products.data.models.MakeDataModels;
+import com.ayusha.products.services.constants.ItemServiceConstants;
+import com.ayusha.products.services.constants.MakeServiceConstants;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class ItemDataHandler {
+	
+	/** singleon object reference **/
+	private final static ItemDataHandler makeDataHandler = new ItemDataHandler();
+	
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private ItemDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static ItemDataHandler getInstance() {
+		return makeDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public ItemDataModel getItem(String itemId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		ItemDataModel itemDataModel = null;
+		String serviceName=ItemServiceConstants.GET_ITEM_BY_ITEMID_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", itemId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			itemDataModel = ((ItemDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),ItemDataModel.class));
+			return itemDataModel;
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw new ServicesDataException();
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public ItemsDataModel getItemsForProductId(String productId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		ItemsDataModel itemsDataModel = null;
+		String serviceName=ItemServiceConstants.GET_ITEM_BY_PRODUCT_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", productId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			itemsDataModel = ((ItemsDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),ItemsDataModel.class));
+			return itemsDataModel;
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw new ServicesDataException();
+		}
+	}
+	/**
+	 * get ticket data
+	 */
+	public MakeDataModels getAllMake() throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		MakeDataModels makeDataModels = null;
+		String serviceName=MakeServiceConstants.GET_ALL_MAKE_SERVICE_NAME;
+		
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			makeDataModels = ((MakeDataModels)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),MakeDataModels.class));
+			return makeDataModels;
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw new ServicesDataException();
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateMake(MakeDataModel makeDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=MakeServiceConstants.UPDATE_MAKE_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(makeDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(makeDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void addMake(MakeDataModel makeDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=MakeServiceConstants.ADD_MAKE_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(makeDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(makeDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+}

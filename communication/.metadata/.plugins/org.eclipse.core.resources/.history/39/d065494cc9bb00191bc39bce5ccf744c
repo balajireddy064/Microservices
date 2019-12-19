@@ -1,0 +1,5 @@
+package com.ayusha.communication.data.models;
+
+public class NotificationMessageDataModel {
+
+}

@@ -1,0 +1,20 @@
+package com.ayusha.repair.service;
+
+import com.ayusha.repair.services.data.models.JobNotes;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the ticket service methods
+ *
+ */
+public interface IRepairServices {
+	
+	/** find job notes by id **/
+	public JobNotes getJobNotes(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+}

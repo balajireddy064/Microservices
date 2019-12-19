@@ -1,0 +1,55 @@
+package com.ayusha.http.client.test;
+
+import java.io.File;
+import java.io.InputStream;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class CategoryDataPopulator {
+	
+	@Autowired
+    ResourceLoader resourceLoader;
+	
+	
+	/**
+	 * default constructor
+	 */
+	public CategoryDataPopulator() {
+		
+	}
+	
+	/**
+	 * populate data
+	 */
+	public void populateCategoryData() {
+		Resource resource = null;
+		InputStream input=null;
+		File file=null;
+		try {
+			
+			resource = resourceLoader.getResource("classpath:android.png");
+			input = resource.getInputStream();
+
+			File file = resource.getFile();
+		}catch(Exception e) {
+			
+		}
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		CategoryDataPopulator serviceTester = new CategoryDataPopulator();
+		serviceTester.testJobNotesFind();
+	}
+
+}

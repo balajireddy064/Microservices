@@ -1,0 +1,190 @@
+package com.ayusha.payments.data.models;
+
+/**
+ * 
+ * @author author
+ * 10-Aug-2019
+ *
+ */
+public class CashReceiptDataModel {
+	
+	/** id **/
+	private int id;
+	
+	/** cash receipt id **/
+	private String cashReceiptId;
+	
+	/** cash receipt id **/
+	private String grandTotal;
+	
+	/** cash receipt id **/
+	private String approvalStatus;
+
+	/** cash receipt id **/
+	private String generatedOn;
+	
+	/** cash receipt id **/
+	private String requested_by;
+	
+	/** cash receipt id **/
+	private String jobCode;
+	
+	/** estimate line items **/
+	private EstimateLineItemsDataModel estimateLineItemsDataModel;
+	
+	/** estimate line items **/
+	private EstimateOtherChargesDataModel estimateOtherChargesDataModel;
+	
+
+	/**
+	 * default constructor
+	 */
+	public EstimateDataModel() {
+		
+	}
+
+
+	/**
+	 * @return the jobCode
+	 */
+	public String getJobCode() {
+		return jobCode;
+	}
+
+
+	/**
+	 * @return the estimateLineItemsDataModel
+	 */
+	public EstimateLineItemsDataModel getEstimateLineItemsDataModel() {
+		return estimateLineItemsDataModel;
+	}
+
+
+	/**
+	 * @param estimateLineItemsDataModel the estimateLineItemsDataModel to set
+	 */
+	public void setEstimateLineItemsDataModel(EstimateLineItemsDataModel estimateLineItemsDataModel) {
+		this.estimateLineItemsDataModel = estimateLineItemsDataModel;
+	}
+
+
+	/**
+	 * @return the estimateOtherChargesDataModel
+	 */
+	public EstimateOtherChargesDataModel getEstimateOtherChargesDataModel() {
+		return estimateOtherChargesDataModel;
+	}
+
+
+	/**
+	 * @param estimateOtherChargesDataModel the estimateOtherChargesDataModel to set
+	 */
+	public void setEstimateOtherChargesDataModel(EstimateOtherChargesDataModel estimateOtherChargesDataModel) {
+		this.estimateOtherChargesDataModel = estimateOtherChargesDataModel;
+	}
+
+
+	/**
+	 * @param jobCode the jobCode to set
+	 */
+	public void setJobCode(String jobCode) {
+		this.jobCode = jobCode;
+	}
+
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	/**
+	 * @return the estimateId
+	 */
+	public String getEstimateId() {
+		return estimateId;
+	}
+
+
+	/**
+	 * @param estimateId the estimateId to set
+	 */
+	public void setEstimateId(String estimateId) {
+		this.estimateId = estimateId;
+	}
+
+
+	/**
+	 * @return the grandTotal
+	 */
+	public String getGrandTotal() {
+		return grandTotal;
+	}
+
+
+	/**
+	 * @param grandTotal the grandTotal to set
+	 */
+	public void setGrandTotal(String grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
+
+	/**
+	 * @return the approvalStatus
+	 */
+	public String getApprovalStatus() {
+		return approvalStatus;
+	}
+
+
+	/**
+	 * @param approvalStatus the approvalStatus to set
+	 */
+	public void setApprovalStatus(String approvalStatus) {
+		this.approvalStatus = approvalStatus;
+	}
+
+
+	/**
+	 * @return the generatedOn
+	 */
+	public String getGeneratedOn() {
+		return generatedOn;
+	}
+
+
+	/**
+	 * @param generatedOn the generatedOn to set
+	 */
+	public void setGeneratedOn(String generatedOn) {
+		this.generatedOn = generatedOn;
+	}
+
+
+	/**
+	 * @return the requested_by
+	 */
+	public String getRequested_by() {
+		return requested_by;
+	}
+
+
+	/**
+	 * @param requested_by the requested_by to set
+	 */
+	public void setRequested_by(String requested_by) {
+		this.requested_by = requested_by;
+	}
+
+}

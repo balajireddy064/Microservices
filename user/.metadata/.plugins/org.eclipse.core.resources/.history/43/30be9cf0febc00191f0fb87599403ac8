@@ -1,0 +1,148 @@
+package com.ayusha.user.services.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.services.common.exceptions.ServiceRequestProcessor;
+import com.ayusha.user.data.models.UserDataModel;
+import com.ayusha.user.service.IUserService;
+import com.ayusha.user.services.repository.IUserLocationRepository;
+import com.ayusha.user.services.repository.IUserRepository;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+/**
+* This is the service api interface.
+* This controls the access to the services
+*
+* @author  author1r
+* @version 1.0
+* @since   2019-05-03 
+*/
+@RestController
+@RequestMapping("/users")
+public class UserServicesController extends ServiceRequestProcessor{
+	
+	/** Logger **/
+	private static Logger LOG = LogManager.getLogger(UserServicesController.class);
+	
+	/** repository **/
+	@Autowired
+	private IUserService iUserService;
+	
+	/** repository **/
+	@Autowired
+	private IUserLocationRepository iUserLocationRepository;
+	/**
+	 * 
+	 * 
+	 */
+	@PostMapping("/user/add")
+	public String addUser(@RequestBody String requestBody,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("entered job notes creation - start");
+		UserDataModel userDataModel = null;
+		
+		int size=0;
+		String strRequestBody = preProcess(requestBody,httpServletRequest,httpServletResponse);
+		
+		strRequestBody = postProcess(requestBody,httpServletRequest,httpServletResponse);
+		userDataModel = (UserDataModel)JSONConverter.convertStringToPOJO(requestBody, UserDataModel.class);
+		
+		iUserService.save(userDataModel);
+		LOG.info("successfully completed add job notes operation ");
+		return JSONConverter.convertPOJOToString(userDataModel);
+	}
+	/**
+	 * 
+	 * 
+	 */
+	@PostMapping("/user/update")
+	public String updateUser(@RequestBody String requestBody,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("entered job notes creation - start");
+		UserDataModel userDataModel = null;
+		
+		int size=0;
+		String strRequestBody = preProcess(requestBody,httpServletRequest,httpServletResponse);
+		
+		strRequestBody = postProcess(requestBody,httpServletRequest,httpServletResponse);
+		userDataModel = (UserDataModel)JSONConverter.convertStringToPOJO(requestBody, UserDataModel.class);
+		
+		iUserService.save(userDataModel);
+		LOG.info("successfully completed add job notes operation ");
+		return JSONConverter.convertPOJOToString(userDataModel);
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	@GetMapping("/all")
+	public String findAllUsers(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("entered symptoms finding - start chedddd");
+		return JSONConverter.convertPOJOToString(iUserService.getAllUsers());
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	@GetMapping("/user/emailid")
+	public String findUserByEmailId(@RequestParam("emailid") String emailId,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("entered symptoms finding - start chedddd");
+		return JSONConverter.convertPOJOToString(iUserService.getUserByEmailId(emailId));
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	@GetMapping("/user/userId")
+	public String findUserByUserId(@RequestParam("userid") String emailId,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("entered symptoms finding - start chedddd");
+		return JSONConverter.convertPOJOToString(iUserService.getUserByUserId(emailId));
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	@GetMapping("/user/firstname")
+	public String findUserByUserName(@RequestParam("firstname") String firstName,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("entered symptoms finding - start chedddd");
+		return JSONConverter.convertPOJOToString(iUserService.getUserByFisrtName(firstName));
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	@GetMapping("/user/phonenumber")
+	public String findUserByPhoneNumber(@RequestParam("phonenumber") String phonenumber,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("entered symptoms finding - start chedddd");
+		return JSONConverter.convertPOJOToString(iUserService.getUserByPhoneNumber(phonenumber));
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	@GetMapping("/user/locations")
+	public String findUsersServingLocations(@RequestParam("locationid") String locationid,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws DataPersistenceOperationException,Exception,InvalidServiceRequestException,ResourceNotFoundException{
+		LOG.info("entered symptoms finding - start chedddd");
+		return JSONConverter.convertPOJOToString(iUserLocationRepository.findUsersByLocations(locationid,"Y"));
+	}
+	
+	
+}

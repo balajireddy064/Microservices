@@ -1,0 +1,99 @@
+package com.ayusha.http.client.test;
+
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.StringTokenizer;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.ayusha.general.services.data.model.CitiesDataModel;
+import com.ayusha.general.services.data.model.CityDataModel;
+import com.ayusha.payments.data.models.EstimateDataModel;
+import com.ayusha.tktmgmt.data.EstimateDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class EstimateDataPoplation {
+	
+	/** city data handler **/
+	private EstimateDataHandler estimateDataHandler = null;
+	/**
+	 * default constructor
+	 */
+	public EstimateDataPoplation() {
+		estimateDataHandler = EstimateDataHandler.getInstance();
+	}
+	
+	/**
+	 * test
+	 */
+	public void addEstimate() {
+		Resource resource = null;
+		InputStream input=null;
+		File file=null;
+		DataInputStream dataInputStream = null;
+		String strLine="";
+		EstimateDataModel estimateDataModel= null;
+		
+		try {
+			estimateDataModel = new EstimateDataModel();
+			estimateDataModel.setApprovalStatus("N");
+			estimateDataModel.setEstimateId("EST100");
+			estimateDataModel.setGeneratedOn("2019/12/12 10:00:00");
+			estimateDataModel.setRequested_by("dvsnk");
+			estimateDataModel.setGrandTotal("200");
+			estimateDataModel.setJobCode("JOB100");
+			estimateDataHandler.addEstimate(estimateDataModel);
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void getEstimateForEstimateId(String estimateId) {
+		
+		EstimateDataModel estimateDataModel = null;
+		
+		try {
+			estimateDataModel = estimateDataHandler.getEstimateForEstimateId("EST100");
+			System.out.println(" Job Notes returned IS ==<>>> "+estimateDataModel);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void getCities(String stateId) {
+		EstimateDataHandler cityDataHandler = null;
+		CitiesDataModel cityDataModel = null;
+		try {
+			
+			cityDataHandler = EstimateDataHandler.getInstance();
+			cityDataModel = cityDataHandler.getCities(stateId);
+			System.out.println(" Job Notes returned IS ==<>>> "+cityDataModel);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		EstimateDataPoplation serviceTester = new EstimateDataPoplation();
+		serviceTester.getCities("KARNATAKA");
+	}
+
+}

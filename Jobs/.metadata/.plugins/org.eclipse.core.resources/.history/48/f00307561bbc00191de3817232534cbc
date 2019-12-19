@@ -1,0 +1,11 @@
+package com.ayusha.job.services.constants;
+
+/**
+ * 
+ * @author author
+ * 10-Aug-2019
+ *
+ */
+public class JobServiceConstants {
+
+}

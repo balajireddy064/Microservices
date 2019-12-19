@@ -1,0 +1,137 @@
+package com.ayusha.repair.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.repair.services.data.models.FaultyItemDataModel;
+import com.ayusha.repair.services.data.models.SymptomDataModel;
+import com.ayusha.repair.services.data.models.SymptomsDataModel;
+import com.ayusha.repair.services.entity.FaultyItemEntity;
+import com.ayusha.repair.services.entity.SymptomsEntity;
+import com.ayusha.repair.services.repository.IFaultyItemRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class RepairFaultyItemsService implements IRepairFaultyItemsService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(RepairFaultyItemsService.class);
+	
+	/** repository **/
+	@Autowired
+	private IFaultyItemRepository iFaultyItemRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public RepairFaultyItemsService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public FaultyItemDataModel save(FaultyItemDataModel faultyItemDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		FaultyItemEntity faultyItemEntity = new FaultyItemEntity();
+		faultyItemEntity.setId(faultyItemDataModel.getId());
+		faultyItemEntity.setJob_id(faultyItemDataModel.getJobId());
+		faultyItemEntity.setPartId(faultyItemDataModel.getPartId());
+		faultyItemEntity.setHeading(faultyItemDataModel.getHeading());
+		faultyItemEntity.setMedia(faultyItemDataModel.getMedia());
+		iFaultyItemRepository.save(faultyItemEntity);
+		return faultyItemDataModel;
+	}
+		
+	/** find job notes by id **/
+	public SymptomsDataModel getSymptomsDataModel(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		SymptomsDataModel symptomsDataModel = new SymptomsDataModel();
+		symptomsDataModel.setJob_id(jobId);
+		symptomsDataModel.setLstSymptoms(getSymptoms(jobId));
+		return symptomsDataModel;
+	}
+	
+	/** find job notes by id **/
+	public List<SymptomDataModel> getSymptoms(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+		List<SymptomDataModel> lstSymptomsDataModel = new ArrayList();
+		SymptomDataModel symptomDataModel = null;
+		SymptomsEntity symptomsEntity = null;
+		int size=0;
+		
+		List<SymptomsEntity> lstSymptomsEntity= iFaultyItemRepository.findSymptomsByJobId(jobId);
+		
+		size = lstSymptomsEntity.size();
+		
+		for(int index=0; index<size; index++) {
+			symptomDataModel = new SymptomDataModel();
+			symptomsEntity = lstSymptomsEntity.get(index);
+			symptomDataModel.setId(Integer.parseInt(""+symptomsEntity.getId()));
+			symptomDataModel.setJobId(symptomsEntity.getJob_id());
+			symptomDataModel.setSymptomId(symptomsEntity.getSymptomId());
+			symptomDataModel.setMedia(symptomsEntity.getMedia());
+			lstSymptomsDataModel.add(symptomDataModel);
+			
+		}
+		
+		return lstSymptomsDataModel;
+	}
+	
+	
+	/**
+	 * add ticket
+	 */
+	public void deleteSymptoms(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		iFaultyItemRepository.deleteSymptomsByJobId(jobId);
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public void updateSymptoms(SymptomsDataModel jobSymptomsDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		int size=0;
+		deleteSymptoms(jobSymptomsDataModel.getJob_id());
+		List<SymptomDataModel> lstSymptomDataModel = jobSymptomsDataModel.getLstSymptoms();
+		
+		size = lstSymptomDataModel.size();
+		
+		for(int index=0; index<size;index++) {
+			save(lstSymptomDataModel.get(index));
+		}
+	}
+}

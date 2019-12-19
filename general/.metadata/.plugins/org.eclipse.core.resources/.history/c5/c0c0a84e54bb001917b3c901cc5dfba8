@@ -1,0 +1,69 @@
+package com.ayusha.general.services.data.model;
+
+/**
+ * 
+ * @author author
+ * 10-Aug-1029
+ * State data
+ *
+ */
+public class StateDataModel {
+	
+	/** id **/
+	private int id;
+	
+	/** state **/
+	private String statecode;
+	
+	/** name **/
+	private String name;
+	
+	/**
+	 * default constructor
+	 */
+	public StateDataModel() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the statecode
+	 */
+	public String getStatecode() {
+		return statecode;
+	}
+
+	/**
+	 * @param statecode the statecode to set
+	 */
+	public void setStatecode(String statecode) {
+		this.statecode = statecode;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+}

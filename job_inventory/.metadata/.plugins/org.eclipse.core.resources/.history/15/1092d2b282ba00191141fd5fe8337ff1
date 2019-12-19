@@ -1,0 +1,24 @@
+package com.ayusha.job.inventory.services.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.ayusha.job.inventory.services.entity.PartReturnedEntity;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the methods for the ticketmanagement persistance CRUD operations
+ *
+ */
+public interface IPartsReturnedRepository extends CrudRepository<PartReturnedEntity,Integer>{
+
+	 @Query("SELECT t FROM PartsReturnedEntity t WHERE t.job_id = ?1")
+	    List<PartReturnedEntity> findAllFaultyItemsByJobId(String jobId);
+	 @Query("delete FROM PartsReturnedEntity t WHERE t.job_id = ?1")
+	    void deleteFaultyItemsByJobId(String jobId);
+}

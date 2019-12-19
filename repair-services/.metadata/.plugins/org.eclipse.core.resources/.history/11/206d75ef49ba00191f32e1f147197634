@@ -1,0 +1,12 @@
+package com.ayusha.repair.services.data.models;
+
+/**
+ * 
+ * @author author
+ * 08-Aug-2019
+ * Symptoms details
+ *
+ */
+public class SymptomsDataModel {
+
+}

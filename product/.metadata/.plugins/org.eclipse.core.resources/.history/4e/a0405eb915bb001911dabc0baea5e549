@@ -1,0 +1,87 @@
+package com.ayusha.products.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.products.data.models.ModelDataModel;
+import com.ayusha.products.data.models.ServiceTypeDataModel;
+import com.ayusha.products.data.models.SymptomDataModel;
+import com.ayusha.products.service.entity.ProductSymptomsEntity;
+import com.ayusha.products.service.entity.ServiceTypeEntity;
+import com.ayusha.products.service.entity.SymptomEntity;
+import com.ayusha.products.service.repository.IProductSymptomsRepository;
+import com.ayusha.products.service.repository.ISymptomRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * 
+ */
+@Service
+public class SymptomService implements ISymptomService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(SymptomService.class);
+	
+	/** repository **/
+	@Autowired
+	private ISymptomRepository iSymptomRepository;
+	
+	/** repository **/
+	@Autowired
+	private IProductSymptomsRepository iProductSymptomsRepository;
+	/**
+	 * default constructor
+	 */
+	public SymptomService() {
+		
+	}
+
+	/** add **/
+	public SymptomDataModel getSymptom(String id) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		SymptomDataModel symptomDataModel = new SymptomDataModel();
+		Optional<SymptomEntity> modelEntity=  iSymptomRepository.findById(Integer.parseInt(id));
+		
+		symptomDataModel.setId(Integer.parseInt(""+modelEntity.get().getId()));
+		symptomDataModel.setDescription(modelEntity.get().getDescription());
+		symptomDataModel.setSymptom(modelEntity.get().getSymptom());
+		symptomDataModel.setSymptomId(modelEntity.get().getSymptomId());
+		return symptomDataModel;
+	}
+	/** update **/
+	public  SymptomDataModel updateSymptom(SymptomDataModel symptomDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		SymptomEntity modelEntity = new SymptomEntity();
+		
+		modelEntity.setId(symptomDataModel.getId());
+		modelEntity.setDescription(symptomDataModel.getDescription());
+		modelEntity.setSymptom(symptomDataModel.getSymptom());
+		modelEntity.setSymptomId(symptomDataModel.getSymptomId());
+		symptomDataModel.setSymptomId(symptomDataModel.getSymptomId());
+		iSymptomRepository.save(modelEntity);
+		return symptomDataModel;
+	}
+	/** update **/
+	public SymptomDataModel add(SymptomDataModel symptomDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		SymptomEntity modelEntity = new SymptomEntity();
+		
+		modelEntity.setId(symptomDataModel.getId());
+		modelEntity.setDescription(symptomDataModel.getDescription());
+		modelEntity.setSymptom(symptomDataModel.getSymptom());
+		modelEntity.setSymptomId(symptomDataModel.getSymptomId());
+		ProductSymptomsEntity productSymptomsEntity = new ProductSymptomsEntity();
+		productSymptomsEntity.setMake_id(make_id);
+		iProductSymptomsRepository.save(entity)
+		
+		symptomDataModel.setSymptomId(symptomDataModel.getSymptomId());
+		iSymptomRepository.save(modelEntity);
+		return symptomDataModel;
+	}
+}

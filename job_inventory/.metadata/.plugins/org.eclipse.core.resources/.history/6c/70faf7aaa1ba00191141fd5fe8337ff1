@@ -1,0 +1,79 @@
+package com.ayusha.http.client.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ayusha.job.inventory.data.models.PartRequestedDataModel;
+import com.ayusha.job.inventory.data.models.PartReturnedDataModel;
+import com.ayusha.job.inventory.data.models.PartsRequestedDataModel;
+import com.ayusha.job.inventory.data.models.PartsReturnedDataModel;
+import com.ayusha.tktmgmt.data.PartsRequestedItemsDataHandler;
+import com.ayusha.tktmgmt.data.PartsReturnedItemsDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class PartsIssuedServiceTester {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public PartsIssuedServiceTester() {
+		
+	}
+	
+	/**
+	 * test
+	 */
+	public void testPartRequestedFind() {
+		PartsRequestedItemsDataHandler partsRequestedItemsDataHandler = null;
+		PartsRequestedDataModel partsRequestedDataModel = null;
+		try {
+			
+			partsRequestedItemsDataHandler = PartsRequestedItemsDataHandler.getInstance();
+			partsRequestedDataModel = partsRequestedItemsDataHandler.getPartsRequested("9");
+			System.out.println(" Job Notes returned IS ==<>>> "+partsRequestedDataModel.getLstPartsRequestedDataModel());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testUpdateJobNotes() {
+		PartsRequestedItemsDataHandler partsRequestedItemsDataHandler = null;
+		PartsRequestedDataModel partsRequestedDataModel = null;
+		List<PartRequestedDataModel> lstPartsRequestedDataModel = new ArrayList();
+		PartRequestedDataModel partRequestedDataModel = null;
+		try {
+			partsRequestedItemsDataHandler = PartsRequestedItemsDataHandler.getInstance();
+			partsRequestedDataModel = new PartsRequestedDataModel();
+			partsRequestedDataModel.setJobId("9");
+			partRequestedDataModel=  new PartRequestedDataModel();
+			partRequestedDataModel.setJobId("9");
+			partRequestedDataModel.setPartId("PART_200");
+			partRequestedDataModel.setRequestedQuantity(20);
+			partRequestedDataModel.setType("PART");
+			lstPartsRequestedDataModel.add(partRequestedDataModel);
+			partsRequestedDataModel.setLstPartsRequestedDataModel(lstPartsRequestedDataModel);
+			partsRequestedItemsDataHandler.updatePartsRequested(partsRequestedDataModel);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		PartsRequestedServiceTester partsRequestedServiceTester = new PartsRequestedServiceTester();
+		partsRequestedServiceTester.testPartRequestedFind();
+	}
+
+}

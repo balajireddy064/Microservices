@@ -1,0 +1,86 @@
+package com.ayusha.http.client.test;
+
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.StringTokenizer;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.ayusha.products.data.models.MakeDataModel;
+import com.ayusha.products.data.models.ProductDataModel;
+import com.ayusha.tktmgmt.data.ProductDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class ProductDataPopulator {
+	
+	/** handler **/
+	private ProductDataHandler productDataHandler = null;
+	
+	
+	/**
+	 * default constructor
+	 */
+	public ProductDataPopulator() {
+		productDataHandler = ProductDataHandler.getInstance();
+	}
+	
+	/**
+	 * populate data
+	 */
+	public void populateProductData() {
+		Resource resource = null;
+		InputStream input=null;
+		File file=null;
+		DataInputStream dataInputStream = null;
+		String strLine="";
+		ProductDataModel productDataModel= null;
+		StringTokenizer stringTokenizer = null;
+		try {
+			resource = new ClassPathResource("products.txt", this.getClass().getClassLoader());
+			input = resource.getInputStream();
+			dataInputStream = new DataInputStream(input);
+			System.out.println(" INSIDE");
+			while((strLine=dataInputStream.readLine())!=null) {
+				System.out.println(" strLine "+strLine);
+				stringTokenizer = new StringTokenizer(strLine,",");
+				productDataModel = new ProductDataModel();
+				System.out.println(" strLine ==========="+strLine);
+				productDataModel.setCategoryId(stringTokenizer.nextToken());
+				productDataModel.setSubCategoryId(stringTokenizer.nextToken());
+				productDataModel.setMakeId(stringTokenizer.nextToken());
+				productDataModel.setModelId(stringTokenizer.nextToken());
+				productDataModel.setProductId(stringTokenizer.nextToken());
+				productDataHandler.addProduct(productDataModel);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * populate data
+	 */
+	public void getProductById(String productId) throws Exception{
+		ProductDataModel productDataModel = productDataHandler.getProduct(productId);
+		System.out.println(" CHECK THIS "+productDataModel.getMakeId());
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		ProductDataPopulator serviceTester = new ProductDataPopulator();
+		try {
+			serviceTester.getProductById("PRD-1");
+		}catch(Exception e) {
+			
+		}
+	}
+
+}

@@ -1,0 +1,49 @@
+package com.ayusha.repair.test;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ayusha.repair.service.RepairService;
+import com.ayusha.repair.services.entity.Ticket;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ *
+ */
+public class ServicesTest {
+	
+	/**
+	 * default constructor
+	 */
+	public ServicesTest() {
+		
+	}
+	
+	/**
+	 * test save ticket
+	 */
+	public void testSave() {
+		ApplicationContext applicationContext = null;
+		RepairService ticketService = null;
+		try {
+			applicationContext =  new ClassPathXmlApplicationContext("tktsmgmt.xml");
+		    ticketService = (RepairService) applicationContext.getBean("ticket");
+		    //ticketService.save(new Ticket());
+		    System.out.println(" CHECK HERE "+ticketService);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		ServicesTest servicesTest = new ServicesTest();
+		servicesTest.testSave();
+	}
+
+}

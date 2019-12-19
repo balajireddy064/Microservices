@@ -1,0 +1,30 @@
+package com.ayusha.payments.service;
+
+import com.ayusha.payments.data.models.CashReceiptDataModel;
+import com.ayusha.payments.data.models.EstimateDataModel;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the ticket service methods
+ *
+ */
+public interface ICashReceiptService {
+	
+	/**
+	 * add ticket
+	 */
+	public CashReceiptDataModel save(CashReceiptDataModel cashReceiptDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+		
+	/** find job notes by id **/
+	public CashReceiptDataModel getCashReceiptByEstimateId(String estimateId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+	
+	/** find job notes by id **/
+	public CashReceiptDataModel getCashReceiptForJobCode(String jobCode) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+}
+

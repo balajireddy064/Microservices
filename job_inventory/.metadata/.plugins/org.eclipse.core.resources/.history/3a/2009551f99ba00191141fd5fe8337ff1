@@ -1,0 +1,79 @@
+package com.ayusha.http.client.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ayusha.job.inventory.data.models.PartReturnedDataModel;
+import com.ayusha.job.inventory.data.models.PartsReturnedDataModel;
+import com.ayusha.tktmgmt.data.PartsReturnedItemsDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class PartsReturnedServiceTester {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public PartsReturnedServiceTester() {
+		
+	}
+	
+	/**
+	 * test
+	 */
+	public void testJobNotesFind() {
+		PartsReturnedItemsDataHandler partsReturnedItemsDataHandler = null;
+		PartsReturnedDataModel partsReturnedDataModel = null;
+		try {
+			
+			partsReturnedItemsDataHandler = PartsReturnedItemsDataHandler.getInstance();
+			partsReturnedDataModel = partsReturnedItemsDataHandler.getPartsReturned("9");
+			System.out.println(" Job Notes returned IS ==<>>> "+partsReturnedDataModel.getLstPartsReturnedDataModel());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testUpdateJobNotes() {
+		PartsReturnedItemsDataHandler partsReturnedItemsDataHandler = null;
+		PartsReturnedDataModel partsReturnedDataModel = null;
+		List<PartReturnedDataModel> lstPartsReturnedDataModel = new ArrayList();
+		PartReturnedDataModel partReturnedDataModel = null;
+		try {
+			partsReturnedItemsDataHandler = PartsReturnedItemsDataHandler.getInstance();
+			partsReturnedDataModel = new PartsReturnedDataModel();
+			partsReturnedDataModel.setJobId("9");
+			partReturnedDataModel=  new PartReturnedDataModel();
+			partReturnedDataModel.setHeading("TESTING");
+			partReturnedDataModel.setJobId("9");
+			partReturnedDataModel.setPartId("PART_200");
+			partReturnedDataModel.setQuantity(20);
+			partReturnedDataModel.setRemarks("TEST REMARKS");
+			partReturnedDataModel.setReturnedOn("2019/12/12 10:00:00");
+			partReturnedDataModel.setType("PART");
+			lstPartsReturnedDataModel.add(partReturnedDataModel);
+			partsReturnedDataModel.setLstPartsReturnedDataModel(lstPartsReturnedDataModel);
+			partsReturnedItemsDataHandler.updatePartsReturned(partsReturnedDataModel);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		PartsReturnedServiceTester partsReturnedServiceTester = new PartsReturnedServiceTester();
+		partsReturnedServiceTester.testUpdateJobNotes();
+	}
+
+}

@@ -1,0 +1,29 @@
+package com.ayusha.products.service;
+
+
+import java.util.List;
+
+import com.ayusha.products.data.models.SymptomDataModel;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Symptom class
+ * Defines the ticket service methods
+ *
+ */
+public interface ISymptomService {
+	
+	/** add **/
+	public SymptomDataModel getSymptom(String id) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	/** update **/
+	public SymptomDataModel updateSymptom(SymptomDataModel symptomDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	/** update **/
+	public SymptomDataModel add(SymptomDataModel SymptomDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+
+	/** add **/
+	public SymptomsDataModel getProductSymptom(String productId) throws DataPersistenceOperationException,InvalidServiceRequestException;
+}

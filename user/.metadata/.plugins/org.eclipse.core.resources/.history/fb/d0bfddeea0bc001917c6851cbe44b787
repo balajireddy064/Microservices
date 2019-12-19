@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ayusha</groupId>
+  <artifactId>android-services-user-data-handler</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>android-services-user-data-handler</name>
+  <description>android-services-user-data-handler</description>
+  
+   <properties>
+  <android.services.client.version>0.0.1-SNAPSHOT</android.services.client.version>
+  <services.common.util.version>0.0.1-SNAPSHOT</services.common.util.version>
+  <android.services.common.version>0.0.1-SNAPSHOT</android.services.common.version>
+  <tktmgmt.models.version>0.0.1-SNAPSHOT</tktmgmt.models.version>
+  </properties>
+  
+  <dependencies>
+  	<dependency>
+  			 <groupId>com.ayusha</groupId>
+			  <artifactId>android-services-client</artifactId>
+			  <version>${android.services.client.version}</version>
+  	</dependency>
+  	
+  	<dependency>
+  	      <groupId>com.ayusha</groupId>
+  		 <artifactId>services-ticket-common-data-model</artifactId>
+		  <version>${tktmgmt.models.version}</version>
+  	</dependency>
+  	<dependency>
+  	     <groupId>com.ayusha</groupId>
+		  <artifactId>android-services-common</artifactId>
+		  <version>${android.services.common.version}</version>
+  	</dependency>
+  	<dependency> 
+		   <groupId>com.personal</groupId>
+  			<artifactId>common-utils</artifactId>
+ 			 <version>${services.common.util.version}</version> 
+		</dependency>
+  </dependencies>
+</project>

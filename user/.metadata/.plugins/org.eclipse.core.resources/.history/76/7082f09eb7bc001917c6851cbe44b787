@@ -1,0 +1,20 @@
+package com.ayusha.user.services.constants;
+
+/**
+ * 
+ * @author author
+ *
+ */
+public class UserServiceConstants {
+
+
+	/** get ticket **/
+	public final static String GET_USER_DETAILS_SERVICE_NAME="users/user/get?id=$1";
+	/** get ticket **/
+	public final static String GET_USERS_SERVICE_NAME="users/";
+	
+	/** get ticket **/
+	public final static String UPDATE_USER_DETAILS_SERVICE_NAME="users/user/update";
+	/** get ticket **/
+	public final static String ADD_USER_DETAILS_SERVICE_NAME="users/user/add";
+}

@@ -1,0 +1,111 @@
+package com.ayusha.job.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.job.services.data.model.StateDataModel;
+import com.ayusha.job.services.data.model.StatesDataModel;
+import com.ayusha.job.services.entity.StateEntity;
+import com.ayusha.job.services.repository.IStateRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class StateService implements IStateService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(StateService.class);
+	
+	/** repository **/
+	@Autowired
+	private IStateRepository iStateRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public StateService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public StateDataModel save(StateDataModel stateDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		StateEntity stateEntity = new StateEntity();
+		stateEntity.setStateCode(stateDataModel.getStatecode());
+		stateEntity.setCountryCode(stateDataModel.getCountryCode());
+		stateEntity.setName(stateDataModel.getName());
+		iStateRepository.save(stateEntity);
+		return stateDataModel;
+	}
+	
+	/** find job notes by id **/
+	public StateDataModel getState(String stateId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		StateEntity stateEntity = iStateRepository.findStateByStateId(stateId);
+		StateDataModel stateDataModel = new StateDataModel();
+		stateDataModel.setCountryCode(stateEntity.getCountryCode());
+		stateDataModel.setName(stateEntity.getName());
+		stateDataModel.setStatecode(stateEntity.getStateCode());
+		return stateDataModel;
+	}
+	
+	/** find job notes by id **/
+	public StatesDataModel getStates(String countryId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		StateEntity stateEntity = null;
+		StateDataModel stateDataModel = new StateDataModel();
+		List<StateEntity> lstStateEntities = iStateRepository.findStatesByCountryId(countryId);
+		
+		List<StateDataModel> lstStateDataModel = new ArrayList();
+		int size =0;
+		size = lstStateEntities.size();
+		
+		for(int index=0; index<size; index++) {
+			stateDataModel = new StateDataModel();
+			stateEntity = lstStateEntities.get(index);
+			stateDataModel.setCountryCode(stateEntity.getCountryCode());
+			stateDataModel.setName(stateEntity.getName());
+			stateDataModel.setStatecode(stateEntity.getStateCode());
+			lstStateDataModel.add(stateDataModel);
+		}
+		StatesDataModel statesDataModel = new StatesDataModel();
+		statesDataModel.setLstStatesDataModel(lstStateDataModel); 
+		return statesDataModel;
+	}
+	
+}

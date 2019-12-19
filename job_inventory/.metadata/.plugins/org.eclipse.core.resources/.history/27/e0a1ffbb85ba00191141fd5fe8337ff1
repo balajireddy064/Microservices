@@ -1,0 +1,145 @@
+package com.ayusha.job.inventory.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.job.inventory.data.models.PartReturnedDataModel;
+import com.ayusha.job.inventory.data.models.PartsReturnedDataModel;
+import com.ayusha.job.inventory.services.data.models.FaultyItemDataModel;
+import com.ayusha.job.inventory.services.data.models.FaultyItemsDataModel;
+import com.ayusha.job.inventory.services.entity.PartReturnedEntity;
+import com.ayusha.job.inventory.services.repository.IPartsReturnedRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class PartsReturnedService implements IReturnedItemsService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(PartsReturnedService.class);
+	
+	/** repository **/
+	@Autowired
+	private IPartsReturnedRepository iPartsReturnedRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public PartsReturnedService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public PartsReturnedDataModel save(PartsReturnedDataModel partsReturnedDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		PartReturnedEntity partReturnedEntity = null;
+		PartReturnedDataModel partReturnedDataModel = null;
+		int size=0;
+		
+		List<PartReturnedDataModel> lstPartReturnedDataModel= partsReturnedDataModel.getLstPartsReturnedDataModel();
+		
+		size = lstPartReturnedDataModel.size();
+		
+		for(int index=0; index<size;index++) {
+			partReturnedDataModel = lstPartReturnedDataModel.get(index);
+			partReturnedEntity = new PartReturnedEntity();
+			partReturnedEntity.setId(partReturnedDataModel.getId());
+			partReturnedEntity.setJobId(partReturnedDataModel.getJobId());
+			partReturnedEntity.setMedia(partReturnedDataModel.getMedia());
+			partReturnedEntity.setQuantity(partReturnedDataModel.getQuantity());
+			partReturnedEntity.setRemarks(partReturnedDataModel.getRemarks());
+			partReturnedEntity.setType(partReturnedDataModel.getType());
+			partReturnedEntity.setVerified('N');
+			iPartsReturnedRepository.save(partReturnedEntity);
+		}
+		return partsReturnedDataModel;
+	}
+		
+	/** find job notes by id **/
+	public PartsReturnedDataModel getPartReturnedDataModel(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		PartsReturnedDataModel partsReturnedDataModel = new PartsReturnedDataModel();
+		partsReturnedDataModel.setJobId(jobId);
+		partsReturnedDataModel.setLstPartsReturnedDataModel(getReturnedPartsItems(jobId));
+		return partsReturnedDataModel;
+	}
+	
+	/** find job notes by id **/
+	public List<PartReturnedDataModel> getReturnedPartsItems(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+		List<PartReturnedDataModel> lstPartReturnedDataModel = new ArrayList();
+		PartReturnedDataModel partReturnedDataModel = null;
+		PartReturnedEntity partReturnedEntity = null;
+		int size=0;
+		
+		List<PartReturnedEntity> lstPartReturnedEntity= iPartsReturnedRepository.findAllReturnedItemsByJobId(jobId);
+		
+		size = lstPartReturnedEntity.size();
+		
+		for(int index=0; index<size; index++) {
+			partReturnedDataModel = new PartReturnedDataModel();
+			partReturnedEntity = lstPartReturnedEntity.get(index);
+			partReturnedDataModel.setId(Integer.parseInt(""+partReturnedEntity.getId()));
+			partReturnedDataModel.setJobId(partReturnedEntity.getJobId());
+			partReturnedDataModel.setPartId(partReturnedEntity.getPartid());
+			partReturnedDataModel.setMedia(partReturnedEntity.getMedia());
+			partReturnedDataModel.setHeading(partReturnedEntity.getRemarks());
+			partReturnedDataModel.setQuantity(partReturnedEntity.getQuantity());
+			partReturnedDataModel.setType(partReturnedEntity.getType());
+			lstPartReturnedDataModel.add(partReturnedDataModel);
+			
+		}
+		
+		return lstPartReturnedDataModel;
+	}
+	
+	
+	/**
+	 * add ticket
+	 */
+	public void deletePartReturnedItems(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		iPartsReturnedRepository.deleteReturnedItemsByJobId(jobId);
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public void updateFaultyItems(PartsReturnedDataModel faultyItemsDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		save(faultyItemsDataModel);
+	}
+}

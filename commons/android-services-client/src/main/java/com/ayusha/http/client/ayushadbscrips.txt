@@ -1,0 +1,585 @@
+CREATE DATABASE `atas_generic` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE TABLE `cities` (
+  `id` int(11) NOT NULL,
+  `citycode` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `state_code` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `countries` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `code` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` int(11) NOT NULL,
+  PRIMARY KEY (`next_val`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `locations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pincode` varchar(100) NOT NULL,
+  `cityname` varchar(250) NOT NULL,
+  `state` varchar(100) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `area` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `states` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `country_id` varchar(100) DEFAULT NULL,
+  `code` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+CREATE DATABASE `atas_job` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE TABLE `events` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` int(11) NOT NULL,
+  PRIMARY KEY (`next_val`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `job` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` varchar(100) NOT NULL,
+  `status_id` varchar(100) DEFAULT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `actual_start_date` datetime DEFAULT NULL,
+  `actual_finish_date` datetime DEFAULT NULL,
+  `logged_by` varchar(100) NOT NULL,
+  `last_updated_on` datetime NOT NULL,
+  `notes` varchar(5000) DEFAULT NULL,
+  `user_id` varchar(100) DEFAULT NULL,CREATE DATABASE `atas_jobinventory` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` int(11) NOT NULL,
+  PRIMARY KEY (`next_val`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `partsissued` (
+  `id` int(11) NOT NULL,
+  `partid` varchar(45) DEFAULT NULL,
+  `jobid` varchar(45) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `issuedon` datetime DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `partsrequested` (
+  `id` int(11) NOT NULL,
+  `partid` varchar(100) DEFAULT NULL,
+  `jobid` varchar(100) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `requestedon` datetime DEFAULT NULL,
+  `fullfilledon` datetime DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `fullfilledby` varchar(100) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `partsreturned` (
+  `id` int(11) NOT NULL,
+  `partid` varchar(100) DEFAULT NULL,
+  `remarks` varchar(5000) DEFAULT NULL,
+  `media` blob,
+  `job_id` varchar(100) DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `returnedon` datetime DEFAULT NULL,
+  `verified` char(1) DEFAULT 'N',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE DATABASE `atas_payments` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE TABLE `cash_receipt` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cash_receipt_id` varchar(100) NOT NULL,
+  `grandtotal` double NOT NULL,
+  `tax` double NOT NULL,
+  `paid_status` char(1) NOT NULL,
+  `generated_on` datetime NOT NULL,
+  `requested_by` varchar(100) NOT NULL,
+  `job_code` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `cash_receipt_discounts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cash_receipt_id` varchar(100) NOT NULL,
+  `coupon_id` varchar(100) NOT NULL,
+  `amount` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `cash_receipt_line_items` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cash_receipt_id` varchar(100) NOT NULL,
+  `item_id` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `amount` double NOT NULL,
+  `tax` double NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `cash_receipt_other_charges` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cash_receipt_id` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `amount` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `coupon` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `coupon_id` int(11) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `amount` double NOT NULL,
+  `rate` double NOT NULL,
+  `active` char(1) NOT NULL,
+  `generated_on` datetime NOT NULL,
+  `valid_till` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `estimate` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `estimated_id` varchar(100) NOT NULL,
+  `grandtotal` double NOT NULL,
+  `approval_status` varchar(100) NOT NULL,
+  `generated_on` datetime NOT NULL,
+  `requested_by` varchar(100) NOT NULL,
+  `job_code` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `estimate_line_items` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `estimated_id` varchar(100) NOT NULL,
+  `item_id` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `amount` double NOT NULL,
+  `tax` double NOT NULL,
+  `quantity` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `estimation_other_charges` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `estimated_id` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `amount` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` int(11) NOT NULL,
+  PRIMARY KEY (`next_val`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `payments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cash_receipt_id` varchar(100) NOT NULL,
+  `mode` varchar(100) NOT NULL,
+  `paid_on` datetime NOT NULL,
+  `status` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `payments_status` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `payment_status_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `job_estimate` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` int(11) NOT NULL,
+  `estimate_id` int(11) DEFAULT NULL,
+  `date_updated` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `job_events` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` int(11) NOT NULL,
+  `event_id` int(11) DEFAULT NULL,
+  `date_updated` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `job_states` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `job_ticket` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` varchar(100) NOT NULL,
+  `ticket_id` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+
+CREATE DATABASE `atas_product` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE TABLE `brand` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `brand_id` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+CREATE TABLE `category` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `category_id` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` int(11) NOT NULL,
+  PRIMARY KEY (`next_val`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `model` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `brand_id` varchar(100) NOT NULL,
+  `model_id` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+CREATE TABLE `product` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` varchar(100) NOT NULL,
+  `sub_cat_id` varchar(100) DEFAULT NULL,
+  `brand_id` varchar(100) DEFAULT NULL,
+  `model_id` varchar(100) DEFAULT NULL,
+  `product_id` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+CREATE TABLE `product_items` (
+  `id` int(11) NOT NULL,
+  `product_id` varchar(100) DEFAULT NULL,
+  `item_id` varchar(100) DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `tax` int(11) DEFAULT NULL,
+  `media` blob,
+  `name` varchar(100) DEFAULT NULL,
+  `remarks` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `product_svcstype` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `servicetype_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `product_symptoms` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `symptom_id` varchar(100) NOT NULL,
+  `product_id` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+CREATE TABLE `servicetype` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `service_type_id` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+CREATE TABLE `sub_category` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `category_id` varchar(100) DEFAULT NULL,
+  `subcategory_id` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+CREATE TABLE `symptoms` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `symptom` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `symptom_id` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+
+CREATE DATABASE `atas_repair` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE TABLE `actions` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `action` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `customer_acknowledgement` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` varchar(100) NOT NULL,
+  `cust_acknowledgement` varchar(100) NOT NULL,
+  `provided_on` datetime NOT NULL,
+  `remarks` varchar(250) NOT NULL,
+  `media` blob,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `faulty_items` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` varchar(100) NOT NULL,
+  `heading` varchar(250) DEFAULT NULL,
+  `part_id` varchar(100) DEFAULT NULL,
+  `media` blob,
+  `faulty` char(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` int(11) NOT NULL,
+  PRIMARY KEY (`next_val`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `job_actions` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` varchar(100) NOT NULL,
+  `action_id` varchar(250) NOT NULL,
+  `updated_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `job_notes` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_Id` varchar(100) NOT NULL,
+  `notes` varchar(5000) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `job_repair` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` varchar(100) NOT NULL,
+  `repair_id` varchar(100) NOT NULL,
+  `updated_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `job_symptoms` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` varchar(100) NOT NULL,
+  `symptom_id` varchar(250) DEFAULT NULL,
+  `media` blob,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+CREATE TABLE `repair` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `repair` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `symptoms` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `symptom` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `tasks` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `task` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `tasks_performed` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` varchar(100) NOT NULL,
+  `task_id` varchar(100) DEFAULT NULL,
+  `performed_on` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE DATABASE `atas_ticket` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+CREATE TABLE `customer` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `custid` varchar(45) DEFAULT NULL,
+  `f_name` varchar(100) NOT NULL,
+  `m_name` varchar(100) DEFAULT NULL,
+  `l_name` varchar(100) NOT NULL,
+  `addr_id` varchar(100) DEFAULT NULL,
+  `addr_type` varchar(100) DEFAULT NULL,
+  `contact_id` varchar(100) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `ph_no` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `active` varchar(1) NOT NULL DEFAULT 'Y',
+  `addr1` varchar(45) DEFAULT NULL,
+  `state` varchar(45) DEFAULT NULL,
+  `country` varchar(45) DEFAULT NULL,
+  `city` varchar(45) DEFAULT NULL,
+  `pin` varchar(45) DEFAULT NULL,
+  `addr2` varchar(45) DEFAULT NULL,
+  `addr3` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `faulty_items` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `job_id` varchar(100) NOT NULL,
+  `heading` varchar(250) DEFAULT NULL,
+  `part_id` int(11) DEFAULT NULL,
+  `media` blob,
+  `faulty` char(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` int(11) NOT NULL,
+  PRIMARY KEY (`next_val`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `servicetype` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `stype` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `code` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `status` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ticket` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `issue` varchar(100) NOT NULL,
+  `description` varchar(250) NOT NULL,
+  `status_id` varchar(100) NOT NULL,
+  `product_id` varchar(100) NOT NULL,
+  `loggedon` datetime NOT NULL,
+  `customer_id` varchar(100) NOT NULL,
+  `logged_by` varchar(100) NOT NULL,
+  `last_update_on` datetime NOT NULL,
+  `warranty_condition` varchar(100) DEFAULT NULL,
+  `serial_no` varchar(250) DEFAULT NULL,
+  `ticket_code` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
+
+CREATE DATABASE `atas_user` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE TABLE `address` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `addr1` varchar(100) NOT NULL,
+  `addr2` varchar(100) DEFAULT NULL,
+  `addr3` varchar(100) DEFAULT NULL,
+  `city` varchar(100) NOT NULL,
+  `state` varchar(100) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `pin` int(11) DEFAULT NULL,
+  `user_id` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `expert_level` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `expert_level` varchar(100) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` int(11) NOT NULL,
+  PRIMARY KEY (`next_val`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `login` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(45) NOT NULL,
+  `login_id` varchar(45) NOT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `qualifications` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `qual_id` varchar(100) NOT NULL,
+  `qualification` varchar(100) NOT NULL,
+  `desc` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `role` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `desc` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `skills` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `skill` varchar(100) NOT NULL,
+  `desc` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(45) DEFAULT NULL,
+  `f_name` varchar(100) NOT NULL,
+  `m_name` varchar(100) DEFAULT NULL,
+  `l_name` varchar(100) NOT NULL,
+  `addr_id` varchar(100) DEFAULT NULL,
+  `addr_type` varchar(100) DEFAULT NULL,
+  `contact_id` varchar(100) NOT NULL,
+  `created_time` datetime NOT NULL,
+  `ph_no` int(11) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `active` varchar(1) NOT NULL DEFAULT 'Y',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `user_expert` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(45) NOT NULL,
+  `expert_level` varchar(100) NOT NULL,
+  `effective_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `user_location` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(45) NOT NULL,
+  `location_id` varchar(100) NOT NULL,
+  `effective_date` datetime NOT NULL,
+  `serving` char(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+CREATE TABLE `user_login` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(45) NOT NULL,
+  `login_id` varchar(45) NOT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `last_login` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `user_qual` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(45) NOT NULL,
+  `qual_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `user_role` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(45) DEFAULT NULL,
+  `role_id` varchar(100) NOT NULL,
+  `active` char(1) NOT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `user_skills` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `skills_id` int(11) NOT NULL,
+  `effective_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(100) DEFAULT NULL,
+  `login_id` varchar(100) DEFAULT NULL,
+  `f_name` varchar(100) NOT NULL,
+  `m_name` varchar(100) DEFAULT NULL,
+  `l_name` varchar(100) NOT NULL,
+  `addr_id` varchar(100) DEFAULT NULL,
+  `addr_type` varchar(100) DEFAULT NULL,
+  `contact_id` varchar(100) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `ph_no` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `active` varchar(1) NOT NULL DEFAULT 'Y',
+  `addr1` varchar(45) DEFAULT NULL,
+  `state` varchar(45) DEFAULT NULL,
+  `country` varchar(45) DEFAULT NULL,
+  `city` varchar(45) DEFAULT NULL,
+  `pin` varchar(45) DEFAULT NULL,
+  `addr2` varchar(45) DEFAULT NULL,
+  `addr3` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+

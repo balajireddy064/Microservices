@@ -1,0 +1,66 @@
+package com.ayusha.http.client.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.repair.services.data.models.SymptomDataModel;
+import com.ayusha.repair.services.data.models.SymptomsDataModel;
+import com.ayusha.tktmgmt.data.RepairNotesDataHandler;
+import com.ayusha.tktmgmt.data.RepairSymptomsDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class PartsReturnedServiceTester {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public PartsReturnedServiceTester() {
+		
+	}
+	
+	/**
+	 * test
+	 */
+	public void testJobNotesFind() {
+		RepairNotesDataHandler repairDataHandler = null;
+		JobNotesDataModel jobNotesDataModel = null;
+		try {
+			
+			repairDataHandler = RepairNotesDataHandler.getInstance();
+			jobNotesDataModel = repairDataHandler.getJobNotes("15");
+			System.out.println(" Job Notes returned IS ==<>>> "+jobNotesDataModel.getNotes());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testUpdateJobNotes() {
+		RepairNotesDataHandler repairDataHandler = null;
+		JobNotesDataModel jobNotesDataModel = null;
+		try {
+			repairDataHandler = RepairNotesDataHandler.getInstance();
+			repairDataHandler.updateJobNotes("TESTING JOB NOTES UPDATE");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		PartsReturnedServiceTester serviceTester = new PartsReturnedServiceTester();
+		serviceTester.testJobNotesFind();
+	}
+
+}

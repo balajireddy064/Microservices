@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.ayusha.products.data.repository.ICategoryRepository"/>
+<fullyQualifiedTypeName name="com.ayusha.products.data.repository.IServiceTypeRepository"/>
+<fullyQualifiedTypeName name="java.util.Optional"/>
+<fullyQualifiedTypeName name="com.ayusha.http.constants.HTTPConstants"/>
+<fullyQualifiedTypeName name="com.ayusha.products.data.models.ServiceTypeDataModel"/>
+<fullyQualifiedTypeName name="com.ayusha.products.services.constants.SymptomServiceConstants"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="java.io.DataInputStream"/>
+<fullyQualifiedTypeName name="org.springframework.context.annotation.ComponentScan"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="com.ayusha.products.service.ICategoryService"/>
+<fullyQualifiedTypeName name="com.ayusha.products.service.IModelService"/>
+<fullyQualifiedTypeName name="com.ayusha.products.service.ISymptomService"/>
+<fullyQualifiedTypeName name="com.ayusha.products.services.constants.ServiceTypeServiceConstants"/>
+<fullyQualifiedTypeName name="com.custom.logger.manager.LogManager"/>
+<fullyQualifiedTypeName name="com.custom.logger.logging.Logger"/>
+<fullyQualifiedTypeName name="com.ayusha.products.service.repository.IProductSymptomsRepository"/>
+<fullyQualifiedTypeName name="com.ayusha.products.service.entity.ProductSymptomsEntity"/>
+<fullyQualifiedTypeName name="com.ayusha.products.data.models.SymptomDataModel"/>
+<fullyQualifiedTypeName name="com.ayusha.products.data.models.SymptomsDataModel"/>
+<fullyQualifiedTypeName name="java.util.StringTokenizer"/>
+<fullyQualifiedTypeName name="com.ayusha.products.service.IProductService"/>
+<fullyQualifiedTypeName name="com.ayusha.products.service.repository.IProductRepository"/>
+<fullyQualifiedTypeName name="com.ayusha.products.services.constants.ProductServiceConstants"/>
+<fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.ayusha.products.services.constants.ItemServiceConstants"/>
+<fullyQualifiedTypeName name="com.ayusha.tktmgmt.data.ItemDataHandler"/>
+</qualifiedTypeNameHistroy>

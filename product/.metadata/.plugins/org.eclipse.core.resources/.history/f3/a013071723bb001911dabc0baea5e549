@@ -1,0 +1,73 @@
+package com.ayusha.products.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.products.data.models.CategoryDataModel;
+import com.ayusha.products.data.models.ModelDataModel;
+import com.ayusha.products.service.entity.CategoryEntity;
+import com.ayusha.products.service.entity.ModelEntity;
+import com.ayusha.products.service.repository.IModelRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * 
+ */
+@Service
+public class ModelService implements IModelService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(ModelService.class);
+	
+	/** repository **/
+	@Autowired
+	private IModelRepository iModelRepository;
+	/**
+	 * default constructor
+	 */
+	public ModelService() {
+		
+	}
+
+	/** add **/
+	public ModelDataModel getModel(String id) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		ModelDataModel modelDataModel = new ModelDataModel();
+		ModelEntity modelEntity=  iModelRepository.findModelById(id);
+		
+		modelDataModel.setId(Integer.parseInt(""+modelEntity.getId()));
+		modelDataModel.setDescription(modelEntity.getDescription());
+		modelDataModel.setName(modelEntity.getName());
+		modelDataModel.setModelId(modelEntity.getModel_id());
+		return modelDataModel;
+	}
+	/** update **/
+	public ModelDataModel updateModel(ModelDataModel modelDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		ModelEntity modelEntity = new ModelEntity();
+		
+		modelEntity.setId(modelDataModel.getId());
+		modelEntity.setDescription(modelDataModel.getDescription());
+		modelEntity.setName(modelDataModel.getName());
+		modelEntity.setModel_id(modelDataModel.getModelId());
+		iModelRepository.save(modelEntity);
+		modelEntity.setModel_id(model_id);
+		return modelDataModel;
+	}
+	/** update **/
+	public ModelDataModel add(ModelDataModel modelDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		ModelEntity modelEntity = new ModelEntity();
+		
+		modelEntity.setId(modelDataModel.getId());
+		modelEntity.setDescription(modelDataModel.getDescription());
+		modelEntity.setName(modelDataModel.getName());
+		modelEntity.setModel_id(modelDataModel.getModelId());
+		iModelRepository.save(modelEntity);
+		return modelDataModel;
+	}
+}

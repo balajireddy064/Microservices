@@ -1,0 +1,92 @@
+package com.ayusha.products.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.products.data.models.MakeDataModel;
+import com.ayusha.products.service.entity.MakeEntity;
+import com.ayusha.products.service.repository.IMakeRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * 
+ */
+@Service
+public class MakeService implements IMakeService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(MakeService.class);
+	
+	/** repository **/
+	@Autowired
+	private IMakeRepository iMakeRepository;
+	/**
+	 * default constructor
+	 */
+	public MakeService() {
+		
+	}
+
+	/** add **/
+	public MakeDataModel getMake(String id) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		MakeDataModel makeDataModel = new MakeDataModel();
+		MakeEntity makeEntity=  iMakeRepository.findMakeById(id);
+		
+		makeDataModel.setId(Integer.parseInt(""+makeEntity.getId()));
+		makeDataModel.setDescription(makeEntity.getDescription());
+		makeDataModel.setName(makeEntity.getName());
+		makeDataModel.setMakeId(makeEntity.getMake_id());
+		return makeDataModel;
+	}
+	
+	/** add **/
+	public MakeDataModel getAllMake() throws DataPersistenceOperationException,InvalidServiceRequestException{
+		MakeDataModel makeDataModel = new MakeDataModel();
+		List<MakeEntity> lstMakeEntity=  iMakeRepository.findAllMakes();
+		MakeEntity MakeEntity = null;
+		int size =0;
+		
+		size = lstMakeEntity.size();
+		for(int index=0; index<size; index++) {
+			makeDataModel = new MakeDataModel();
+			MakeEntity = lstMakeEntity.get(index);
+			makeDataModel.setId(Integer.parseInt(""+makeEntity.getId()));
+			makeDataModel.setDescription(makeEntity.getDescription());
+			makeDataModel.setName(makeEntity.getName());
+			makeDataModel.setMakeId(makeEntity.getMake_id());
+		}
+	
+		return makeDataModel;
+	}
+	/** update **/
+	public MakeDataModel updateMake(MakeDataModel makeDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		MakeEntity makeEntity = new MakeEntity();
+		
+		makeEntity.setId(makeDataModel.getId());
+		makeEntity.setDescription(makeDataModel.getDescription());
+		makeEntity.setName(makeDataModel.getName());
+		makeEntity.setMake_id(makeDataModel.getMakeId());
+		iMakeRepository.save(makeEntity);
+		return makeDataModel;
+	}
+	/** update **/
+	public MakeDataModel add(MakeDataModel makeDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		MakeEntity makeEntity = new MakeEntity();
+		
+		makeEntity.setId(makeDataModel.getId());
+		makeEntity.setDescription(makeDataModel.getDescription());
+		makeEntity.setName(makeDataModel.getName());
+		makeEntity.setMake_id(makeDataModel.getMakeId());
+		iMakeRepository.save(makeEntity);
+		return makeDataModel;
+	}
+}

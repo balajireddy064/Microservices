@@ -1,0 +1,5 @@
+package com.ayusha.products.data.repository;
+
+public class ICategoryRepository {
+
+}

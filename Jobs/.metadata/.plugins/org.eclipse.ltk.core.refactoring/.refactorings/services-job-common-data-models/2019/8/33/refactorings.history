@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;JobDataModel.java&apos; to &apos;services-job-common-data-models/src/main/java/com.ayusha.job.data.models&apos;&#x0D;&#x0A;- Original project: &apos;services-job-common-data-models&apos;&#x0D;&#x0A;- Destination element: &apos;services-job-common-data-models/src/main/java/com.ayusha.job.data.models&apos;&#x0D;&#x0A;- Original element: &apos;com.ayusha.job.data.models.JobDataModel.java&apos;" description="Copy compilation unit" destination="/src\/main\/java&lt;com.ayusha.job.data.models" element1="/src\/main\/java&lt;com.ayusha.job.data.models{JobDataModel.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1565518799855" units="1" version="1.0"/>
+</session>

@@ -1,0 +1,68 @@
+package com.ayusha.http.client.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ayusha.job.inventory.data.models.PartsReturnedDataModel;
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.repair.services.data.models.SymptomDataModel;
+import com.ayusha.repair.services.data.models.SymptomsDataModel;
+import com.ayusha.tktmgmt.data.PartsReturnedItemsDataHandler;
+import com.ayusha.tktmgmt.data.RepairNotesDataHandler;
+import com.ayusha.tktmgmt.data.RepairSymptomsDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class PartsReturnedServiceTester {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public PartsReturnedServiceTester() {
+		
+	}
+	
+	/**
+	 * test
+	 */
+	public void testJobNotesFind() {
+		PartsReturnedItemsDataHandler partsReturnedItemsDataHandler = null;
+		PartsReturnedDataModel partsReturnedDataModel = null;
+		try {
+			
+			partsReturnedItemsDataHandler = PartsReturnedItemsDataHandler.getInstance();
+			partsReturnedDataModel = partsReturnedItemsDataHandler.getPartsReturned("9");
+			System.out.println(" Job Notes returned IS ==<>>> "+partsReturnedDataModel.getLstPartsReturnedDataModel());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testUpdateJobNotes() {
+		PartsReturnedItemsDataHandler partsReturnedItemsDataHandler = null;
+		PartsReturnedDataModel partsReturnedDataModel = null;
+		try {
+			partsReturnedItemsDataHandler = PartsReturnedItemsDataHandler.getInstance();
+			repairDataHandler.updateJobNotes("TESTING JOB NOTES UPDATE");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		PartsReturnedServiceTester serviceTester = new PartsReturnedServiceTester();
+		serviceTester.testJobNotesFind();
+	}
+
+}

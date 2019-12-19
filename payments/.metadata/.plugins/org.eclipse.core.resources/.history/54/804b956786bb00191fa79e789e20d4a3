@@ -1,0 +1,48 @@
+package com.ayusha.payments.services.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Ticket Model
+ *
+ */
+@Entity
+@Table(name="cash_receipt_discounts")
+public class CashReceiptDiscountsEntity {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE) 
+	@Column(name="id")
+    private long id; 
+	
+
+	/** customerid **/
+	@Column(name="cash_receipt_id")
+	private String cashReceiptId="";
+	
+	/** customerid **/
+	@Column(name="coupon_id")
+	private String couponId;
+	
+	/** customerid **/
+	@Column(name="amount")
+	private double amount;
+	
+	/**
+	 * default constructor
+	 */
+	public CashReceiptDiscountsEntity() {
+		
+	}
+
+}

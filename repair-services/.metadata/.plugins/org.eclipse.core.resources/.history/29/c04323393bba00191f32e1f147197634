@@ -1,0 +1,20 @@
+package com.ayusha.repair.service;
+
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.tktmgmt.models.TicketDetailsDataModel;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the ticket service methods
+ *
+ */
+public interface ITicketService {
+	
+	/** find ticket by id **/
+	public TicketDetailsDataModel getTicketById(String id) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+}

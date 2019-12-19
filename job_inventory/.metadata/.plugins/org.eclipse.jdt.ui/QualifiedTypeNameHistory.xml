@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.ayusha.job.inventory.services.repository.IPartsReturnedRepository"/>
+<fullyQualifiedTypeName name="com.ayusha.job.inventory.data.models.PartReturnedDataModel"/>
+<fullyQualifiedTypeName name="com.ayusha.job.inventory.service.IReturnedItemsService"/>
+<fullyQualifiedTypeName name="com.ayusha.tktmgmt.data.PartsReturnedItemsDataHandler"/>
+<fullyQualifiedTypeName name="com.ayusha.job.inventory.data.models.PartsReturnedDataModel"/>
+<fullyQualifiedTypeName name="com.ayusha.json.utils.JSONConverter"/>
+<fullyQualifiedTypeName name="com.ayusha.job.inventory.service.IPartsIssuedService"/>
+<fullyQualifiedTypeName name="com.ayusha.job.inventory.service.IPartsRequestedService"/>
+<fullyQualifiedTypeName name="com.ayusha.http.client.ServicesClient"/>
+</qualifiedTypeNameHistroy>

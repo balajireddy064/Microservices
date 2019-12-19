@@ -1,0 +1,16 @@
+package com.ayusha.products.services.constants;
+
+/**
+ * 
+ * @author author
+ * 08-Aug-2019
+ * Repai services constants
+ *
+ */
+public class MakeServiceConstants {
+
+	/** Job Notes Get Service Name **/
+	public final static String GET_MAKE_SERVICE_NAME="repairs/notes/find?jobid=$1";
+	/** Job Notes Get Service Name **/
+	public final static String UPDATE_MAKE_SERVICE_NAME="repairs/notes/update/";
+}

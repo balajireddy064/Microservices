@@ -1,0 +1,102 @@
+package com.ayusha.products.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.products.data.models.MakeDataModel;
+import com.ayusha.products.data.models.MakeDataModels;
+import com.ayusha.products.data.models.ProductDataModel;
+import com.ayusha.products.service.entity.MakeEntity;
+import com.ayusha.products.service.entity.ProductEntity;
+import com.ayusha.products.service.repository.IProductRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * 
+ */
+@Service
+public class ProductService implements IProductService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(ProductService.class);
+	
+	/** repository **/
+	@Autowired
+	private IProductRepository iProductRepository;
+	/**
+	 * default constructor
+	 */
+	public ProductService() {
+		
+	}
+
+	/** add **/
+	public ProductDataModel getProductById(String productId) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		ProductDataModel productDataModel = new ProductDataModel();
+		ProductEntity productEntity=  iProductRepository.findProductByProductId(productId);
+		
+		productDataModel.setId(Integer.parseInt(""+productEntity.getId()));
+		productDataModel.setCategoryId(productEntity.getCategoryId());
+		productDataModel.setSubCategoryId(productEntity.getSubCategoryId());
+		productDataModel.setMakeId(productEntity.getMake_id());
+		productDataModel.setProductId(productId);
+		productDataModel.setModelId(productEntity.getModelId());
+		productDataModel.setMakeId(productEntity.getMake_id());
+		return productDataModel;
+	}
+	
+	/** add **/
+	public ProductDataModel getProductFor(String categoryId,String subCategoryId,String makeId) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		MakeDataModel makeDataModel = new MakeDataModel();
+		List<ProductEntity> lstMakeEntity=  iProductRepository.findProduct(categoryId, subCategoryId, makeId);
+		List<MakeDataModel> lstMakeDataModel= new ArrayList();
+		MakeEntity makeEntity = null;
+		int size =0;
+		
+		size = lstMakeEntity.size();
+		for(int index=0; index<size; index++) {
+			makeDataModel = new MakeDataModel();
+			makeEntity = lstMakeEntity.get(index);
+			makeDataModel.setId(Integer.parseInt(""+makeEntity.getId()));
+			makeDataModel.setDescription(makeEntity.getDescription());
+			makeDataModel.setName(makeEntity.getName());
+			makeDataModel.setMakeId(makeEntity.getMake_id());
+			lstMakeDataModel.add(makeDataModel);
+		}
+		MakeDataModels makeDataModels = new MakeDataModels();
+		makeDataModels.setLstMakeDataModel(lstMakeDataModel);
+		return makeDataModels;
+	}
+	/** update **/
+	public ProductDataModel updateProduct(ProductDataModel productDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		MakeEntity makeEntity = new MakeEntity();
+		
+		makeEntity.setId(makeDataModel.getId());
+		makeEntity.setDescription(makeDataModel.getDescription());
+		makeEntity.setName(makeDataModel.getName());
+		makeEntity.setMake_id(makeDataModel.getMakeId());
+		iProductRepository.save(makeEntity);
+		return makeDataModel;
+	}
+	/** update **/
+	public ProductDataModel add(ProductDataModel productDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		MakeEntity makeEntity = new MakeEntity();
+		
+		makeEntity.setId(makeDataModel.getId());
+		makeEntity.setDescription(makeDataModel.getDescription());
+		makeEntity.setName(makeDataModel.getName());
+		makeEntity.setMake_id(makeDataModel.getMakeId());
+		iProductRepository.save(makeEntity);
+		return makeDataModel;
+	}
+}

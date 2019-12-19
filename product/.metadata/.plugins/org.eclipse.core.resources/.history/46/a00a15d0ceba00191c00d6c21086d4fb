@@ -1,0 +1,26 @@
+package com.ayusha.products.service;
+
+
+import com.ayusha.products.data.models.ServiceTypeDataModel;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket ServiceType class
+ * Defines the ticket service methods
+ *
+ */
+public interface IServiceTypeService {
+	
+	/** add **/
+	public ServiceTypeDataModel getServiceType(String id) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	/** update **/
+	public ServiceTypeDataModel updateServiceType(String id) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	/** update **/
+	public ServiceTypeDataModel add(ServiceTypeDataModel serviceTypeDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+
+
+}

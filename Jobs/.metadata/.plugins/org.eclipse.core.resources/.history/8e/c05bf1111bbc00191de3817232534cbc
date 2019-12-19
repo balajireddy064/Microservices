@@ -1,0 +1,42 @@
+package com.ayusha.job.data.models;
+
+
+/**
+ * 
+ * @author author
+ * 10-Aug-2019
+ *
+ */
+public class JobDataModel {
+
+	/** id **/
+	private int id;
+	
+	/** jobid **/
+	private String jobId;
+	
+	/** status id **/
+	private String statusId;
+	
+	/** status name **/
+	private String statusName;
+	
+	/** start date **/
+	/** status name **/
+	private String startDate;
+	/** status name **/
+	private String endDate;
+	
+	/** status name **/
+	private String actualStartDate;
+	
+	/** status name **/
+	private String actualEndDate;
+	
+	/**
+	 * default constructor
+	 */
+	public JobDataModel() {
+		
+	}
+}

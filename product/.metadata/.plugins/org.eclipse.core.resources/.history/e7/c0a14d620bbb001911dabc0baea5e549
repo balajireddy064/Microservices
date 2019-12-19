@@ -1,0 +1,65 @@
+package com.ayusha.http.client.test;
+
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.ayusha.products.data.models.CategoryDataModel;
+import com.ayusha.tktmgmt.data.CategoryDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class CategoryDataPopulator {
+	
+	/** handler **/
+	private CategoryDataHandler categoryHandler = null;
+	
+	
+	/**
+	 * default constructor
+	 */
+	public CategoryDataPopulator() {
+		categoryHandler = CategoryDataHandler.getInstance();
+	}
+	
+	/**
+	 * populate data
+	 */
+	public void populateCategoryData() {
+		Resource resource = null;
+		InputStream input=null;
+		File file=null;
+		DataInputStream dataInputStream = null;
+		String strLine="";
+		CategoryDataModel categoryDataModel= null;
+		try {
+			resource = new ClassPathResource("categories.txt", this.getClass().getClassLoader());
+			input = resource.getInputStream();
+			dataInputStream = new DataInputStream(input);
+			while((strLine=dataInputStream.readLine())!=null) {
+				categoryDataModel = new CategoryDataModel();
+				categoryDataModel.setDescription(strLine);
+				categoryDataModel.setName(strLine);
+				categoryHandler.addCategory(categoryDataModel);
+			}
+		}catch(Exception e) {
+			
+		}
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		CategoryDataPopulator serviceTester = new CategoryDataPopulator();
+		serviceTester.populateCategoryData();
+	}
+
+}

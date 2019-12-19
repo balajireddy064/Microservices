@@ -1,0 +1,66 @@
+package com.ayusha.http.client.test;
+
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.ayusha.products.data.models.MakeDataModel;
+import com.ayusha.products.data.models.ModelDataModel;
+import com.ayusha.tktmgmt.data.ModelDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class ModelDataPopulator {
+	
+	/** handler **/
+	private ModelDataHandler modelDataHandler = null;
+	
+	
+	/**
+	 * default constructor
+	 */
+	public ModelDataPopulator() {
+		modelDataHandler = ModelDataHandler.getInstance();
+	}
+	
+	/**
+	 * populate data
+	 */
+	public void populateMakeData() {
+		Resource resource = null;
+		InputStream input=null;
+		File file=null;
+		DataInputStream dataInputStream = null;
+		String strLine="";
+		ModelDataModel modelDataModel= null;
+		try {
+			resource = new ClassPathResource("makes.txt", this.getClass().getClassLoader());
+			input = resource.getInputStream();
+			dataInputStream = new DataInputStream(input);
+			while((strLine=dataInputStream.readLine())!=null) {
+				modelDataModel = new ModelDataModel();
+				modelDataModel.setDescription(strLine);
+				modelDataModel.setName(strLine);
+				modelDataHandler.addMake(modelDataModel);
+			}
+		}catch(Exception e) {
+			
+		}
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		ModelDataPopulator2 serviceTester = new ModelDataPopulator2();
+		serviceTester.populateMakeData();
+	}
+
+}

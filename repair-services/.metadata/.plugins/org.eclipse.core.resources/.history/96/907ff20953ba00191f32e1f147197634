@@ -1,0 +1,72 @@
+package com.ayusha.repair.services.data.models;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 
+ * @author author
+ * 08-Aug-2019
+ * Symptoms details
+ *
+ */
+public class SymptomDataModel {
+	
+	/** id **/
+	private int id;
+	
+	/** jobid **/
+	private String symptom="";
+	
+	/** symptoms **/
+	private String description="";
+	
+	/**
+	 * default constructor
+	 */
+	public SymptomDataModel() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the symptom
+	 */
+	public String getSymptom() {
+		return symptom;
+	}
+
+	/**
+	 * @param symptom the symptom to set
+	 */
+	public void setSymptom(String symptom) {
+		this.symptom = symptom;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+}

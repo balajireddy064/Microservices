@@ -1,0 +1,18 @@
+package com.ayusha.general.services.constants;
+
+/**
+ * 
+ * @author author
+ * 10-Aug-2019
+ *
+ */
+public class GeneralServicesConstants {
+
+	/** Job Notes Get Service Name **/
+	public final static String GET_STATES_SERVICE_NAME="general/states/find?statecode=$1";
+	/** Job Notes Get Service Name **/
+	public final static String UPDATE_JOB_NOTES_SERVICE_NAME="repairs/notes/update/";
+	
+	/** Job Notes Get Service Name **/
+	public final static String GET_REPAIR_SYMPTOMS_SERVICE_NAME="repairs/symptoms/find?jobid=$1";
+}

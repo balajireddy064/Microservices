@@ -1,0 +1,99 @@
+package com.ayusha.http.client.test;
+
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.tktmgmt.data.RepairDataHandler;
+import com.ayusha.tktmgmt.models.CustomerMgmtDataModel;
+import com.ayusha.tktmgmt.models.TicketDetailsDataModel;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class ServiceTester {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public ServiceTester() {
+		
+	}
+	
+	/**
+	 * test
+	 */
+	public void testJobNotesFind() {
+		RepairDataHandler repairDataHandler = null;
+		JobNotesDataModel jobNotesDataModel = null;
+		try {
+			
+			repairDataHandler = RepairDataHandler.getInstance();
+			jobNotesDataModel = repairDataHandler.getJobNotes("1");
+			System.out.println(" TICKET ISSUE IS "+jobNotesDataModel.getNotes());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testUpdateJobNotes() {
+		RepairDataHandler repairDataHandler = null;
+		JobNotesDataModel jobNotesDataModel = null;
+		try {
+			
+			repairDataHandler = RepairDataHandler.getInstance();
+			jobNotesDataModel = repairDataHandler.updateJobNotes("TESTING JOB NOTES UPDATE");
+			System.out.println(" TICKET ISSUE IS "+jobNotesDataModel.getNotes());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testTicketUpdateDetails() {
+		RepairDataHandler ticketDataHandler = null;
+		TicketDetailsDataModel ticketDetailsDataModel = null;
+		try {
+			ticketDataHandler = RepairDataHandler.getInstance();
+			ticketDataHandler.updateTicket("9", "GOOD","GGOOOOD");
+			//System.out.println(" TICKET ISSUE IS "+ticketDetailsDataModel.getIssue());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testCustomerUpdateDetails() {
+		RepairDataHandler ticketDataHandler = null;
+		TicketDetailsDataModel ticketDetailsDataModel = null;
+		try {
+			ticketDataHandler = RepairDataHandler.getInstance();
+			TicketDetailsDataModel tkt = ticketDataHandler.getTicket("9");
+			CustomerMgmtDataModel customerMgmtDataModel = tkt.getCustomerMgmtDataModel();
+			customerMgmtDataModel.setCity("YOKOHAMA");
+			ticketDataHandler.updateCustomer(customerMgmtDataModel);
+			//System.out.println(" TICKET ISSUE IS "+ticketDetailsDataModel.getIssue());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		ServiceTester serviceTester = new ServiceTester();
+		serviceTester.testCustomerUpdateDetails();
+	}
+
+}

@@ -1,0 +1,71 @@
+package com.ayusha.products.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.products.data.models.CategoryDataModel;
+import com.ayusha.products.service.entity.CategoryEntity;
+import com.ayusha.products.service.entity.SubCategoryEntity;
+import com.ayusha.products.service.repository.ISubCategoryRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * 
+ */
+@Component
+@Service
+public class SubCategoryService implements ICategoryService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(SubCategoryService.class);
+	
+	/** repository **/
+	@Autowired
+	private ISubCategoryRepository iSubCategoryRepository;
+	/**
+	 * default constructor
+	 */
+	public SubCategoryService() {
+		
+	}
+
+	/** add **/
+	public CategoryDataModel getCategory(String categoryId) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		CategoryDataModel categoryDataModel = new CategoryDataModel();
+		List<SubCategoryEntity> lstSubCategoryEntity=  iSubCategoryRepository.findAllSubCategoriesForCategory(categoryId);
+		
+		categoryDataModel.setId(Integer.parseInt(""+subCategoryEntity.getId()));
+		categoryDataModel.setDescription(subCategoryEntity.getDescription());
+		categoryDataModel.setName(subCategoryEntity.getName());
+		return categoryDataModel;
+	}
+	/** update **/
+	public CategoryDataModel updateCategory(CategoryDataModel categoryDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		CategoryEntity categoryEntity = new CategoryEntity();
+		
+		categoryEntity.setId(categoryDataModel.getId());
+		categoryEntity.setDescription(categoryDataModel.getDescription());
+		categoryEntity.setName(categoryDataModel.getName());
+		iSubCategoryRepository.save(categoryEntity);
+		return categoryDataModel;
+	}
+	/** update **/
+	public CategoryDataModel add(CategoryDataModel categoryDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		CategoryEntity categoryEntity = new CategoryEntity();
+		
+		categoryEntity.setId(categoryDataModel.getId());
+		categoryEntity.setDescription(categoryDataModel.getDescription());
+		categoryEntity.setName(categoryDataModel.getName());
+		iSubCategoryRepository.save(categoryEntity);
+		return categoryDataModel;
+	}
+}

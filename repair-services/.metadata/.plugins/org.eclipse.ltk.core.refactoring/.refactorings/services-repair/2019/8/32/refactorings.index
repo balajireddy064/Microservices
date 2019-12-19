@@ -1,0 +1,39 @@
+1565309682123	Rename package 'com.ayusha.ticketmgmt'
+1565309706040	Rename package 'com.ayusha.ticketmgmt.controller'
+1565309732943	Rename package 'com.ayusha.ticketmgmt.entity'
+1565309756231	Rename package 'com.ayusha.ticketmgmt.repository'
+1565309776769	Rename package 'com.ayusha.ticketmgmt.service'
+1565309794220	Rename package 'com.ayusha.ticketmgmt.service.validations'
+1565309810147	Rename package 'com.ayusha.ticketmgmt.test'
+1565309876828	Rename type 'TicketManagementApp'
+1565309898343	Delete elements
+1565309913622	Rename type 'ITicketService'
+1565310014132	Rename type 'TicketService'
+1565310499031	Delete element
+1565310543965	Rename type 'IServiceTypeRepository'
+1565310855594	Delete element
+1565310989979	Rename type 'Customer'
+1565310996421	Delete elements
+1565311825883	Rename type 'CustomerDataValidation'
+1565311830874	Delete element
+1565311988815	Rename type 'CustomerManagementController'
+1565311993232	Delete element
+1565312034484	Rename field 'iCustomerRepository'
+1565312617792	Delete element
+1565316453033	Rename type 'JobSymptomsEntity'
+1565319134970	Rename type 'RepairServicesController'
+1565319340292	Rename type 'IRepairServices'
+1565319357893	Rename type 'RepairService'
+1565319367189	Rename type 'IRepairNotesServices'
+1565319373735	Rename type 'RepairNotesServices'
+1565320028595	Rename local variable 'symptomsDataValidation'
+1565320359496	Rename field 'iRepairServices'
+1565320620797	Rename field 'iJobNotesRepository'
+1565322784486	Rename field 'iRepairSymptomsService'
+1565327566442	Rename local variable 'symptomDataModel'
+1565327888837	Rename field 'iSymptomsRepository'
+1565329575464	Rename local variable 'symptomsEntity'
+1565329787241	Rename local variable 'jobSymptomsDataModel'
+1565331336907	Rename field 'iRepairSymptomsService'
+1565331399684	Rename local variable 'lstSymptomDataModel'
+1565331434762	Rename local variable 'symptomDataModel'

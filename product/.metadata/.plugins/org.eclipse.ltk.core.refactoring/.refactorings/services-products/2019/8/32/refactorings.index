@@ -1,0 +1,83 @@
+1565360025126	Rename field 'iJobNotesRepository'
+1565360397964	Copy compilation units
+1565360460565	Rename field 'iCategoryRepository'
+1565360566705	Rename local variable 'categoryDataModel'
+1565360585931	Rename local variable 'categoryEntity'
+1565360836248	Copy compilation units
+1565360931583	Rename local variable 'ModelDataModel'
+1565360939208	Rename local variable 'ModelEntity'
+1565361067339	Copy compilation units
+1565361254095	Rename field 'iServiceTypelRepository'
+1565361316043	Rename local variable 'modelDataModel'
+1565361631096	Copy compilation units
+1565362108237	Rename field 'iServiceTypeRepository'
+1565362395147	Rename local variable 'faultyItemDataModel'
+1565362433682	Copy compilation unit
+1565362452904	Rename local variable 'makeDataModel'
+1565362474845	Copy compilation unit
+1565362507451	Rename local variable 'modelDataModel'
+1565362533772	Copy compilation unit
+1565362554256	Rename local variable 'categoryDataModel'
+1565362589416	Copy compilation unit
+1565362610143	Rename local variable 'serviceTypeDataModel'
+1565363933310	Rename field 'iRepairFaultyItemsService'
+1565364272098	Rename type 'RepairFaultyItemsServicesController'
+1565364297534	Copy compilation unit
+1565364358961	Rename field 'iCategoryService'
+1565364433234	Copy compilation unit
+1565364459338	Rename field 'iCategoryService'
+1565364566510	Copy compilation unit
+1565364600954	Rename compilation unit 'ServiceTypeServicesController2.java'
+1565364635822	Rename local variable 'makeDataModel'
+1565364708572	Copy compilation unit
+1565364769294	Rename field 'iServiceTypeService'
+1565364787063	Rename local variable 'serviceTypeDataModel'
+1565368474927	Rename type 'RepairServicesApp'
+1565368973601	Rename package 'com.ayusha.products.app'
+1565369081772	Rename package 'com.ayusha.products.data.services'
+1565369094127	Rename package 'com.ayusha.products.data.repository'
+1565369149927	Rename package 'com.ayusha.products.services.data.validation'
+1565369431749	Rename package 'com.ayusha.products.repository'
+1565369493546	Rename package 'com.ayusha.products.data.entity'
+1565370268238	Copy compilation unit
+1565370683646	Rename package 'com.ayusha.products.services'
+1565370691281	Rename package 'com.ayusha.products.services.controller'
+1565370699406	Rename package 'com.ayusha.products.services.entity'
+1565370705806	Rename package 'com.ayusha.products.services.repository'
+1565370712715	Rename package 'com.ayusha.products.services.validation'
+1565370762190	Delete element
+1565370847373	Rename package 'com.ayusha.products.service'
+1565370882624	Copy compilation units
+1565370917056	Copy compilation units
+1565370926716	Copy compilation units
+1565370936933	Copy compilation units
+1565370947746	Copy compilation units
+1565371483529	Rename package 'com.ayusha.products.services'
+1565371845348	Copy compilation units
+1565371856595	Copy compilation units
+1565371871716	Copy compilation units
+1565371971977	Copy compilation units
+1565372696037	Copy package
+1565372720022	Copy file
+1565372857111	Copy compilation unit
+1565372924791	Copy compilation units
+1565372954189	Copy compilation unit
+1565372973196	Copy compilation unit
+1565372995878	Copy compilation unit
+1565396724933	Copy compilation units
+1565397549813	Copy compilation unit
+1565397581238	Rename field 'iCategoryService'
+1565412126421	Copy compilation unit
+1565412315597	Copy compilation unit
+1565412561964	Copy compilation unit
+1565412675410	Copy compilation unit
+1565412713937	Rename field 'iMakeRepository'
+1565414001171	Copy compilation unit
+1565414079851	Rename field 'iCategoryService'
+1565423384310	Copy compilation unit
+1565423686295	Copy compilation unit
+1565423813542	Copy compilation unit
+1565423901362	Rename field 'iMakeRepository'
+1565425045047	Rename local variable 'makeDataModel'
+1565426673617	Copy compilation unit
+1565426766513	Rename field 'iMakeService'

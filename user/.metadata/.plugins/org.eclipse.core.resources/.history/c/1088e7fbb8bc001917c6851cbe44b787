@@ -1,0 +1,252 @@
+package com.ayusha.user.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.user.data.models.LocationsUsersDataModel;
+import com.ayusha.user.data.models.UserDataModel;
+import com.ayusha.user.data.models.UserLocationsDataModel;
+import com.ayusha.user.data.models.UsersDataModel;
+import com.ayusha.user.services.entity.UserEntity;
+import com.ayusha.user.services.entity.UserLocationEntity;
+import com.ayusha.user.services.repository.IUserLocationRepository;
+import com.ayusha.user.services.repository.IUserRepository;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class UserService implements IUserService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(UserService.class);
+	
+	/** repository **/
+	@Autowired
+	private IUserRepository iUserRepository;
+	
+	/** IUserLocationRepository **/
+	private IUserLocationRepository iUserLocationRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public UserService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public UserDataModel save(UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		UserEntity userEntity = new UserEntity();
+		populateUserEntity(userEntity, userDataModel);
+		iUserRepository.save(userEntity);
+		return userDataModel;
+	}
+	
+	/**
+	 * populate user entity
+	 */
+	private void populateUserEntity(UserEntity userEntity, UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		userEntity.setAddr1(userDataModel.getAddr1());
+		userEntity.setAddr2(userDataModel.getAddr2());
+		userEntity.setAddr3(userDataModel.getAddr3());
+		userEntity.setCity(userDataModel.getCity());
+		userEntity.setState(userDataModel.getState());
+		userEntity.setCountry(userDataModel.getCountry());
+		userEntity.setPin(userDataModel.getPin());
+		
+		userEntity.setEmailId(userDataModel.getEmail());
+		userEntity.setPhoneNumber(userDataModel.getPhoneNumber());
+		userEntity.setFirstName(userDataModel.getFirstName());
+		userEntity.setLastName(userDataModel.getLastName());
+		userEntity.setMiddleName(userDataModel.getMiddleName());
+		userEntity.setLoginId(userDataModel.getLoginId());
+		userEntity.setUserId(userDataModel.getUserId());
+	}
+	
+	/**
+	 * populate user entity
+	 */
+	private void populateUserDataModel(UserEntity userEntity, UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		userDataModel.setAddr1(userEntity.getAddr1());
+		userDataModel.setAddr2(userEntity.getAddr2());
+		userDataModel.setAddr3(userEntity.getAddr3());
+		userDataModel.setCity(userEntity.getCity());
+		userDataModel.setState(userEntity.getState());
+		userDataModel.setCountry(userEntity.getCountry());
+		userDataModel.setPin(userEntity.getPin());
+		
+		userDataModel.setEmail(userEntity.getEmailId());
+		userDataModel.setPhoneNumber(userEntity.getPhoneNumber());
+		userDataModel.setFirstName(userEntity.getFirstName());
+		userDataModel.setLastName(userEntity.getLastName());
+		userDataModel.setMiddleName(userEntity.getMiddleName());
+		userDataModel.setLoginId(userEntity.getLoginId());
+		userDataModel.setUserId(userEntity.getUserId());
+	}
+		
+	/**
+	 * add ticket
+	 */
+	public UserDataModel update(UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		UserEntity userEntity = iUserRepository.findUserByUserId(userDataModel.getUserId());
+		populateUserEntity(userEntity, userDataModel);
+		iUserRepository.save(userEntity);
+		return userDataModel;
+	}
+	
+	/** find job notes by id **/
+	public UserDataModel getUserByUserId(String userId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		UserEntity userEntity = iUserRepository.findUserByUserId(userId);
+		UserDataModel userDataModel = new UserDataModel();
+		populateUserDataModel(userEntity, userDataModel);
+		return userDataModel;
+	}
+	
+	/** find job notes by id **/
+	public UserDataModel getUserByEmailId(String emailId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		UserEntity userEntity = iUserRepository.findUserByEmailId(emailId);
+		UserDataModel userDataModel = new UserDataModel();
+		populateUserDataModel(userEntity, userDataModel);
+		return userDataModel;
+	}
+
+	/** find job notes by id **/
+	public UserDataModel getUserByPhoneNumber(String phoneNumber) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		UserEntity userEntity = iUserRepository.findUserByPhoneNumberId(phoneNumber);
+		UserDataModel userDataModel = new UserDataModel();
+		populateUserDataModel(userEntity, userDataModel);
+		return userDataModel;
+	}
+	
+	/** find job notes by id **/
+	public UsersDataModel getUserByFisrtName(String firstName) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		List<UserDataModel> lstUserDataModel = new ArrayList();
+		UserEntity userEntity = null;
+		UserDataModel userDataModel = new UserDataModel();
+		List<UserEntity> lstUserEntity = iUserRepository.findUserByFisrtName(firstName);
+		
+		UsersDataModel usersDataModel = new UsersDataModel();
+	    userEntity = new UserEntity();
+		int size=0;
+		size = lstUserEntity.size();
+		
+		for(int index=0;index<size; index++) {
+			userEntity = lstUserEntity.get(index);
+			userDataModel = new UserDataModel();
+			populateUserDataModel(userEntity, userDataModel);
+			lstUserDataModel.add(userDataModel);
+		}
+		
+		usersDataModel.setLstUserDataModel(lstUserDataModel);
+		
+		return usersDataModel;
+	}
+	
+	/** find job notes by id **/
+	public UsersDataModel getAllUsers() throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		List<UserEntity> iterableuserEntity = iUserRepository.findAllUsers();
+		UserDataModel userDataModel = new UserDataModel();
+		UsersDataModel usersDataModel = new UsersDataModel();
+		
+		List<UserDataModel> lstUserDataModel = new ArrayList();
+		UserEntity userEntity = new UserEntity();
+		
+		
+		
+		int size=0;
+		
+		size = iterableuserEntity.size();
+		
+
+		for(int index=0;index<size; index++) {
+			userEntity = iterableuserEntity.get(index);
+			userDataModel = new UserDataModel();
+			populateUserDataModel(userEntity, userDataModel);
+			lstUserDataModel.add(userDataModel);
+		}
+		
+		usersDataModel.setLstUserDataModel(lstUserDataModel);
+		return usersDataModel;
+	}
+	
+	/** find job notes by id **/
+	public UserLocationsDataModel getLocations(String userId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		UserLocationsDataModel userLocationsDataModel = new UserLocationsDataModel();
+		List<UserLocationEntity> lstUserLocations = iUserLocationRepository.findLocationsByUserId(userId);
+		UserLocationEntity userLocationEntity = null;
+		
+		List<String> lstLocations = new ArrayList();
+		
+		int size=0;
+		size = lstUserLocations.size();
+		
+		for(int index=0; index<size; index++) {
+			userLocationEntity = lstUserLocations.get(index);
+			lstLocations.add(userLocationEntity.getLocationId());
+			
+		}
+		userLocationsDataModel.setLstLocations(lstLocations);
+		return userLocationsDataModel;
+	}
+	
+	/** find job notes by id **/
+	public LocationsUsersDataModel getUsersServingLocation(String location) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		LocationsUsersDataModel locationsUsersDataModel = new LocationsUsersDataModel();
+		List<UserLocationEntity> lstUserLocations = iUserLocationRepository.findLocationsByUserId(location);
+		UserLocationEntity userLocationEntity = null;
+		
+		List<String> lstLocations = new ArrayList();
+		
+		int size=0;
+		size = lstUserLocations.size();
+		
+		for(int index=0; index<size; index++) {
+			userLocationEntity = lstUserLocations.get(index);
+			lstLocations.add(userLocationEntity.getLocationId());
+			
+		}
+		locationsUsersDataModel.setLstUsers(lstLocations);
+		return locationsUsersDataModel;
+	}
+	
+	
+	
+}

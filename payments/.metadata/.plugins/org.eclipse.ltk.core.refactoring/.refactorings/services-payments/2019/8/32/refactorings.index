@@ -1,0 +1,30 @@
+1565445475924	Delete elements
+1565445497878	Rename type 'CityEntity'
+1565445703654	Delete elements
+1565445717167	Rename type 'ICityRepository'
+1565445858633	Rename type 'CountryDataValidation'
+1565446001441	Delete elements
+1565446015271	Rename type 'ICityService'
+1565446114235	Rename type 'CityService'
+1565446331561	Rename field 'iCityRepository'
+1565446730289	Delete elements
+1565446744772	Rename type 'CityServicesController'
+1565447054538	Rename field 'iCityService'
+1565448388168	Copy compilation unit
+1565448572554	Copy compilation unit
+1565448630078	Copy compilation unit
+1565448649408	Copy compilation unit
+1565450060476	Rename package 'com.ayusha.general.service'
+1565450075190	Rename package 'com.ayusha.general.services.repository'
+1565450086326	Rename package 'com.ayusha.general.services.entity'
+1565450100771	Rename package 'com.ayusha.general.services.controller'
+1565450112725	Rename package 'com.ayusha.general.service.validations'
+1565450124790	Rename package 'com.ayusha.general'
+1565450233022	Copy compilation unit
+1565450436531	Copy compilation unit
+1565450526437	Copy compilation unit
+1565450748197	Copy compilation unit
+1565450779352	Rename field 'iEstimationRepository'
+1565450828323	Rename local variable 'estimateEntity'
+1565452060751	Copy compilation unit
+1565452178673	Copy compilation unit

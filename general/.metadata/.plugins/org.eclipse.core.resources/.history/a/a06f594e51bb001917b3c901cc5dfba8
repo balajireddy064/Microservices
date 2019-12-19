@@ -1,0 +1,5 @@
+package com.ayusha.general.services.data.model;
+
+public class CityDataModel {
+
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.ayusha.general.services.constants.GeneralServicesConstants"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="java.io.DataInputStream"/>
+<fullyQualifiedTypeName name="com.ayusha.tktmgmt.data.CountryDataHandler"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.ayusha.general.services.repository.ICityRepository"/>
+<fullyQualifiedTypeName name="com.ayusha.tktmgmt.data.StateDataHandler"/>
+<fullyQualifiedTypeName name="com.ayusha.http.client.ServicesClient"/>
+</qualifiedTypeNameHistroy>

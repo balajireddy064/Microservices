@@ -1,0 +1,72 @@
+package com.ayusha.products.data.models;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 
+ * @author author
+ * 09-Aug-2019
+ * Product and supported service types
+ *
+ */
+public class ProductServiceTypesDataModel {
+	
+	/**  id **/
+	private int id;
+	
+	/** product id **/
+	private String productId;
+	
+	/** service types **/
+	private List<ServiceType> lstServiceTypes = new ArrayList();
+	
+	/**
+	 * default constructor
+	 */
+	public ProductServiceTypesDataModel() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the productId
+	 */
+	public String getProductId() {
+		return productId;
+	}
+
+	/**
+	 * @param productId the productId to set
+	 */
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	/**
+	 * @return the lstServiceTypes
+	 */
+	public List<ServiceType> getLstServiceTypes() {
+		return lstServiceTypes;
+	}
+
+	/**
+	 * @param lstServiceTypes the lstServiceTypes to set
+	 */
+	public void setLstServiceTypes(List<ServiceType> lstServiceTypes) {
+		this.lstServiceTypes = lstServiceTypes;
+	}
+}

@@ -1,0 +1,18 @@
+package com.ayusha.products.services.constants;
+
+/**
+ * 
+ * @author author
+ * 08-Aug-2019
+ * Repai services constants
+ *
+ */
+public class SymptomServiceConstants {
+
+	/** Job Notes Get Service Name **/
+	public final static String GET_SYMPTOM_SERVICE_NAME="products/symptom/find?id=$1";
+	/** Job Notes Get Service Name **/
+	public final static String UPDATE_SYMPTOM_SERVICE_NAME="products/symptom/update/";
+	/** Job Notes Get Service Name **/
+	public final static String ADD_SYMPTOM_SERVICE_NAME="products/symptom/add/";
+}

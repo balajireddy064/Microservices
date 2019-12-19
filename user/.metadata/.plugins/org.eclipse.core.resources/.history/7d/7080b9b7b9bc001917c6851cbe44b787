@@ -1,0 +1,111 @@
+package com.ayusha.http.client.test;
+
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.StringTokenizer;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.ayusha.tktmgmt.data.UserDataHandler;
+import com.ayusha.user.data.models.UserDataModel;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class UserDataTester {
+	
+	/** ticket Data Handler **/
+	private UserDataHandler userDataHandler = UserDataHandler.getInstance();
+	
+	/**
+	 * default constructor
+	 */
+	public UserDataTester() {
+		
+	}
+	
+	/**
+	 * add ticket
+	 */
+	private void addUser() {
+		Resource resource = null;
+		InputStream input=null;
+		File file=null;
+		DataInputStream dataInputStream = null;
+		String strLine="";
+		UserDataModel userDataModel= new UserDataModel();
+	
+		
+		StringTokenizer stringTokenizer = null;
+		try {
+			resource = new ClassPathResource("users.txt", this.getClass().getClassLoader());
+			input = resource.getInputStream();
+			dataInputStream = new DataInputStream(input);
+			while((strLine=dataInputStream.readLine())!=null) {
+			stringTokenizer = new StringTokenizer(strLine,",");
+			userDataModel = new UserDataModel();
+			System.out.println(" CHECK THIS "+strLine);
+			userDataModel.setLoginId(stringTokenizer.nextToken());
+			userDataModel.setUserId(stringTokenizer.nextToken());
+			userDataModel.setFirstName(stringTokenizer.nextToken());
+			userDataModel.setMiddleName(stringTokenizer.nextToken());
+			userDataModel.setLastName(stringTokenizer.nextToken());
+			userDataModel.setAddr1(stringTokenizer.nextToken());
+			userDataModel.setAddr2(stringTokenizer.nextToken());
+			userDataModel.setAddr3(stringTokenizer.nextToken());
+				
+			userDataModel.setCity(stringTokenizer.nextToken());
+			userDataModel.setState(stringTokenizer.nextToken());
+			userDataModel.setCountry(stringTokenizer.nextToken());
+			userDataModel.setPin(stringTokenizer.nextToken());
+			userDataModel.setEmail(stringTokenizer.nextToken());
+			userDataModel.setPhoneNumber(stringTokenizer.nextToken());	
+			System.out.println(" CHECK THIS fdsfsfsf"+strLine);
+			userDataHandler.addUser(userDataModel);
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * add ticket
+	 */
+	private void getAllUsers() {
+		
+		try {
+			
+			userDataHandler.getAllUsers();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * add ticket
+	 */
+	private void getUserByUserId() {
+		try {
+			
+			userDataHandler.getUserUserId("nagendra");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		UserDataTester serviceTester = new UserDataTester();
+		serviceTester.getUserByUserId();
+	}
+
+}

@@ -1,0 +1,46 @@
+package com.ayusha.general.service.validations;
+
+import org.springframework.stereotype.Component;
+
+import com.ayusha.general.services.data.model.CountryDataModel;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the ticket service data validation methods
+ *
+ */
+@Component
+public class CountryDataValidation {
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(CountryDataValidation.class);
+	
+	/**
+	 * default constructor
+	 */
+	public CountryDataValidation() {
+		
+	}
+	
+	/**
+	 * validate
+	 */
+	public boolean validate(CountryDataModel countryDataModel) throws InvalidServiceRequestException{
+		
+		if(countryDataModel==null) {
+			throw new InvalidServiceRequestException("Invalid service request data");
+		}else if(countryDataModel.getName()==null || (countryDataModel.getName().trim().length()<1)) {
+			throw new InvalidServiceRequestException("Invalid job notes request data");
+		}else if(countryDataModel.getCountryCode()==null || (countryDataModel.getCountryCode().trim().length()<1)) {
+			throw new InvalidServiceRequestException("Invalid job notes request data");
+		}
+		return true;
+	}
+
+}

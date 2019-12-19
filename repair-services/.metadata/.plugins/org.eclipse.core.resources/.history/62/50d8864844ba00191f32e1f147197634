@@ -1,0 +1,158 @@
+package com.ayusha.tktmgmt.data;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.repair.services.constants.RepairServiceConstants;
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+import com.ayusha.tktmgmt.constants.TicketMgmtServiceConstants;
+import com.ayusha.tktmgmt.models.CustomerMgmtDataModel;
+import com.ayusha.tktmgmt.models.UpdateTicketDetailsDataModel;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class RepairDataHandler {
+	
+	/** singleon object reference **/
+	private final static RepairDataHandler repairDataHandler = new RepairDataHandler();
+	
+	/** selected ticket id **/
+	private String selectedJobId="15";
+	
+	/** selected ticket **/
+	private JobNotesDataModel jobNotesDataModel = null;
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private RepairDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static RepairDataHandler getInstance() {
+		return repairDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public JobNotesDataModel getJobNotes(String jobId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		String jobNotesServiceName=RepairServiceConstants.GET_JOB_NOTES_SERVICE_NAME;
+		
+		jobNotesServiceName = jobNotesServiceName.replace("$1", jobId);
+		
+		servicesClient = ServicesClient.getInstance();
+		
+		serviceResponse = servicesClient.execute(jobNotesServiceName,"",HTTPConstants.GET);
+		
+		try {
+			jobNotesDataModel = ((JobNotesDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),JobNotesDataModel.class));
+			return jobNotesDataModel;
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateJobNotes(String notes) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateJobNotesServiceName=RepairServiceConstants.UPDATE_JOB_NOTES_SERVICE_NAME;
+		
+		if(jobNotesDataModel==null) {
+			jobNotesDataModel = new JobNotesDataModel();
+		}
+		
+		jobNotesDataModel.setJobId(selectedJobId);
+		jobNotesDataModel.setNotes(notes);
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(updateJobNotesServiceName,JSONConverter.convertPOJOToString(jobNotesDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+	
+	
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateCustomer(CustomerMgmtDataModel customerMgmtDataModel) throws ServicesDataException{
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		UpdateTicketDetailsDataModel updateTicketDetailsDataModel = null;
+		String tktService=TicketMgmtServiceConstants.UPDATE_CUSTOMER_DETAILS_SERVICE_NAME;
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" CCCCCC "+JSONConverter.convertPOJOToString(customerMgmtDataModel)+":::::"+tktService);
+			serviceResponse = servicesClient.execute(tktService,JSONConverter.convertPOJOToString(customerMgmtDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+	/**
+	 * get ticket data
+	 */
+	public void updateTicket(String tktId,String serviceTypeId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		UpdateTicketDetailsDataModel updateTicketDetailsDataModel = null;
+		String tktService=TicketMgmtServiceConstants.UPDATE_TICKET_DETAILS_SERVICE_NAME;
+		
+		updateTicketDetailsDataModel = new UpdateTicketDetailsDataModel();
+		updateTicketDetailsDataModel.setTktId(tktId);
+		updateTicketDetailsDataModel.setType("SERVICETYPE");
+		updateTicketDetailsDataModel.setSeviceTypeId(serviceTypeId);
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(tktService,JSONConverter.convertPOJOToString(updateTicketDetailsDataModel),HTTPConstants.POST);
+		    System.out.println(" RESPONSE IS "+serviceResponse);
+		}catch(Exception e) {
+			e.printStackTrace();
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}
+			
+	}
+	
+	
+
+}

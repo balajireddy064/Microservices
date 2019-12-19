@@ -1,0 +1,25 @@
+package com.ayusha.user.services.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.ayusha.user.services.entity.UserEntity;
+import com.ayusha.user.services.entity.CountryEntity;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the methods for the ticketmanagement persistance CRUD operations
+ *
+ */
+public interface IUserRepository extends CrudRepository<UserEntity,Integer>{
+
+	 @Query("SELECT t FROM UserEntity t WHERE t.user_id = ?1")
+	 UserEntity findCityByCityId(String user_id);
+	 @Query("SELECT t FROM UserEntity t WHERE t.fisrtName = ?1")
+	 List<UserEntity> findCitiesByStateId(String fisrtName);
+}

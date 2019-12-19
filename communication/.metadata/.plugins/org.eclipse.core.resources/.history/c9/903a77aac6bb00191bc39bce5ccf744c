@@ -1,0 +1,197 @@
+package com.ayusha.communication.services.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Ticket Model
+ *
+ */
+@Entity
+@Table(name="notification_requests")
+public class CommunicationEntity {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE) 
+	@Column(name="id")
+    private long id; 
+	
+
+	/** customerid **/
+	@Column(name="channel_type")
+	private String channelType="";
+	
+	/** customerid **/
+	@Column(name="notification_type")
+	private String notificationType="";
+	
+	/** customerid **/
+	@Column(name="requested_on")
+	private String requestedOn="";
+	
+	/** customerid **/
+	@Column(name="notifiedOn")
+	private String notifiedOn="";
+	
+	/** customerid **/
+	@Column(name="status")
+	private String status="";
+	/** customerid **/
+	@Column(name="requested_by")
+	private String requestedBy="";
+	/** customerid **/
+	@Column(name="appid")
+	private String appId="";
+	/** customerid **/
+	@Column(name="notification_remarks")
+	private String remarks="";
+	
+	/**
+	 * default constructor
+	 */
+	public CommunicationEntity() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the channelType
+	 */
+	public String getChannelType() {
+		return channelType;
+	}
+
+	/**
+	 * @param channelType the channelType to set
+	 */
+	public void setChannelType(String channelType) {
+		this.channelType = channelType;
+	}
+
+	/**
+	 * @return the notificationType
+	 */
+	public String getNotificationType() {
+		return notificationType;
+	}
+
+	/**
+	 * @param notificationType the notificationType to set
+	 */
+	public void setNotificationType(String notificationType) {
+		this.notificationType = notificationType;
+	}
+
+	/**
+	 * @return the requestedOn
+	 */
+	public String getRequestedOn() {
+		return requestedOn;
+	}
+
+	/**
+	 * @param requestedOn the requestedOn to set
+	 */
+	public void setRequestedOn(String requestedOn) {
+		this.requestedOn = requestedOn;
+	}
+
+	/**
+	 * @return the notifiedOn
+	 */
+	public String getNotifiedOn() {
+		return notifiedOn;
+	}
+
+	/**
+	 * @param notifiedOn the notifiedOn to set
+	 */
+	public void setNotifiedOn(String notifiedOn) {
+		this.notifiedOn = notifiedOn;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return the requestedBy
+	 */
+	public String getRequestedBy() {
+		return requestedBy;
+	}
+
+	/**
+	 * @param requestedBy the requestedBy to set
+	 */
+	public void setRequestedBy(String requestedBy) {
+		this.requestedBy = requestedBy;
+	}
+
+	/**
+	 * @return the appId
+	 */
+	public String getAppId() {
+		return appId;
+	}
+
+	/**
+	 * @param appId the appId to set
+	 */
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+
+	/**
+	 * @return the remarks
+	 */
+	public String getRemarks() {
+		return remarks;
+	}
+
+	/**
+	 * @param remarks the remarks to set
+	 */
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+}

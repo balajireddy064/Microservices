@@ -1,0 +1,5 @@
+package com.ayusha.job.inventory.services.controller;
+
+public class PartsIssuedServicesController {
+
+}

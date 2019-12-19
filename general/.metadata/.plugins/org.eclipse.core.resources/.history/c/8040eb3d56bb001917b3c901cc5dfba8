@@ -1,0 +1,94 @@
+package com.ayusha.http.client.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.repair.services.data.models.SymptomDataModel;
+import com.ayusha.repair.services.data.models.SymptomsDataModel;
+import com.ayusha.tktmgmt.data.RepairNotesDataHandler;
+import com.ayusha.tktmgmt.data.RepairSymptomsDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class RepairSymptomsTester {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public RepairSymptomsTester() {
+		
+	}
+	
+	
+	/********************************************************************************************************/
+	    
+	/*************************************************************************************************************/
+	/**
+	 * test
+	 */
+	public void testRepairSymptomsFind() {
+		RepairSymptomsDataHandler repairSymptomsDataHandler = null;
+		SymptomsDataModel symptomsDataModel = null;
+		try {
+			
+			repairSymptomsDataHandler = RepairSymptomsDataHandler.getInstance();
+			symptomsDataModel = repairSymptomsDataHandler.getSymptoms("9");
+			System.out.println(" Job Notes returned IS ==<>>> "+symptomsDataModel.getLstSymptoms());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testRepairSymptomsAdd() {
+		RepairSymptomsDataHandler repairSymptomsDataHandler = null;
+		SymptomsDataModel symptomsDataModel = null;
+		List<SymptomDataModel> lstSymptomDataModel = new ArrayList();
+		SymptomDataModel symptomDataModel = null;
+		int jobId = 9;
+		try {
+			
+			repairSymptomsDataHandler = RepairSymptomsDataHandler.getInstance();
+			symptomDataModel = new SymptomDataModel();
+			symptomDataModel.setJobId(""+jobId);
+			symptomDataModel.setMedia(null);
+			symptomDataModel.setSymptomId("400");
+			symptomDataModel.setMedia("IMAGE".getBytes());
+			lstSymptomDataModel.add(symptomDataModel);
+			
+			symptomDataModel = new SymptomDataModel();
+			symptomDataModel.setJobId(""+jobId);
+			symptomDataModel.setMedia(null);
+			symptomDataModel.setSymptomId("300");
+			symptomDataModel.setMedia("I AM GOOD".getBytes());
+			lstSymptomDataModel.add(symptomDataModel);
+			symptomsDataModel = new SymptomsDataModel();
+			symptomsDataModel.setJob_id(""+jobId);
+			symptomsDataModel.setLstSymptoms(lstSymptomDataModel);
+			
+			repairSymptomsDataHandler.updateRepairSymptoms(symptomsDataModel);
+			System.out.println(" Repair Symptoms returned IS ==<>>> "+symptomsDataModel.getLstSymptoms());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		RepairSymptomsTester repairSymptomsTester = new RepairSymptomsTester();
+		repairSymptomsTester.testRepairSymptomsFind();
+	}
+
+}

@@ -1,0 +1,5 @@
+package com.ayusha.products.data.models;
+
+public class ProductDataModel {
+
+}

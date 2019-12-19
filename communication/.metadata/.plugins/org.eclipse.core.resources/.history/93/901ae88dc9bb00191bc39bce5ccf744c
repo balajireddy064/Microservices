@@ -1,0 +1,19 @@
+package com.ayusha.communication.data.models;
+
+
+/**
+ * 
+ * @author Author
+ *
+ */
+public class NotificationMessageDataModel {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public NotificationMessageDataModel() {
+		
+	}
+
+}

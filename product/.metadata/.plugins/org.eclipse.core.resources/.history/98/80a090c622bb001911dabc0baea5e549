@@ -1,0 +1,86 @@
+package com.ayusha.products.data.models;
+
+/**
+ * 
+ * @author author
+ * 09-Aug-2019
+ * Product and supported service types
+ *
+ */
+public class ModelDataModel {
+
+	/** id **/
+	private int id;
+	
+	/** service type**/
+	private String name;
+	
+	/** description **/
+	private String description;
+	
+	/** description **/
+	private String modelId;
+	
+	/**
+	 * default constructor
+	 */
+	public ModelDataModel() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the modelId
+	 */
+	public String getModelId() {
+		return modelId;
+	}
+
+	/**
+	 * @param modelId the modelId to set
+	 */
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+}

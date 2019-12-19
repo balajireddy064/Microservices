@@ -1,0 +1,25 @@
+package com.ayusha.user.data.models;
+
+
+/**
+ * 
+ * @author author
+ *
+ */
+public class UsersDataModel {
+	
+	
+	/** id **/
+	private String id;
+	
+	/** list of users **/
+	private List<UserDataModel> lstUserDataModel;
+	
+	/**
+	 * default constructor
+	 */
+	public UsersDataModel() {
+		
+	}
+
+}

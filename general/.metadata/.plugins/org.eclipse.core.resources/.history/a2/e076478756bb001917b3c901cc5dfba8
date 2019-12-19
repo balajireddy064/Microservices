@@ -1,0 +1,62 @@
+package com.ayusha.http.client.test;
+
+import com.ayusha.general.services.data.model.StateDataModel;
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.tktmgmt.data.RepairNotesDataHandler;
+import com.ayusha.tktmgmt.data.StateDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class StatesDataPoplation {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public StatesDataPoplation() {
+		
+	}
+	
+	/**
+	 * test
+	 */
+	public void addStates() {
+		StateDataHandler stateDataHandler = null;
+		StateDataModel stateDataModel = null;
+		try {
+			
+			stateDataHandler = stateDataHandler.getInstance();
+			stateDataModel = stateDataHandler.addState(stateDataModel);
+			System.out.println(" Job Notes returned IS ==<>>> "+jobNotesDataModel.getNotes());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testUpdateJobNotes() {
+		RepairNotesDataHandler repairDataHandler = null;
+		JobNotesDataModel jobNotesDataModel = null;
+		try {
+			repairDataHandler = RepairNotesDataHandler.getInstance();
+			repairDataHandler.updateJobNotes("TESTING JOB NOTES UPDATE");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		StatesDataPoplation serviceTester = new StatesDataPoplation();
+		serviceTester.testJobNotesFind();
+	}
+
+}

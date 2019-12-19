@@ -1,0 +1,5 @@
+package com.ayusha.job.inventory.services.repository;
+
+public class IPartsIssuedRepository {
+
+}

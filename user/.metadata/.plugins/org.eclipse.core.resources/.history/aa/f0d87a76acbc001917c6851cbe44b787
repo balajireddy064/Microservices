@@ -1,0 +1,10 @@
+package com.ayusha.user.data.models;
+
+/**
+ * 
+ * @author author
+ *
+ */
+public class UserLocationsDataModel {
+
+}

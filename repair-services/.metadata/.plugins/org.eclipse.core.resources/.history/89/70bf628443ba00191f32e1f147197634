@@ -1,0 +1,5 @@
+package com.ayusha.repair.services.constants;
+
+public class RepairServiceConstants {
+
+}

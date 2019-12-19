@@ -1,0 +1,155 @@
+package com.ayusha.user.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.user.data.models.UserDataModel;
+import com.ayusha.user.data.models.UsersDataModel;
+import com.ayusha.user.services.entity.UserEntity;
+import com.ayusha.user.services.repository.IUserRepository;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class UserService implements IUserService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(UserService.class);
+	
+	/** repository **/
+	@Autowired
+	private IUserRepository iUserRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public UserService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public UserDataModel save(UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		UserEntity userEntity = new UserEntity();
+		populateUserEntity(userEntity, userDataModel);
+		iUserRepository.save(userEntity);
+		return userDataModel;
+	}
+	
+	/**
+	 * populate user entity
+	 */
+	private void populateUserEntity(UserEntity userEntity, UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+	}
+	
+	/**
+	 * populate user entity
+	 */
+	private void populateUserDataModel(UserEntity userEntity, UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		userDataModel.setAddr1(userEntity.getAddr1());
+		userDataModel.setAddr2(userEntity.getAddr2());
+		userDataModel.setAddr3(userEntity.getAddr3());
+		userDataModel.setCity(userEntity.getCity());
+		userDataModel.setState(userEntity.getState());
+		userDataModel.setCountry(userEntity.getCountry());
+		userDataModel.setPin(userEntity.getPin());
+		
+		userDataModel.setEmail(userEntity.getEmail());
+		userDataModel.setPhoneNumber(userEntity.getPhoneNumber());
+		userDataModel.setFirstName(userEntity.getFirstName());
+		userDataModel.setLastName(userEntity.getLastName());
+		userDataModel.setMiddleName(userEntity.getMiddleName());
+		userDataModel.setLoginId(userEntity.getLoginId());
+		userDataModel.setUserId(userEntity.getUserId());
+	}
+		
+	/**
+	 * add ticket
+	 */
+	public UserDataModel update(UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		UserEntity userEntity = iUserRepository.findUserByUserId(userDataModel.getUserId());
+		populateUserEntity(userEntity, userDataModel);
+		iUserRepository.save(userEntity);
+		return userDataModel;
+	}
+	
+	/** find job notes by id **/
+	public UserDataModel getUserByUserId(String userId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		UserEntity userEntity = iUserRepository.findUserByUserId(userId);
+		UserDataModel userDataModel = new UserDataModel();
+		populateUserDataModel(userEntity, userDataModel);
+		return userDataModel;
+	}
+	
+	/** find job notes by id **/
+	public UserDataModel getUserByEmailId(String emailId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		UserEntity userEntity = iUserRepository.findUserByEmailId(emailId);
+		UserDataModel userDataModel = new UserDataModel();
+		populateUserDataModel(userEntity, userDataModel);
+		return userDataModel;
+	}
+
+	/** find job notes by id **/
+	public UserDataModel getUserByPhoneNumber(String phoneNumber) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		UserEntity userEntity = iUserRepository.findUserByPhoneNumber(phoneNumber);
+		UserDataModel userDataModel = new UserDataModel();
+		populateUserDataModel(userEntity, userDataModel);
+		return userDataModel;
+	}
+	
+	/** find job notes by id **/
+	public UsersDataModel getUserByFisrtName(String firstName) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		List<UserEntity> userEntity = iUserRepository.findUserByFisrtName(firstName);
+		UserDataModel userDataModel = new UserDataModel();
+		UsersDataModel usersDataModel = new UsersDataModel();
+		
+		return usersDataModel;
+	}
+	
+	/** find job notes by id **/
+	public UsersDataModel getAllUsers() throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		List<UserEntity> userEntity = iUserRepository.findUserByFisrtName(firstName);
+		UserDataModel userDataModel = new UserDataModel();
+		UsersDataModel usersDataModel = new UsersDataModel();
+		
+		return usersDataModel;
+	}
+	
+	
+}

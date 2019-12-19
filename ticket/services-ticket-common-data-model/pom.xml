@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ayusha</groupId>
+  <artifactId>services-ticket-common-data-model</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>services-ticket-common-data-model</name>
+  <description>services-ticket-common-data-model</description>
+  
+  <properties>
+  		<ticketmgmt.services.models.version>0.0.1-SNAPSHOT</ticketmgmt.services.models.version>
+  </properties>
+  
+  <dependencies>
+  	<dependency>
+	     <groupId>com.ayusha</groupId>
+  		   <artifactId>services-products-common-data-model</artifactId>
+  		 <version>${ticketmgmt.services.models.version}</version>
+	</dependency>
+  </dependencies>
+</project>

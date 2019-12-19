@@ -1,0 +1,10 @@
+package com.ayusha.user.services.constants;
+
+/**
+ * 
+ * @author author
+ *
+ */
+public class UserServiceConstants {
+
+}

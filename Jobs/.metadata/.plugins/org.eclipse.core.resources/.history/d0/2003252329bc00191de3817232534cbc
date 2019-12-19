@@ -1,0 +1,69 @@
+package com.ayusha.http.client.test;
+
+import com.ayusha.job.data.handlers.JobDataHandler;
+import com.ayusha.job.data.models.JobDataModel;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class JobDataPoplation {
+	
+	/** city data handler **/
+	private JobDataHandler jobDataHandler = null;
+	/**
+	 * default constructor
+	 */
+	public JobDataPoplation() {
+		jobDataHandler = JobDataHandler.getInstance();
+	}
+	
+	/**
+	 * test
+	 */
+	public void createJob() {
+		JobDataModel jobDataModel = new JobDataModel();
+		try {
+			jobDataModel = new JobDataModel();
+			jobDataModel.setActualEndDate("2019/12/12 11:00:00");
+			jobDataModel.setActualStartDate("2019/12/12 11:00:00");
+			jobDataModel.setEndDate("2019/12/12 11:00:00");
+			jobDataModel.setStartDate("2019/12/12 11:00:00");
+			jobDataModel.setJobId("JOB#200");
+			jobDataModel.setLastUpdatedOn("2019/12/12 11:00:00");
+			jobDataModel.setLoggedBy("shiva");
+			jobDataModel.setNotes("TESTING REMOTE");
+			jobDataModel.setStatusId("OPEN");
+			jobDataModel.setUserId("dvsnkumar");
+			jobDataHandler.createJob(jobDataModel);
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void getJobForJobId(String jobId) {
+		JobDataModel jobDataModel = new JobDataModel();
+		try {
+			
+			jobDataModel = jobDataHandler.getJob(jobId);
+			System.out.println(" JOBS ------"+jobDataModel);
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		JobDataPoplation serviceTester = new JobDataPoplation();
+		serviceTester.getJobForJobId("JOB#200");
+	}
+
+}

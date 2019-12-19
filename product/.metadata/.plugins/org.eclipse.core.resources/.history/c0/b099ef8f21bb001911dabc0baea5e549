@@ -1,0 +1,86 @@
+package com.ayusha.products.data.models;
+
+/**
+ * 
+ * @author author
+ * 09-Aug-2019
+ * Product and supported service types
+ *
+ */
+public class SubCategorysDataModel {
+
+	/** id **/
+	private int id;
+	
+	/** service type**/
+	private String name;
+	
+	/** description **/
+	private String categoryId;
+	
+	/** description **/
+	private String subCategoryId;
+	
+	/**
+	 * default constructor
+	 */
+	public SubCategorysDataModel() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the subCategoryId
+	 */
+	public String getSubCategoryId() {
+		return subCategoryId;
+	}
+
+	/**
+	 * @param subCategoryId the subCategoryId to set
+	 */
+	public void setSubCategoryId(String subCategoryId) {
+		this.subCategoryId = subCategoryId;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the categoryId
+	 */
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	/**
+	 * @param categoryId the categoryId to set
+	 */
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+}

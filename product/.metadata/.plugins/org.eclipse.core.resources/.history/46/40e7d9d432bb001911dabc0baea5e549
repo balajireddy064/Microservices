@@ -1,0 +1,82 @@
+package com.ayusha.http.client.test;
+
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.StringTokenizer;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.ayusha.products.data.models.MakeDataModel;
+import com.ayusha.tktmgmt.data.MakeDataHandler;
+import com.ayusha.tktmgmt.data.ProductDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class ProductDataPopulator {
+	
+	/** handler **/
+	private ProductDataHandler productDataHandler = null;
+	
+	
+	/**
+	 * default constructor
+	 */
+	public ProductDataPopulator() {
+		productDataHandler = ProductDataHandler.getInstance();
+	}
+	
+	/**
+	 * populate data
+	 */
+	public void populateMakeData() {
+		Resource resource = null;
+		InputStream input=null;
+		File file=null;
+		DataInputStream dataInputStream = null;
+		String strLine="";
+		MakeDataModel makeDataModel= null;
+		StringTokenizer stringTokenizer = null;
+		try {
+			resource = new ClassPathResource("products.txt", this.getClass().getClassLoader());
+			input = resource.getInputStream();
+			dataInputStream = new DataInputStream(input);
+			System.out.println(" INSIDE");
+			while((strLine=dataInputStream.readLine())!=null) {
+				stringTokenizer = new StringTokenizer(strLine,",");
+				makeDataModel = new MakeDataModel();
+				System.out.println(" strLine "+strLine);
+				makeDataModel.setMakeId(stringTokenizer.nextToken());
+				makeDataModel.setName(stringTokenizer.nextToken());
+				makeDataModel.setDescription("");
+				productDataHandler.addMake(makeDataModel);
+			}
+		}catch(Exception e) {
+			
+		}
+	}
+	/**
+	 * populate data
+	 */
+	public void getAllMakeData() throws Exception{
+		productDataHandler.getAllMake();
+	}
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		ProductDataPopulator serviceTester = new ProductDataPopulator();
+		try {
+			serviceTester.getAllMakeData();
+		}catch(Exception e) {
+			
+		}
+	}
+
+}

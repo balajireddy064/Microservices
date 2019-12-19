@@ -1,0 +1,47 @@
+package com.ayusha.user.services.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Ticket Model
+ *
+ */
+@Entity
+@Table(name="user_location")
+public class UserLocationEntity {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE) 
+	@Column(name="id")
+    private long id; 
+	
+
+	/** customerid **/
+	@Column(name="user_id")
+	private String userId="";
+	/** customerid **/
+	@Column(name="location_id")
+	private String locationId="";
+	/** customerid **/
+	@Column(name="effective_date")
+	private String effectiveDate="";
+	/** customerid **/
+	@Column(name="serving")
+	private String serving="";
+	
+	/**
+	 * default constructor
+	 */
+	public UserLocationEntity() {
+		
+	}
+}

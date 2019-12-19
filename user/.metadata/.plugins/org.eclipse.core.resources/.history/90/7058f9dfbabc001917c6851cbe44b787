@@ -1,0 +1,26 @@
+package com.ayusha.user.services.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.ayusha.user.services.entity.UserEntity;
+import com.ayusha.user.services.entity.UserLocationEntity;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the methods for the ticketmanagement persistance CRUD operations
+ *
+ */
+public interface IUserLocationRepository extends CrudRepository<UserLocationEntity,Integer>{
+
+	 @Query("SELECT t FROM UserLocationEntity t WHERE t.userId =:userId and serving='Y'")
+	 List<UserLocationEntity> findLocationsByUserId(String userId);
+	 
+	 @Query("SELECT t FROM UserLocationEntity t WHERE t.locationId =:userId and serving='Y'")
+	 List<UserLocationEntity> findUsersByLocations(String locationId);
+}

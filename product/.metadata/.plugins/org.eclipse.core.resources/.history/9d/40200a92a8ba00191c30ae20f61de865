@@ -1,0 +1,25 @@
+package com.ayusha.products.data.models;
+
+/**
+ * 
+ * @author author
+ * 09-Aug-2019
+ * Product and supported service types
+ *
+ */
+public class ProductServiceTypesDataModel {
+	
+	/**  id **/
+	private int id;
+	
+	/** product id **/
+	private String productId;
+	
+	/**
+	 * default constructor
+	 */
+	public ProductServiceTypesDataModel() {
+		
+	}
+
+}

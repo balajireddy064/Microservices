@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.ayusha.repair.services.entity.JobNotesEntity"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.service.IRepairServices"/>
+<fullyQualifiedTypeName name="com.ayusha.json.utils.JSONConverter"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.services.data.models.JobNotesDataModel"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.service.IRepairSymptomsService"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.services.repository.ISymptomsRepository"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.services.entity.SymptomsEntity"/>
+<fullyQualifiedTypeName name="com.ayusha.tktmgmt.data.RepairSymptomsDataHandler"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.services.data.models.SymptomsDataModel"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.services.repository.IFaultyItemRepository"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.service.IRepairFaultyItemsService"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.services.entity.FaultyItemEntity"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.services.data.models.FaultyItemDataModel"/>
+<fullyQualifiedTypeName name="com.ayusha.repair.services.data.models.FaultyItemsDataModel"/>
+<fullyQualifiedTypeName name="com.ayusha.http.client.test.RepairFaultyItemsTester"/>
+</qualifiedTypeNameHistroy>

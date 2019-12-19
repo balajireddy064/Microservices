@@ -1,0 +1,19 @@
+1565456827856	Rename package 'com.ayusha.general'
+1565456842126	Rename package 'com.ayusha.general.service'
+1565456856882	Rename package 'com.ayusha.general.service.validations'
+1565456868220	Rename package 'com.ayusha.general.services.controller'
+1565456887410	Rename package 'com.ayusha.general.services.entity'
+1565456900267	Rename package 'com.ayusha.general.services.repository'
+1565456914040	Rename type 'GeneralServicesApp'
+1565456973576	Delete elements
+1565456983194	Delete elements
+1565457002716	Rename type 'CityEntity'
+1565457204888	Delete elements
+1565457219771	Rename type 'ICityRepository'
+1565457359021	Rename type 'ICityService'
+1565457457750	Rename type 'CityService'
+1565457758759	Rename field 'iCityRepository'
+1565457887067	Rename type 'CountryDataValidation'
+1565457988508	Delete elements
+1565458005835	Rename type 'CityServicesController'
+1565458032884	Rename field 'iCityService'

@@ -1,0 +1,22 @@
+package com.ayusha.products.services.constants;
+
+/**
+ * 
+ * @author author
+ * 08-Aug-2019
+ * Repai services constants
+ *
+ */
+public class ProductServiceConstants {
+
+	/** Job Notes Get Service Name **/
+	public final static String GET_PRODUCT_SERVICE_NAME="products/product/find?id=$1";
+	/** Job Notes Get Service Name **/
+	public final static String GET_PRODUCT_FOR_SERVICE_NAME="products/product/find/productfor?categoryid=$1&subcategoryid=$2&makeid=$3";
+	/** Job Notes Get Service Name **/
+	public final static String GET_PRODUCT_FOR1_SERVICE_NAME="products/product/find/productfor1?categoryid=$1&subcategoryid=$2&makeid=$3&modelid=$4";
+	/** Job Notes Get Service Name **/
+	public final static String UPDATE_PRODUCT_SERVICE_NAME="products/product/update";
+	/** Job Notes Get Service Name **/
+	public final static String ADD_PRODUCT_SERVICE_NAME="products/product/add";
+}

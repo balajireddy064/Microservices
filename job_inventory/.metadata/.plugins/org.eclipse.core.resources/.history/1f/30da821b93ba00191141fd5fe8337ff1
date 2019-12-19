@@ -1,0 +1,5 @@
+package com.ayusha.job.inventory.data.constants;
+
+public class JonInventoryServiceConstants {
+
+}

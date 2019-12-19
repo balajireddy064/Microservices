@@ -1,0 +1,114 @@
+package com.ayusha.tktmgmt.data;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.products.data.models.SymptomDataModel;
+import com.ayusha.products.data.models.SymptomsDataModel;
+import com.ayusha.products.services.constants.SymptomServiceConstants;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class SymptomDataHandler {
+	
+	/** singleon object reference **/
+	private final static SymptomDataHandler makeDataHandler = new SymptomDataHandler();
+	
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private SymptomDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static SymptomDataHandler getInstance() {
+		return makeDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public SymptomsDataModel getSymptom(String id) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		SymptomsDataModel symptomsDataModel = null;
+		String serviceName=SymptomServiceConstants.GET_SYMPTOM_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", id);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			symptomsDataModel = ((SymptomsDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),SymptomsDataModel.class));
+			return symptomsDataModel;
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw new ServicesDataException();
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateSymptom(SymptomDataModel symptomDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=SymptomServiceConstants.UPDATE_SYMPTOM_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(symptomDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(symptomDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void addSymptom(SymptomDataModel symptomDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=SymptomServiceConstants.ADD_SYMPTOM_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(symptomDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(symptomDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+}

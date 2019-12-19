@@ -1,0 +1,41 @@
+package com.ayusha.job.service;
+
+import com.ayusha.job.data.models.JobDataModel;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the ticket service methods
+ *
+ */
+public interface IJobService {
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel save(JobDataModel jobDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+		
+	/** find job notes by id **/
+	public JobDataModel getJob(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel update(JobDataModel jobDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel updateJobStatus(String jobId ,String statusId) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	
+	/**
+	 * add ticket
+	 */
+	public JobDataModel updateJobNotes(String jobId,String notes) throws DataPersistenceOperationException,InvalidServiceRequestException;
+}
+

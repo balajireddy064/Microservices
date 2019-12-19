@@ -1,0 +1,91 @@
+package com.ayusha.products.service.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+/**
+ * 
+ * @author author
+ * 09-Aug-2019
+ * Product and supported service types
+ *
+ */
+@Entity
+@Table(name="subcategory")
+public class SubCategoryEntity {
+	
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE) 
+	@Column(name="id")
+    private long id; 
+	
+
+	/** customerid **/
+	@Column(name="name")
+	private String name="";
+	
+	/** customerid **/
+	@Column(name="category_id")
+	private String category_id="";
+	
+	/**
+	 * default constructor
+	 */
+	public SubCategoryEntity() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the category_id
+	 */
+	public String getCategory_id() {
+		return category_id;
+	}
+
+	/**
+	 * @param category_id the category_id to set
+	 */
+	public void setCategory_id(String category_id) {
+		this.category_id = category_id;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+}

@@ -1,0 +1,27 @@
+package com.ayusha.job.services.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.ayusha.job.services.entity.JobEntity;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the methods for the ticketmanagement persistance CRUD operations
+ *
+ */
+public interface IJobRepository extends CrudRepository<JobEntity,Integer>{
+
+	 @Query("SELECT t FROM JobEntity t WHERE t.jobId = ?1")
+	 JobEntity findJobByJobId(String jobId);
+	 @Query("SELECT t FROM JobEntity t WHERE t.userId = ?1")
+	 List<JobEntity> findJobByUserId(String userId);
+	 @Query("SELECT t FROM JobEntity t WHERE t.userId = :userId and t.statusId=:statusId")
+	 List<JobEntity> findJobByUserId(String userId,String statusId);
+	
+}

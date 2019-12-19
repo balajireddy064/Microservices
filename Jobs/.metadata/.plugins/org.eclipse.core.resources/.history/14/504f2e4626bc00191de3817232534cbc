@@ -1,0 +1,110 @@
+package com.ayusha.job.data.handlers;
+
+import com.ayusha.general.services.constants.GeneralServicesConstants;
+import com.ayusha.general.services.data.model.CitiesDataModel;
+import com.ayusha.general.services.data.model.CityDataModel;
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.job.data.models.JobDataModel;
+import com.ayusha.job.services.constants.JobServiceConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class JobDataHandler {
+	
+	/** singleon object reference **/
+	private final static JobDataHandler jobDataHandler = new JobDataHandler();
+	
+	/** states data model **/
+	private JobDataModel jobDataModel;
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private JobDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static JobDataHandler getInstance() {
+		return jobDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public JobDataModel getJob(String jobId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		JobDataModel jobDataModel = null;
+		String serviceName=JobServiceConstants.GET_JOB_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", jobId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			jobDataModel = ((JobDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),JobDataModel.class));
+			if(jobDataModel==null) {
+				jobDataModel= new JobDataModel();
+			}
+			return jobDataModel;
+		}catch(Exception e) {
+			jobDataModel= new JobDataModel();
+			return jobDataModel;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public JobDataModel createJob() throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		JobDataModel jobDataModel = null;
+		String serviceName=JobServiceConstants.ADD_JOB_SERVICE_NAME;
+		
+		jobDataModel = new JobDataModel();
+		jobDataModel.setActualEndDate("12/12/2019 11:00:00");
+		jobDataModel.setActualStartDate("12/12/2019 11:00:00");
+		jobDataModel.setEndDate("12/12/2019 11:00:00");
+		jobDataModel.setStartDate("12/12/2019 11:00:00");
+		jobDataModel.setJobId("JOB#123");
+		jobDataModel.setLastUpdatedOn("12/12/2019 11:00:00");
+		jobDataModel.setLoggedBy("dvsnk");
+		jobDataModel.setNotes("TESTING TV");
+		jobDataModel.setStatusId("OPEN");
+		jobDataModel.setU
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			jobDataModel = ((JobDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),JobDataModel.class));
+			if(jobDataModel==null) {
+				jobDataModel= new JobDataModel();
+			}
+			return jobDataModel;
+		}catch(Exception e) {
+			jobDataModel= new JobDataModel();
+			return jobDataModel;
+		}
+	}
+}

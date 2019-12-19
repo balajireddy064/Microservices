@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ayusha</groupId>
+  <artifactId>android-services-client</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>android-services-client</name>
+  <description>android-services-client</description>
+  
+  <properties>
+	    <java.version>9</java.version>
+	    <services.commons.version>0.0.1-SNAPSHOT</services.commons.version>
+	    <logging.version>0.0.1-SNAPSHOT</logging.version>
+	    <common.utils.version>0.0.1-SNAPSHOT</common.utils.version>
+	    <apache.http.client.version>4.5.6</apache.http.client.version>
+	    <android.services.common.version>0.0.1-SNAPSHOT</android.services.common.version>
+	</properties>
+	<dependencies>
+	
+	<dependency>
+  	     <groupId>com.ayusha</groupId>
+		  <artifactId>android-services-common</artifactId>
+		  <version>${android.services.common.version}</version>
+  	</dependency>
+  	
+  	<dependency>
+  	    <groupId>com.ayusha</groupId>
+  		<artifactId>services-common</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+	<dependency>
+	     <groupId>com.ayusha</groupId>
+		  <artifactId>services-common</artifactId>
+		  <version>${services.commons.version}</version>
+	</dependency>
+	
+	<dependency> 
+	     <groupId>com.personal</groupId>
+ 		 <artifactId>common-utils</artifactId>
+  		<version>${common.utils.version}</version>
+	</dependency>
+	
+			<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>${apache.http.client.version}</version>
+		</dependency>
+	
+	
+	<dependency> 
+		  <groupId>com.personal</groupId>
+   		 <artifactId>common-custom-logging</artifactId>
+   		 <version>${logging.version}</version>
+   	</dependency>
+	
+	</dependencies>
+	<build>
+	  <plugins>
+		 <plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+		 </plugin>
+	  </plugins>
+	</build>
+</project>

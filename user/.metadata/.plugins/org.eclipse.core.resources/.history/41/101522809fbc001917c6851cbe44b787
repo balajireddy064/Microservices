@@ -1,0 +1,42 @@
+package com.ayusha.user.data.models;
+
+import java.util.List;
+
+/**
+ * 
+ * @author author
+ *
+ */
+public class UsersDataModel {
+	
+	
+	/** id **/
+	private String id;
+	
+	/** list of users **/
+	private List<UserDataModel> lstUserDataModel;
+	
+	/**
+	 * default constructor
+	 */
+	public UsersDataModel() {
+		
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public List<UserDataModel> getLstUserDataModel() {
+		return lstUserDataModel;
+	}
+
+	public void setLstUserDataModel(List<UserDataModel> lstUserDataModel) {
+		this.lstUserDataModel = lstUserDataModel;
+	}
+	
+}

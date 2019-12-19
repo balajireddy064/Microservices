@@ -1,0 +1,212 @@
+package com.ayusha.job.services.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Ticket Model
+ *
+ */
+@Entity
+@Table(name="job")
+public class JobTicketEntity {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE) 
+	@Column(name="id")
+    private long id; 
+	
+
+	/** customerid **/
+	@Column(name="job_id")
+	private String jobId="";
+	
+	/** customerid **/
+	@Column(name="statusId")
+	private String statusId="";
+	
+	/** customerid **/
+	@Column(name="start_date")
+	private String startDate="";
+	/** customerid **/
+	@Column(name="end_date")
+	private String endDate="";
+	/** customerid **/
+	@Column(name="actual_start_date")
+	private String actualStartDate="";
+	/** customerid **/
+	@Column(name="actual_finish_date")
+	private String actualEndDate="";
+	/** customerid **/
+	@Column(name="loggedBy")
+	private String loggedBy="";
+	/** customerid **/
+	@Column(name="last_updated_on")
+	private String lastUpdatedOn="";
+	/** customerid **/
+	@Column(name="notes")
+	private String notes="";
+	
+	/**
+	 * default constructor
+	 */
+	public JobTicketEntity() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the jobId
+	 */
+	public String getJobId() {
+		return jobId;
+	}
+
+	/**
+	 * @param jobId the jobId to set
+	 */
+	public void setJobId(String jobId) {
+		this.jobId = jobId;
+	}
+
+	/**
+	 * @return the statusId
+	 */
+	public String getStatusId() {
+		return statusId;
+	}
+
+	/**
+	 * @param statusId the statusId to set
+	 */
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
+	}
+
+	/**
+	 * @return the startDate
+	 */
+	public String getStartDate() {
+		return startDate;
+	}
+
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * @return the endDate
+	 */
+	public String getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	/**
+	 * @return the actualStartDate
+	 */
+	public String getActualStartDate() {
+		return actualStartDate;
+	}
+
+	/**
+	 * @param actualStartDate the actualStartDate to set
+	 */
+	public void setActualStartDate(String actualStartDate) {
+		this.actualStartDate = actualStartDate;
+	}
+
+	/**
+	 * @return the actualEndDate
+	 */
+	public String getActualEndDate() {
+		return actualEndDate;
+	}
+
+	/**
+	 * @param actualEndDate the actualEndDate to set
+	 */
+	public void setActualEndDate(String actualEndDate) {
+		this.actualEndDate = actualEndDate;
+	}
+
+	/**
+	 * @return the loggedBy
+	 */
+	public String getLoggedBy() {
+		return loggedBy;
+	}
+
+	/**
+	 * @param loggedBy the loggedBy to set
+	 */
+	public void setLoggedBy(String loggedBy) {
+		this.loggedBy = loggedBy;
+	}
+
+	/**
+	 * @return the lastUpdatedOn
+	 */
+	public String getLastUpdatedOn() {
+		return lastUpdatedOn;
+	}
+
+	/**
+	 * @param lastUpdatedOn the lastUpdatedOn to set
+	 */
+	public void setLastUpdatedOn(String lastUpdatedOn) {
+		this.lastUpdatedOn = lastUpdatedOn;
+	}
+
+	/**
+	 * @return the notes
+	 */
+	public String getNotes() {
+		return notes;
+	}
+
+	/**
+	 * @param notes the notes to set
+	 */
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+}

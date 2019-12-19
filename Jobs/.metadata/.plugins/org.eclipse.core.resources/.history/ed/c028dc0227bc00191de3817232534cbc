@@ -1,0 +1,63 @@
+package com.ayusha.http.client.test;
+
+import java.io.DataInputStream;
+import java.util.StringTokenizer;
+
+import org.springframework.core.io.ClassPathResource;
+
+import com.ayusha.general.services.data.model.CitiesDataModel;
+import com.ayusha.general.services.data.model.CityDataModel;
+import com.ayusha.job.data.handlers.JobDataHandler;
+import com.ayusha.job.data.models.JobDataModel;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class JobDataPoplation {
+	
+	/** city data handler **/
+	private JobDataHandler jobDataHandler = null;
+	/**
+	 * default constructor
+	 */
+	public JobDataPoplation() {
+		jobDataHandler = JobDataHandler.getInstance();
+	}
+	
+	/**
+	 * test
+	 */
+	public void createJob() {
+		JobDataModel jobDataModel = new JobDataModel();
+		try {
+			jobDataModel = new JobDataModel();
+			jobDataModel.setActualEndDate("12/12/2019 11:00:00");
+			jobDataModel.setActualStartDate("12/12/2019 11:00:00");
+			jobDataModel.setEndDate("12/12/2019 11:00:00");
+			jobDataModel.setStartDate("12/12/2019 11:00:00");
+			jobDataModel.setJobId("JOB#123");
+			jobDataModel.setLastUpdatedOn("12/12/2019 11:00:00");
+			jobDataModel.setLoggedBy("dvsnk");
+			jobDataModel.setNotes("TESTING TV");
+			jobDataModel.setStatusId("OPEN");
+			jobDataModel.setUserId("dvsnkumar");
+			jobDataHandler.createJob(jobDataModel);
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		JobDataPoplation serviceTester = new JobDataPoplation();
+		serviceTester.createJob();
+	}
+
+}

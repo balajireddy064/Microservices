@@ -1,0 +1,5 @@
+package com.ayusha.user.services.entity;
+
+public class UserLocationEntity {
+
+}

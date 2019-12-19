@@ -1,0 +1,134 @@
+package com.ayusha.repair.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.repair.services.data.models.SymptomDataModel;
+import com.ayusha.repair.services.data.models.SymptomsDataModel;
+import com.ayusha.repair.services.entity.SymptomsEntity;
+import com.ayusha.repair.services.repository.ISymptomsRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class RepairSymptomsService implements IRepairSymptomsService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(RepairSymptomsService.class);
+	
+	/** repository **/
+	@Autowired
+	private ISymptomsRepository iSymptomsRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public RepairSymptomsService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public SymptomDataModel save(SymptomDataModel symptomDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		SymptomsEntity symptomsEntity = new SymptomsEntity();
+		symptomsEntity.setId(symptomDataModel.getId());
+		symptomsEntity.setJob_id(symptomDataModel.getJobId());
+		symptomsEntity.setSymptomId(symptomDataModel.getSymptomId());
+		symptomsEntity.setMedia(symptomDataModel.getMedia());
+		iSymptomsRepository.save(symptomsEntity);
+		return symptomDataModel;
+	}
+		
+	/** find job notes by id **/
+	public SymptomsDataModel getSymptomsDataModel(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		SymptomsDataModel symptomsDataModel = new SymptomsDataModel();
+		symptomsDataModel.setJob_id(jobId);
+		symptomsDataModel.setLstSymptoms(getSymptoms(jobId));
+		return symptomsDataModel;
+	}
+	
+	/** find job notes by id **/
+	public List<SymptomDataModel> getSymptoms(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+		List<SymptomDataModel> lstSymptomsDataModel = new ArrayList();
+		SymptomDataModel symptomDataModel = null;
+		SymptomsEntity symptomsEntity = null;
+		int size=0;
+		
+		List<SymptomsEntity> lstSymptomsEntity= iSymptomsRepository.findSymptomsByJobId(jobId);
+		
+		size = lstSymptomsEntity.size();
+		
+		for(int index=0; index<size; index++) {
+			symptomDataModel = new SymptomDataModel();
+			symptomsEntity = lstSymptomsEntity.get(index);
+			symptomDataModel.setId(Integer.parseInt(""+symptomsEntity.getId()));
+			symptomDataModel.setJobId(symptomsEntity.getJob_id());
+			symptomDataModel.setSymptomId(symptomsEntity.getSymptomId());
+			symptomDataModel.setMedia(symptomsEntity.getMedia());
+			lstSymptomsDataModel.add(symptomDataModel);
+			
+		}
+		
+		return lstSymptomsDataModel;
+	}
+	
+	
+	/**
+	 * add ticket
+	 */
+	public void deleteSymptoms(String jobId) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		iSymptomsRepository.deleteSymptomsByJobId(jobId);
+	}
+	
+	/**
+	 * add ticket
+	 */
+	public void updateSymptoms(SymptomsDataModel jobSymptomsDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		int size=0;
+		deleteSymptoms(jobSymptomsDataModel.getJob_id());
+		List<SymptomDataModel> lstSymptomDataModel = jobSymptomsDataModel.getLstSymptoms();
+		
+		size = lstSymptomDataModel.size();
+		
+		for(int index=0; index<size;index++) {
+			save(lstSymptomDataModel.get(index));
+		}
+	}
+}

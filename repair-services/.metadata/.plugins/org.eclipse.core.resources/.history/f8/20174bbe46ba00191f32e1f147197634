@@ -1,0 +1,64 @@
+package com.ayusha.http.client.test;
+
+import com.ayusha.repair.services.data.models.JobNotesDataModel;
+import com.ayusha.tktmgmt.data.RepairDataHandler;
+
+/**
+ * 
+ * @author author
+ * 07-Aug-2019
+ * Service Tester
+ *
+ */
+public class ServiceTester {
+	
+	
+	/**
+	 * default constructor
+	 */
+	public ServiceTester() {
+		
+	}
+	
+	/**
+	 * test
+	 */
+	public void testJobNotesFind() {
+		RepairDataHandler repairDataHandler = null;
+		JobNotesDataModel jobNotesDataModel = null;
+		try {
+			
+			repairDataHandler = RepairDataHandler.getInstance();
+			jobNotesDataModel = repairDataHandler.getJobNotes("1");
+			System.out.println(" Job Notes returned IS "+jobNotesDataModel.getNotes());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * test
+	 */
+	public void testUpdateJobNotes() {
+		RepairDataHandler repairDataHandler = null;
+		JobNotesDataModel jobNotesDataModel = null;
+		try {
+			
+			repairDataHandler = RepairDataHandler.getInstance();
+			repairDataHandler.updateJobNotes("TESTING JOB NOTES UPDATE");
+			System.out.println(" Job Notes Update IS "+jobNotesDataModel.getNotes());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * main method
+	 */
+	public static void main(String[] args) {
+		ServiceTester serviceTester = new ServiceTester();
+		serviceTester.testJobNotesFind();
+	}
+
+}

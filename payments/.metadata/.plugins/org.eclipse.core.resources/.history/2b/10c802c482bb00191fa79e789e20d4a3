@@ -1,0 +1,5 @@
+package com.ayusha.payments.data.models;
+
+public class CashReceiptDataModel {
+
+}

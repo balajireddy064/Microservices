@@ -1,0 +1,31 @@
+package com.ayusha.repair.services.data.models;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 
+ * @author author
+ * 08-Aug-2019
+ * Symptoms details
+ *
+ */
+public class SymptomsDataModel {
+	
+	/** id **/
+	private int id;
+	
+	/** jobid **/
+	private String job_id;
+	
+	/** symptoms **/
+	private List<SymptomDataModel> lstSymptoms = new ArrayList();
+	
+	/**
+	 * default constructor
+	 */
+	public SymptomsDataModel() {
+		
+	}
+
+}

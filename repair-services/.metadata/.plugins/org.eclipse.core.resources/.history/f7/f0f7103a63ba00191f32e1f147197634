@@ -1,0 +1,36 @@
+package com.ayusha.repair.services.data.models;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Job Notes
+ */
+public class FaultyItemDataModel {
+	
+	/** id **/
+	private int id;
+	
+	/** jobid **/
+	private String jobId;
+	
+	/** heading **/
+	private String heading;
+	
+	/** partid **/
+	private String partId;
+	
+	/** media **/
+	private byte[] media;
+	
+	/** partid **/
+	private String faulty;
+	
+	/**
+	 * default constructor
+	 */
+	public FaultyItemDataModel() {
+		
+	}
+
+}

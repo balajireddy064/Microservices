@@ -1,0 +1,94 @@
+package com.ayusha.communication.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ayusha.communication.data.models.NotificationDataModel;
+import com.ayusha.communication.services.entity.CommunicationEntity;
+import com.ayusha.communication.services.repository.INotificationRepository;
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.custom.logger.logging.Logger;
+import com.custom.logger.manager.LogManager;
+
+
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * 
+ * 1. Recording (single):
+ *      a. Persisting in DB
+ *      b. on Success - sending an email/sms to customer
+ *      c. assigning service invoking
+ * 
+ * 2. Update:
+ *     a. On change of status - sending an email/sms notification
+ *     
+ * 3. Batch Recording:
+ *     a.  Persisting in DB
+ *     b. on Success - sending an email/sms to customer -seggregating and sending an single email
+ *     c. assigning service invoking - Individually
+ *      
+ *  4. Search:
+ *      a. search based on date, user, customer,logged date, issue,servicetype,serialnumber
+ *      
+ *  5. Sorting:
+ *      a. soring based on logged date,status,servicetype (ASC | DSC)
+ */
+@Service
+public class NotificationService implements INotificationService{
+	
+	/** LOGGER **/
+	private static Logger LOG = LogManager.getLogger(NotificationService.class);
+	
+	/** repository **/
+	@Autowired
+	private INotificationRepository iNotificationRepository;
+	
+	
+	
+	/**
+	 * default constructor
+	 */
+	public NotificationService() {
+		LOG.info("Ticket Service Constructor");
+	}
+	/**
+	 * add ticket
+	 */
+	public NotificationDataModel save(NotificationDataModel notificationDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException{
+		
+		CommunicationEntity communicationEntity = new CommunicationEntity();
+		communicationEntity.setAppId(notificationDataModel.getAppId());
+		communicationEntity.setChannelType(notificationDataModel.getChannelType());
+		communicationEntity.setNotificationType(notificationDataModel.getNotificationType());
+		communicationEntity.setRemarks(notificationDataModel.getRemarks());
+		communicationEntity.setRequestedBy(notificationDataModel.getRequestedBy());
+		communicationEntity.setStatus(notificationDataModel.getStatus());
+		communicationEntity.setNotifiedOn(notificationDataModel.getNotifiedOn());
+		communicationEntity.setRequestedOn(notificationDataModel.getRequestedOn());
+		communicationEntity.setRemarks(notificationDataModel.getRemarks());
+		communicationEntity.setNotificationId(notificationDataModel.getNotificationId());
+		iNotificationRepository.save(communicationEntity);
+		return notificationDataModel;
+     }
+	/** find job notes by id **/
+	public NotificationDataModel getNotification(String notificationId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception{
+		
+		CommunicationEntity communicationEntity = iNotificationRepository.findNotificationByNotificationId(notificationId);
+		NotificationDataModel notificationDataModel = new NotificationDataModel();
+		
+		notificationDataModel.setAppId(communicationEntity.getAppId());
+		notificationDataModel.setChannelType(communicationEntity.getChannelType());
+		notificationDataModel.setNotificationType(communicationEntity.getNotificationType());
+		notificationDataModel.setRemarks(communicationEntity.getRemarks());
+		notificationDataModel.setRequestedBy(communicationEntity.getRequestedBy());
+		notificationDataModel.setStatus(communicationEntity.getStatus());
+		return notificationDataModel;
+	}
+	
+}

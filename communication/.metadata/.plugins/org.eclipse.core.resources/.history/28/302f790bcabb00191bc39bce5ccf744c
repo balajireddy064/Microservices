@@ -1,0 +1,63 @@
+package com.ayusha.communication.data.models;
+
+import java.util.HashMap;
+
+/**
+ * 
+ * @author Author
+ *
+ */
+public class NotificationMessageDataModel {
+	
+	/** HashMap message properties**/
+	private HashMap hashMapMessageProperties;
+	
+	/** notification id **/
+	private String notificationId;
+	
+	/** event type **/
+	private String eventType="";
+	/**
+	 * default constructor
+	 */
+	public NotificationMessageDataModel() {
+		
+	}
+	/**
+	 * @return the hashMapMessageProperties
+	 */
+	public HashMap getHashMapMessageProperties() {
+		return hashMapMessageProperties;
+	}
+	/**
+	 * @param hashMapMessageProperties the hashMapMessageProperties to set
+	 */
+	public void setHashMapMessageProperties(HashMap hashMapMessageProperties) {
+		this.hashMapMessageProperties = hashMapMessageProperties;
+	}
+	/**
+	 * @return the notificationId
+	 */
+	public String getNotificationId() {
+		return notificationId;
+	}
+	/**
+	 * @param notificationId the notificationId to set
+	 */
+	public void setNotificationId(String notificationId) {
+		this.notificationId = notificationId;
+	}
+	/**
+	 * @return the eventType
+	 */
+	public String getEventType() {
+		return eventType;
+	}
+	/**
+	 * @param eventType the eventType to set
+	 */
+	public void setEventType(String eventType) {
+		this.eventType = eventType;
+	}
+
+}

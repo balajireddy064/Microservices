@@ -1,0 +1,121 @@
+package com.ayusha.job.services.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Ticket Model
+ *
+ */
+@Entity
+@Table(name="job")
+public class JobEntity {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE) 
+	@Column(name="id")
+    private long id; 
+	
+
+	/** customerid **/
+	@Column(name="job_id")
+	private String jobId="";
+	
+	/** customerid **/
+	@Column(name="statusId")
+	private String statusId="";
+	
+	/** customerid **/
+	@Column(name="start_date")
+	private String startDate="";
+	/** customerid **/
+	@Column(name="end_date")
+	private String endDate="";
+	/** customerid **/
+	@Column(name="actual_start_date")
+	private String actualStartDate="";
+	/** customerid **/
+	@Column(name="actual_finish_date")
+	private String actualEndDate="";
+	
+	/**
+	 * default constructor
+	 */
+	public JobEntity() {
+		
+	}
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the cityCode
+	 */
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	/**
+	 * @param cityCode the cityCode to set
+	 */
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the stateCode
+	 */
+	public String getStateCode() {
+		return stateCode;
+	}
+
+	/**
+	 * @param stateCode the stateCode to set
+	 */
+	public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
+}

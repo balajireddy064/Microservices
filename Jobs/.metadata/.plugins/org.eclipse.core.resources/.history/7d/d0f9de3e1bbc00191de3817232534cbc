@@ -1,0 +1,5 @@
+package com.ayusha.job.services.constants;
+
+public class JobServiceConstants {
+
+}

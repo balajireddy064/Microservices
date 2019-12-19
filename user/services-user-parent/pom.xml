@@ -1,0 +1,14 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ayusha</groupId>
+  <artifactId>services-user-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>services-user-parent</name>
+  <description>services-user-parent</description>
+  <modules>
+  	<module>../android-services-user-data-handler</module>
+  	<module>../sercices-user-common-data-model</module>
+  	<module>../services-user</module>
+  </modules>
+</project>

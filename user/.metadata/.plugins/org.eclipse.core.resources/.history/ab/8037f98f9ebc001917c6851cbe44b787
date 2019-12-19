@@ -1,0 +1,87 @@
+package com.ayusha.user.data.models;
+
+
+/**
+ * 
+ * @author author
+ *
+ */
+public class UserDataModel {
+	
+	/** id **/
+	private String id;
+	
+	/** user id */
+	private String userId;
+	
+	/** customerid **/
+	
+	private String customerId="";
+	
+	/** customerid **/
+	
+	private String firstName="";
+
+	/** customerid **/
+
+	private String lastName="";
+	/** customerid **/
+	
+	private String middleName="";
+	
+	/** customerid **/
+	
+	private String addressId="";
+	
+	/** customerid **/
+
+	private String addressType="";
+	
+	/** customerid **/
+	
+	private String contactId="";
+	
+	/** customerid **/
+	
+	private String email="";
+	
+	/** customerid **/
+	
+	private String phoneNumber="";
+	
+	/** customerid **/
+	
+	private String createdOn="2019/12/12 10:00:00";
+	
+	/** customerid **/
+	
+	private String addr1="";
+	/** customerid **/
+	
+	private String addr2="";
+	/** customerid **/
+	
+	private String addr3="";
+	
+	/** customerid **/
+	
+	private String city="";
+	
+	/** customerid **/
+	
+	private String country="";
+	/** customerid **/
+
+	private String pin="";
+	/** customerid **/
+	
+	private String state="";
+	
+	/**
+	 * default constructor
+	 */
+	public UserDataModel() {
+		
+	}
+
+}

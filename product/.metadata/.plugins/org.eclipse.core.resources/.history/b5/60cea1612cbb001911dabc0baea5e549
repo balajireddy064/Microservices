@@ -1,0 +1,31 @@
+package com.ayusha.products.data.models;
+
+import java.util.List;
+
+/**
+ * 
+ * @author author
+ * 09-Aug-2019
+ * Product and supported service types
+ *
+ */
+public class ProductsDataModel {
+	
+	/** id **/
+	private int id;
+	
+	/** categoryname **/
+	private String productId="";
+	
+	/** list of products **/
+	private List<ProductDataModel> lstProductDataModel = null;
+	
+	/**
+	 * default constructor
+	 */
+	public ProductsDataModel() {
+		
+	}
+
+	
+}

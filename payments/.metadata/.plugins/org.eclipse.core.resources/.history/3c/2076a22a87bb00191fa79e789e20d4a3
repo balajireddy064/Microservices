@@ -1,0 +1,210 @@
+package com.ayusha.payments.data.models;
+
+/**
+ * 
+ * @author author
+ * 10-Aug-2019
+ *
+ */
+public class CashReceiptDataModel {
+	
+	/** id **/
+	private int id;
+	
+	/** cash receipt id **/
+	private String cashReceiptId;
+	
+	/** cash receipt id **/
+	private String grandTotal;
+	
+	/** cash receipt id **/
+	private String paidStatus;
+
+	/** cash receipt id **/
+	private String generatedOn;
+	
+	/** cash receipt id **/
+	private String requested_by;
+	
+
+	/** cash receipt id **/
+	private double tax;
+	
+	
+	/** cash receipt id **/
+	private String jobCode;
+	
+	/** estimate line items **/
+	private EstimateLineItemsDataModel estimateLineItemsDataModel;
+	
+	/** estimate line items **/
+	private EstimateOtherChargesDataModel estimateOtherChargesDataModel;
+	
+
+	/**
+	 * default constructor
+	 */
+	public CashReceiptDataModel() {
+		
+	}
+
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	/**
+	 * @return the cashReceiptId
+	 */
+	public String getCashReceiptId() {
+		return cashReceiptId;
+	}
+
+
+	/**
+	 * @param cashReceiptId the cashReceiptId to set
+	 */
+	public void setCashReceiptId(String cashReceiptId) {
+		this.cashReceiptId = cashReceiptId;
+	}
+
+
+	/**
+	 * @return the grandTotal
+	 */
+	public String getGrandTotal() {
+		return grandTotal;
+	}
+
+
+	/**
+	 * @param grandTotal the grandTotal to set
+	 */
+	public void setGrandTotal(String grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
+
+	/**
+	 * @return the paidStatus
+	 */
+	public String getPaidStatus() {
+		return paidStatus;
+	}
+
+
+	/**
+	 * @param paidStatus the paidStatus to set
+	 */
+	public void setPaidStatus(String paidStatus) {
+		this.paidStatus = paidStatus;
+	}
+
+
+	/**
+	 * @return the generatedOn
+	 */
+	public String getGeneratedOn() {
+		return generatedOn;
+	}
+
+
+	/**
+	 * @param generatedOn the generatedOn to set
+	 */
+	public void setGeneratedOn(String generatedOn) {
+		this.generatedOn = generatedOn;
+	}
+
+
+	/**
+	 * @return the requested_by
+	 */
+	public String getRequested_by() {
+		return requested_by;
+	}
+
+
+	/**
+	 * @param requested_by the requested_by to set
+	 */
+	public void setRequested_by(String requested_by) {
+		this.requested_by = requested_by;
+	}
+
+
+	/**
+	 * @return the tax
+	 */
+	public double getTax() {
+		return tax;
+	}
+
+
+	/**
+	 * @param tax the tax to set
+	 */
+	public void setTax(double tax) {
+		this.tax = tax;
+	}
+
+
+	/**
+	 * @return the jobCode
+	 */
+	public String getJobCode() {
+		return jobCode;
+	}
+
+
+	/**
+	 * @param jobCode the jobCode to set
+	 */
+	public void setJobCode(String jobCode) {
+		this.jobCode = jobCode;
+	}
+
+
+	/**
+	 * @return the estimateLineItemsDataModel
+	 */
+	public EstimateLineItemsDataModel getEstimateLineItemsDataModel() {
+		return estimateLineItemsDataModel;
+	}
+
+
+	/**
+	 * @param estimateLineItemsDataModel the estimateLineItemsDataModel to set
+	 */
+	public void setEstimateLineItemsDataModel(EstimateLineItemsDataModel estimateLineItemsDataModel) {
+		this.estimateLineItemsDataModel = estimateLineItemsDataModel;
+	}
+
+
+	/**
+	 * @return the estimateOtherChargesDataModel
+	 */
+	public EstimateOtherChargesDataModel getEstimateOtherChargesDataModel() {
+		return estimateOtherChargesDataModel;
+	}
+
+
+	/**
+	 * @param estimateOtherChargesDataModel the estimateOtherChargesDataModel to set
+	 */
+	public void setEstimateOtherChargesDataModel(EstimateOtherChargesDataModel estimateOtherChargesDataModel) {
+		this.estimateOtherChargesDataModel = estimateOtherChargesDataModel;
+	}
+}

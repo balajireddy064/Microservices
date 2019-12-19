@@ -1,0 +1,15 @@
+package com.ayusha.repair.services.constants;
+
+/**
+ * 
+ * @author author
+ * 08-Aug-2019
+ * Repai services constants
+ *
+ */
+public class RepairServiceConstants {
+
+	
+	/** Job Notes Get Service Name **/
+	public final static String GET_JOB_NOTES_SERVICE_NAME="repair/getnotes?jobid=$1";
+}

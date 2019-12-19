@@ -1,0 +1,91 @@
+package com.ayusha.tktmgmt.data;
+
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.products.data.models.CategoryDataModel;
+import com.ayusha.products.services.constants.CategoryServiceConstants;
+import com.ayusha.products.services.constants.MakeServiceConstants;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class CategoryDataHandler {
+	
+	/** singleon object reference **/
+	private final static CategoryDataHandler makeDataHandler = new CategoryDataHandler();
+	
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private CategoryDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static CategoryDataHandler getInstance() {
+		return makeDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public CategoryDataModel getCategory(String id) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		CategoryDataModel categoryDataModel = null;
+		String serviceName=CategoryServiceConstants.GET_CATEGORY_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", id);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			categoryDataModel = ((CategoryDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),CategoryDataModel.class));
+			return categoryDataModel;
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw new ServicesDataException();
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateCategory(CategoryDataModel categoryDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=CategoryServiceConstants.UPDATE_CATEGORY_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance(); 
+		try {
+			System.out.println(" PAYLOAD ======>"+JSONConverter.convertPOJOToString(categoryDataModel)+"::::::"+categoryDataModel);
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(categoryDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+}

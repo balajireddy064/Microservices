@@ -1,0 +1,48 @@
+package com.ayusha.user.service;
+
+import java.util.List;
+
+import com.ayusha.services.common.exceptions.DataPersistenceOperationException;
+import com.ayusha.services.common.exceptions.InvalidServiceRequestException;
+import com.ayusha.services.common.exceptions.ResourceNotFoundException;
+import com.ayusha.user.data.models.UserDataModel;
+import com.ayusha.user.data.models.UserLocationsDataModel;
+import com.ayusha.user.data.models.UsersDataModel;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the ticket service methods
+ *
+ */
+public interface IUserService {
+	
+	/**
+	 * add ticket
+	 */
+	public UserDataModel save(UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+		
+	/**
+	 * add ticket
+	 */
+	public UserDataModel update(UserDataModel userDataModel) throws DataPersistenceOperationException,InvalidServiceRequestException;
+	
+	/** find job notes by id **/
+	public UserDataModel getUserByUserId(String userId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+	
+	/** find job notes by id **/
+	public UserDataModel getUserByEmailId(String emailId) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+
+	/** find job notes by id **/
+	public UserDataModel getUserByPhoneNumber(String phoneNumber) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+	
+	/** find job notes by id **/
+	public UsersDataModel getUserByFisrtName(String firstName) throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+	
+	/** find job notes by id **/
+	public UserLocationsDataModel getLocations() throws DataPersistenceOperationException,InvalidServiceRequestException,ResourceNotFoundException,Exception;
+	
+}
+

@@ -1,0 +1,23 @@
+package com.ayusha.payments.services.repository;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.ayusha.payments.services.entity.CashReceiptEntity;
+import com.ayusha.payments.services.entity.EstimateEntity;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Ticket Model class
+ * Defines the methods for the ticketmanagement persistance CRUD operations
+ *
+ */
+public interface ICashReceiptDiscountsRepository extends CrudRepository<CashReceiptEntity,Integer>{
+
+	 @Query("SELECT t FROM CashReceiptEntity t WHERE t.cashReceiptId = ?1")
+	 CashReceiptEntity findCashReceiptByReceiptId(String estimateId);
+	 @Query("SELECT t FROM CashReceiptEntity t WHERE t.jobCode = ?1")
+	 CashReceiptEntity findCashReceiptByJobCode(String jobCode);
+}

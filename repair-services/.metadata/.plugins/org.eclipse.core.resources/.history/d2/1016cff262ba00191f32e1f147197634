@@ -1,0 +1,11 @@
+package com.ayusha.repair.services.data.models;
+
+/**
+ * 
+ * @author author1
+ * Date : 01-Aug-2019
+ * Job Notes
+ */
+public class FaultyItemDataModel {
+
+}

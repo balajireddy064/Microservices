@@ -1,0 +1,156 @@
+package com.ayusha.tktmgmt.data;
+
+import java.util.ArrayList;
+
+import com.ayusha.general.services.constants.GeneralServicesConstants;
+import com.ayusha.general.services.data.model.CityDataModel;
+import com.ayusha.general.services.data.model.CountryDataModel;
+import com.ayusha.http.client.ServicesClient;
+import com.ayusha.http.client.models.ServiceResponse;
+import com.ayusha.http.constants.HTTPConstants;
+import com.ayusha.json.utils.JSONConverter;
+import com.ayusha.services.common.exceptions.ServicesDataException;
+
+/**
+ * 
+ * @author author1
+ * 07-Aug-2019
+ * Gets the ticket data
+ *
+ */
+public class CityDataHandler {
+	
+	/** singleon object reference **/
+	private final static CityDataHandler repairFaultyItemsDataHandler = new CityDataHandler();
+	
+	/** states data model **/
+	private CityDataModel cityDataModel;
+	
+	/** 
+	
+	
+	/**
+	 * default constructor
+	 */
+	private CityDataHandler() {
+		
+	}
+	
+	
+	/**
+	 * returns singleton reference
+	 */
+	public static CityDataHandler getInstance() {
+		return repairFaultyItemsDataHandler;
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public CityDataModel getCity(String cityId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		CityDataModel cityDataModel = null;
+		String serviceName=GeneralServicesConstants.GET_CITY_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", cityId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			cityDataModel = ((CityDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),CityDataModel.class));
+			if(cityDataModel==null) {
+				cityDataModel= new CityDataModel();
+				cityDataModel.setCityCode("");
+				cityDataModel.setName("");
+			}
+			return cityDataModel;
+		}catch(Exception e) {
+			cityDataModel= new CityDataModel();
+			cityDataModel.setCityCode("");
+			cityDataModel.setName("");
+			return cityDataModel;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public CityDataModel getCities(String stateId) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		CityDataModel cityDataModel = null;
+		String serviceName=GeneralServicesConstants.GET_CITY_SERVICE_NAME;
+		
+		serviceName = serviceName.replace("$1", stateId);
+		
+		servicesClient = ServicesClient.getInstance();
+		try {
+			serviceResponse = servicesClient.execute(serviceName,"",HTTPConstants.GET);
+			cityDataModel = ((CityDataModel)JSONConverter.convertStringToPOJO(""+serviceResponse.getResponse(),CityDataModel.class));
+			if(cityDataModel==null) {
+				cityDataModel= new CityDataModel();
+				cityDataModel.setCityCode("");
+				cityDataModel.setName("");
+			}
+			return cityDataModel;
+		}catch(Exception e) {
+			cityDataModel= new CityDataModel();
+			cityDataModel.setCityCode("");
+			cityDataModel.setName("");
+			return cityDataModel;
+		}
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public void updateCity(CityDataModel cityDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=GeneralServicesConstants.UPDATE_CITY_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(cityDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(cityDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+	}
+	
+	/**
+	 * get ticket data
+	 */
+	public CityDataModel addCity(CityDataModel cityDataModel) throws ServicesDataException{
+		
+		ServicesClient servicesClient = null;
+		ServiceResponse serviceResponse = null;
+		ServicesDataException servicesDataException = null;
+		
+		String updateServiceName=GeneralServicesConstants.ADD_CITY_SERVICE_NAME;
+	
+		servicesClient = ServicesClient.getInstance();
+		try {
+			System.out.println(" PAYLOAD "+JSONConverter.convertPOJOToString(cityDataModel));
+			serviceResponse = servicesClient.execute(updateServiceName,JSONConverter.convertPOJOToString(cityDataModel),HTTPConstants.POST);
+		}catch(Exception e) {
+			servicesDataException = new ServicesDataException();
+			servicesDataException.setErrorCode(HTTPConstants.INTERNAL_ERROR);
+			servicesDataException.setErrorMessage(HTTPConstants.HTTP_INTERNAL_ERROR_MESSAGE);
+			throw servicesDataException;
+		}	
+		
+		return cityDataModel;
+	}
+}

@@ -7,7 +7,7 @@
   <description>services-common</description>
   
   <properties>
-    <spring.web.version>5.1.5.RELEASE</spring.web.version>
+    <spring.web.version>6.0.0</spring.web.version>
     <servlet.version>2.5</servlet.version>
     <services.common.util.version>0.0.1-SNAPSHOT</services.common.util.version>
   </properties>
